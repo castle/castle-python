@@ -21,7 +21,6 @@ class CastleIOException(Exception):
 
 
 class CastleIO(object):
-
     def __init__(self, api_key=None, host=None, port=None, url_prefix=None, retries=3, timeout=10, backoff_factor=0.02):
         self.api_key = api_key
         self.host = host or 'api.castle.io'
@@ -31,7 +30,6 @@ class CastleIO(object):
         self.timeout = timeout
         self.backoff_factor = backoff_factor
 
-        self.setup_headers()
         self.setup_base_url()
         self.setup_connection()
 

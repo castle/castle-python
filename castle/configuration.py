@@ -19,11 +19,44 @@ BLACKLISTED = ['HTTP_COOKIE']
 
 class ConfigurationObject(object):
     def __init__(self):
+        self.api_key = None
         self.host = 'api.castle.io'
         self.port = 443
         self.url_prefix = '/v1'
         self.whitelisted = WHITELISTED
         self.blacklisted = BLACKLISTED
+
+    @property
+    def api_key(self):
+        return self.__api_key
+
+    @api_key.setter
+    def api_key(self, value):
+        self.__api_key = value
+
+    @property
+    def host(self):
+        return self.__host
+
+    @host.setter
+    def host(self, value):
+        self.__host = value
+
+    @property
+    def port(self):
+        return self.__port
+
+    @port.setter
+    def port(self, value):
+        self.__port = value
+
+    @property
+    def url_prefix(self):
+        return self.__url_prefix
+
+    @url_prefix.setter
+    def url_prefix(self, value):
+        self.__url_prefix = value
 
     @property
     def whitelisted(self):

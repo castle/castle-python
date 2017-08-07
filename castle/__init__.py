@@ -21,11 +21,7 @@ class CastleIOException(Exception):
 
 
 class CastleIO(object):
-    def __init__(self, api_key=None, host=None, port=None, url_prefix=None, retries=3, timeout=10, backoff_factor=0.02):
-        self.api_key = api_key
-        self.host = host or 'api.castle.io'
-        self.port = port or 443
-        self.url_prefix = url_prefix or '/v1'
+    def __init__(self, retries=3, timeout=10, backoff_factor=0.02):
         self.retries = retries
         self.timeout = timeout
         self.backoff_factor = backoff_factor
@@ -35,16 +31,16 @@ class CastleIO(object):
 
     def setup_base_url(self):
         template = 'http://{host}:{port}/{prefix}'
-        if self.port == 443:
+        if configuration.port == 443:
             template = 'https://{host}/{prefix}'
 
-        if '://' in self.host:
-            self.host = self.host.split('://')[1]
+        if '://' in configuration.host:
+            configuration.host = configuration.host.split('://')[1]
 
         self.base_url = template.format(
-            host=self.host.strip('/'),
-            port=self.port,
-            prefix=self.url_prefix.strip('/'))
+            host=configuration.host.strip('/'),
+            port=configuration.port,
+            prefix=configuration.url_prefix.strip('/'))
 
     def setup_connection(self):
         self.http = Session()
@@ -52,7 +48,7 @@ class CastleIO(object):
         # also define backoff_factor to delay each retry
         self.http.mount('https://', HTTPAdapter(max_retries=Retry(
             total=self.retries, backoff_factor=self.backoff_factor)))
-        self.http.auth = ('', self.api_key)
+        self.http.auth = ('', configuration.api_key)
 
     def get_query_string(self, action):
         '''Generates an API path'''

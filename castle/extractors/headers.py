@@ -12,7 +12,7 @@ class ExtractorsHeaders(object):
 
     def call(self):
         headers = dict()
-        for key, value in self.environ().items():
+        for key, value in self.environ.items():
             name = self.formatter.call(key)
             if name not in configuration.whitelisted: continue
             if name in configuration.blacklisted: continue

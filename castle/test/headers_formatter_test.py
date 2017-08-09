@@ -1,4 +1,4 @@
-import unittest
+from castle.test import unittest
 from castle.headers_formatter import HeadersFormatter
 
 

@@ -1,4 +1,4 @@
-import unittest
+from castle.test import unittest
 
 from castle.configuration import configuration
 from castle.extractors.client_id import ExtractorsClientId

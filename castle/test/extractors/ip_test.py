@@ -1,6 +1,4 @@
-import unittest
-from unittest import mock
-
+from castle.test import unittest, mock
 from castle.configuration import configuration
 from castle.extractors.ip import ExtractorsIp
 

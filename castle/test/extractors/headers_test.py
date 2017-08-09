@@ -1,5 +1,6 @@
-import unittest
 import pdb
+
+from castle.test import unittest
 from castle.configuration import configuration
 from castle.extractors.headers import ExtractorsHeaders
 

@@ -1,4 +1,3 @@
-import unittest
 import pkgutil
 import logging
 import sys

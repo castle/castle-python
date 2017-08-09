@@ -20,8 +20,9 @@ else:
     from unittest import mock
 
 TEST_MODULES = [
-    'castle.test.headers_formatter_test',
-    'castle.test.extractors.headers_test'
+    'castle.test.extractors.client_id_test',
+    'castle.test.extractors.headers_test',
+    'castle.test.headers_formatter_test'
 ]
 
 def all():

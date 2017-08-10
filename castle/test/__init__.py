@@ -24,6 +24,7 @@ TEST_MODULES = [
     'castle.test.extractors.client_id_test',
     'castle.test.extractors.headers_test',
     'castle.test.extractors.ip_test',
+    'castle.test.failover_response_test',
     'castle.test.headers_formatter_test'
 ]
 

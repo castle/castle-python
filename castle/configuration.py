@@ -20,7 +20,7 @@ BLACKLISTED = ['HTTP_COOKIE']
 REQUEST_TIMEOUT = 0.5
 
 
-class ConfigurationObject(object):
+class Configuration(object):
     def __init__(self):
         self.api_secret = None
         self.host = 'api.castle.io'
@@ -93,9 +93,5 @@ class ConfigurationObject(object):
         self.__request_timeout = value
 
 
-configuration = ConfigurationObject()
 
-
-def Configuration():
-    """Simulate a singelton Configuration object for backward compatibility."""
-    return configuration
+configuration = Configuration()

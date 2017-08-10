@@ -8,6 +8,8 @@ from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+from castle.configuration import configuration
+
 try:
     from datetime import timezone
     USE_PY3_TIMESTAMPS = True
@@ -48,7 +50,7 @@ class CastleIO(object):
         # also define backoff_factor to delay each retry
         self.http.mount('https://', HTTPAdapter(max_retries=Retry(
             total=self.retries, backoff_factor=self.backoff_factor)))
-        self.http.auth = ('', configuration.api_key)
+        self.http.auth = ('', configuration.api_secret)
 
     def get_query_string(self, action):
         '''Generates an API path'''

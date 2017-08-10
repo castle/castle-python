@@ -1,3 +1,4 @@
+from castle.exceptions import FailoverStrategyValueError
 from castle.headers_formatter import HeadersFormatter
 
 WHITELISTED = [
@@ -18,6 +19,7 @@ BLACKLISTED = ['HTTP_COOKIE']
 
 # 500 milliseconds
 REQUEST_TIMEOUT = 0.5
+FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
 
 
 class Configuration(object):
@@ -29,6 +31,7 @@ class Configuration(object):
         self.whitelisted = WHITELISTED
         self.blacklisted = BLACKLISTED
         self.request_timeout = REQUEST_TIMEOUT
+        self.failover_strategy = 'allow'
 
     @property
     def api_secret(self):
@@ -92,6 +95,15 @@ class Configuration(object):
     def request_timeout(self, value):
         self.__request_timeout = value
 
+    @property
+    def failover_strategy(self):
+        return self.__failover_strategy
 
+    @failover_strategy.setter
+    def failover_strategy(self, value):
+        if value in FAILOVER_STRATEGIES:
+            self.__failover_strategy = value
+        else:
+            raise FailoverStrategyValueError
 
 configuration = Configuration()

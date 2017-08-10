@@ -1,0 +1,2 @@
+class CommandsAuthenticate(object):
+    pass

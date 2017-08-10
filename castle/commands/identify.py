@@ -1,0 +1,2 @@
+class CommandsIdentify(object):
+    pass

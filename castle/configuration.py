@@ -16,6 +16,9 @@ WHITELISTED = [
 
 BLACKLISTED = ['HTTP_COOKIE']
 
+# 500 milliseconds
+REQUEST_TIMEOUT = 0.5
+
 
 class ConfigurationObject(object):
     def __init__(self):
@@ -25,6 +28,7 @@ class ConfigurationObject(object):
         self.url_prefix = '/v1'
         self.whitelisted = WHITELISTED
         self.blacklisted = BLACKLISTED
+        self.request_timeout = REQUEST_TIMEOUT
 
     @property
     def api_secret(self):
@@ -79,6 +83,14 @@ class ConfigurationObject(object):
             self.__blacklisted = [HeadersFormatter.call(v) for v in value]
         else:
             self.__blacklisted = []
+
+    @property
+    def request_timeout(self):
+        return self.__request_timeout
+
+    @request_timeout.setter
+    def request_timeout(self, value):
+        self.__request_timeout = value
 
 
 configuration = ConfigurationObject()

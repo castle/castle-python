@@ -5,3 +5,7 @@ class CastleError(Exception):
 # Raised when invalid failover strategy value passed
 class FailoverStrategyValueError(CastleError):
     pass
+
+# Raised when invalid parameter are passed
+class InvalidParametersError(CastleError):
+    pass

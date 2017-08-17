@@ -9,3 +9,25 @@ class FailoverStrategyValueError(CastleError):
 # Raised when invalid parameter are passed
 class InvalidParametersError(CastleError):
     pass
+
+# Raised when request errors
+class RequestError(CastleError):
+    pass
+
+class BadRequestError(CastleError):
+    pass
+
+class UnauthorizedError(CastleError):
+    pass
+
+class ForbiddenError(CastleError):
+    pass
+
+class NotFoundError(CastleError):
+    pass
+
+class UserUnauthorizedError(CastleError):
+    pass
+
+class ApiError(CastleError):
+    pass

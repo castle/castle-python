@@ -3,4 +3,4 @@ class ExtractorsIp(object):
         self.request = request
 
     def call(self):
-        return self.request.ip()
+        return self.request.ip

@@ -4,7 +4,7 @@ from castle.exceptions import InvalidParametersError
 
 
 class CommandsIdentify(object):
-    def initialize(self, context):
+    def __init__(self, context):
         self.context_merger = ContextMerger(context)
 
     def build(self, options):
@@ -14,7 +14,7 @@ class CommandsIdentify(object):
 
         args = {
             'user_id': user_id,
-            'context': self.build_context(options['context'])
+            'context': self.build_context(options.get('context', dict()))
         }
 
         if 'active' in options and options['active']:

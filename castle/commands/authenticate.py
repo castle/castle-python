@@ -4,7 +4,7 @@ from castle.exceptions import InvalidParametersError
 
 
 class CommandsAuthenticate(object):
-    def initialize(self, context):
+    def __init__(self, context):
         self.context_merger = ContextMerger(context)
 
     def build(self, options):
@@ -17,9 +17,10 @@ class CommandsAuthenticate(object):
             raise InvalidParametersError
 
         args = {
-            'event': event,
+            # TODO: rename back to event
+            'name': event,
             'user_id': user_id,
-            'context': self.build_context(options['context'])
+            'context': self.build_context(options.get('context', dict()))
         }
 
         if 'properties' in options:
@@ -28,4 +29,4 @@ class CommandsAuthenticate(object):
         return Command(method='post', endpoint='authenticate', data=args)
 
     def build_context(self, context):
-        self.context_merger.call(context or {})
+        return self.context_merger.call(context)

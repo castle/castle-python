@@ -1,4 +1,5 @@
 import requests
+import pdb
 from castle.configuration import configuration
 
 
@@ -11,20 +12,15 @@ class Request(object):
         return requests.request(
             method,
             self.build_url(endpoint),
-            self.build_query_params(params)
-        )
-
-    def build_query_params(self, params):
-        return dict(
-            headers=self.headers,
-            timeout=configuration.request_timeout,
             auth=('', configuration.api_secret),
+            # timeout=configuration.request_timeout,
+            headers=self.headers,
             verify=self.verify(),
-            params=params
+            data=params
         )
 
     def build_url(self, endpoint):
-        return '{base}/{action}'.format(base=self.base_url, action=endpoint.split('/'))
+        return '{base}/{action}'.format(base=self.base_url, action=endpoint.split('/')[-1])
 
     def build_base_url(self):
         template = 'http://{host}:{port}/{prefix}'

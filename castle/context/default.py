@@ -10,7 +10,7 @@ from castle.extractors.ip import ExtractorsIp
 __version__ = VERSION
 
 class ContextDefault(object):
-    def __init__(self, request, cookies=dict()):
+    def __init__(self, request, cookies):
         self.client_id = ExtractorsClientId(request.environ, cookies).call()
         self.headers = ExtractorsHeaders(request.environ).call()
         self.ip = ExtractorsIp(request).call()

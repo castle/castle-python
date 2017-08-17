@@ -4,7 +4,7 @@ from castle.exceptions import InvalidParametersError
 
 
 class CommandsTrack(object):
-    def initialize(self, context):
+    def __init__(self, context):
         self.context_merger = ContextMerger(context)
 
     def build(self, options):
@@ -13,8 +13,9 @@ class CommandsTrack(object):
             raise InvalidParametersError
 
         args = {
-            'event': event,
-            'context': self.build_context(options['context'])
+            # TODO: rename back to event
+            'name': event,
+            'context': self.build_context(options.get('context', dict()))
         }
 
         if 'user_id' in options:

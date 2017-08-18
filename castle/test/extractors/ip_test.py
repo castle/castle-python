@@ -9,7 +9,7 @@ class ExtractorsIpTestCase(unittest.TestCase):
 
     def request(self):
         r = mock.Mock()
-        r.ip = self.request_ip
+        r.ip = self.request_ip()
         return r
 
     def test_extract_ip(self):

@@ -18,7 +18,7 @@ class ContextDefaultTestCase(unittest.TestCase):
     def environ(self):
         return {
             'HTTP_X_FORWARDED_FOR': self.request_ip(),
-            'HTTP_COOKIE': "__cid={self.client_id()};other=efgh"
+            'HTTP_COOKIE': f"__cid={self.client_id()};other=efgh"
         }
 
     def environ_with_extras(self):
@@ -32,7 +32,7 @@ class ContextDefaultTestCase(unittest.TestCase):
 
     def request(self, environ):
         r = mock.Mock()
-        r.ip = self.request_ip
+        r.ip = self.request_ip()
         r.environ = environ
         return r
 

@@ -17,12 +17,12 @@ class Client(object):
         self.api = Api()
 
     def identify(self, options):
-        if not self.tracked:
+        if not self.tracked():
             return
         return self.api.call(CommandsIdentify(self.context).build(options))
 
     def authenticate(self, options):
-        if self.tracked:
+        if self.tracked():
             try:
                 return self.api.call(CommandsAuthenticate(self.context).build(options))
             except RequestError as exception:
@@ -31,7 +31,7 @@ class Client(object):
             return FailoverResponse(options['user_id'], 'allow').call()
 
     def track(self, options):
-        if not self.tracked:
+        if not self.tracked():
             return
         return self.api.call(CommandsTrack(self.context).build(options))
 

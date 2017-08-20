@@ -19,6 +19,7 @@ else:
     from unittest import mock
 
 TEST_MODULES = [
+    'castle.test.client_test',
     'castle.test.configuration_test',
     'castle.test.context.default_test',
     'castle.test.command_test',

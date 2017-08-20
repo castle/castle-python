@@ -1,7 +1,6 @@
 import json
 
 from castle.version import VERSION
-from castle.system import System
 
 from castle.extractors.client_id import ExtractorsClientId
 from castle.extractors.headers import ExtractorsHeaders

@@ -23,6 +23,7 @@ TEST_MODULES = [
     'castle.test.client_test',
     'castle.test.configuration_test',
     'castle.test.context.default_test',
+    'castle.test.context.merger_test',
     'castle.test.command_test',
     'castle.test.commands.authenticate_test',
     'castle.test.commands.identify_test',

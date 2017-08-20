@@ -8,11 +8,11 @@ class CommandsAuthenticate(object):
         self.context_merger = ContextMerger(context)
 
     def build(self, options):
-        event = options['event']
+        event = options.get('event')
         if event is None or event == '':
             raise InvalidParametersError
 
-        user_id = options['user_id']
+        user_id = options.get('user_id')
         if user_id is None or user_id == '':
             raise InvalidParametersError
 

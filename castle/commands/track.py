@@ -8,7 +8,7 @@ class CommandsTrack(object):
         self.context_merger = ContextMerger(context)
 
     def build(self, options):
-        event = options['event']
+        event = options.get('event')
         if event is None or event == '':
             raise InvalidParametersError
 
@@ -26,4 +26,4 @@ class CommandsTrack(object):
         return Command(method='post', endpoint='track', data=args)
 
     def build_context(self, context):
-        self.context_merger.call(context or {})
+        return self.context_merger.call(context or {})

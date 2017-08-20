@@ -8,7 +8,7 @@ class CommandsIdentify(object):
         self.context_merger = ContextMerger(context)
 
     def build(self, options):
-        user_id = options['user_id']
+        user_id = options.get('user_id')
         if user_id is None or user_id == '':
             raise InvalidParametersError
 
@@ -25,4 +25,4 @@ class CommandsIdentify(object):
         return Command(method='post', endpoint='identify', data=args)
 
     def build_context(self, context):
-        self.context_merger.call(context or {})
+        return self.context_merger.call(context or {})

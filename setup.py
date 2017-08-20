@@ -35,5 +35,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     install_requires=['requests>=2.5'],
+    tests_require=['responses'],
     test_suite='castle.test.all'
 )

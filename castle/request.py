@@ -1,3 +1,4 @@
+import json
 import requests
 import pdb
 from castle.configuration import configuration
@@ -16,7 +17,7 @@ class Request(object):
             # timeout=configuration.request_timeout,
             headers=self.headers,
             verify=self.verify(),
-            data=params
+            data=json.dumps(params)
         )
 
     def build_url(self, endpoint):

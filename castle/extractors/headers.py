@@ -1,7 +1,6 @@
 import re
 import pdb
 
-from castle import CastleIO
 from castle.headers_formatter import HeadersFormatter
 from castle.configuration import configuration
 

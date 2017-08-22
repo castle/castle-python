@@ -4,8 +4,7 @@ from castle.response import Response
 
 class Api(object):
     def __init__(self):
-        # TODO: remove those headers
-        self.req = Request({'X-Castle-Ip': '217.144.192.112', 'X-Castle-Client-Id': '1234', 'X-Castle-User-Agent': 'castle-python/1.0'})
+        self.req = Request({'Content-Type': 'application/json'})
 
     def request(self, command):
         return self.req.build_query(command.method, command.endpoint, command.data)

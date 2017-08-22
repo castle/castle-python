@@ -19,7 +19,7 @@ class CommandsTrackTestCase(unittest.TestCase):
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'post')
         self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, {'name': '$login.authenticate', 'user_id': '1234', 'properties': {'test': '1'}, 'context': {'test': '1'}})
+        self.assertEqual(command.data, {'event': '$login.authenticate', 'user_id': '1234', 'properties': {'test': '1'}, 'context': {'test': '1'}})
 
     def test_build_context(self):
         context = {'test': '1'}

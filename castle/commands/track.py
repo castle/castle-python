@@ -13,8 +13,7 @@ class CommandsTrack(object):
             raise InvalidParametersError
 
         args = {
-            # TODO: rename back to event
-            'name': event,
+            'event': event,
             'context': self.build_context(options.get('context', dict()))
         }
 

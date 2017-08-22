@@ -23,7 +23,7 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'post')
         self.assertEqual(command.endpoint, 'authenticate')
-        self.assertEqual(command.data, {'properties': {'test': '1'}, 'context': {'test': '1'}, 'name': '$login.authenticate', 'user_id': '1234'})
+        self.assertEqual(command.data, {'properties': {'test': '1'}, 'context': {'test': '1'}, 'event': '$login.authenticate', 'user_id': '1234'})
 
     def test_build_context(self):
         context = {'test': '1'}

@@ -17,8 +17,7 @@ class CommandsAuthenticate(object):
             raise InvalidParametersError
 
         args = {
-            # TODO: rename back to event
-            'name': event,
+            'event': event,
             'user_id': user_id,
             'context': self.build_context(options.get('context', dict()))
         }

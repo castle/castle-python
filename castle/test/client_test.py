@@ -44,6 +44,14 @@ class ClientTestCase(unittest.TestCase):
         options = {'event': '$login.authenticate', 'user_id': '1234'}
         self.assertEqual(client.authenticate(options), response_text)
 
+    @responses.activate
+    def test_authenticate_tracked_true_status_401(self):
+        response_text = 'authenticate'
+        responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text, status=500)
+        client = Client(request(), {})
+        options = {'event': '$login.authenticate', 'user_id': '1234'}
+        self.assertEqual(client.authenticate(options), {'action': 'allow', 'user_id': '1234'})
+
     def test_authenticate_tracked_false(self):
         client = Client(request(), {})
         client.disable_tracking()
@@ -98,12 +106,14 @@ class ClientTestCase(unittest.TestCase):
         self.assertEqual(client.setup_context(request()), context)
 
     def test_failover_strategy_not_throw(self):
-        client = Client(request(), {'user_id': '1234'})
-        self.assertEqual(client.failover(Exception), {'action': 'allow', 'user_id': '1234'})
+        options = {'user_id': '1234'}
+        client = Client(request(), options)
+        self.assertEqual(client.failover(options, Exception), {'action': 'allow', 'user_id': '1234'})
 
     def test_failover_strategy_throw(self):
-        client = Client(request(), {'user_id': '1234'})
+        options = {'user_id': '1234'}
+        client = Client(request(), options)
         configuration.failover_strategy = 'throw'
         with self.assertRaises(Exception):
-            client.failover(Exception)
+            client.failover(options, Exception)
         configuration.failover_strategy = 'allow'

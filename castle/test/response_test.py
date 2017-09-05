@@ -3,7 +3,7 @@ import requests
 
 from castle.test import unittest
 from castle.response import Response
-from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, UserUnauthorizedError, InvalidParametersError, ApiError
+from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, UserUnauthorizedError, InvalidParametersError, ApiError, InternalServerError
 
 
 class ResponseTestCase(unittest.TestCase):
@@ -51,5 +51,5 @@ class ResponseTestCase(unittest.TestCase):
             Response(self.response(status_code=422)).verify()
 
     def test_verify_500(self):
-        with self.assertRaises(ApiError):
+        with self.assertRaises(InternalServerError):
             Response(self.response(status_code=500)).verify()

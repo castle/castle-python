@@ -10,10 +10,6 @@ class FailoverStrategyValueError(CastleError):
 class InvalidParametersError(CastleError):
     pass
 
-# Raised when request errors
-class RequestError(CastleError):
-    pass
-
 class BadRequestError(CastleError):
     pass
 
@@ -30,4 +26,7 @@ class UserUnauthorizedError(CastleError):
     pass
 
 class ApiError(CastleError):
+    pass
+
+class InternalServerError(CastleError):
     pass

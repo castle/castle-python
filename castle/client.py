@@ -5,7 +5,7 @@ from castle.context.merger import ContextMerger
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
 from castle.commands.track import CommandsTrack
-from castle.exceptions import RequestError
+from castle.exceptions import InternalServerError
 from castle.failover_response import FailoverResponse
 
 
@@ -25,8 +25,8 @@ class Client(object):
         if self.tracked():
             try:
                 return self.api.call(CommandsAuthenticate(self.context).build(options))
-            except RequestError as exception:
-                return self.failover(exception)
+            except InternalServerError as exception:
+                return self.failover(options, exception)
         else:
             return FailoverResponse(options['user_id'], 'allow').call()
 
@@ -51,7 +51,7 @@ class Client(object):
         default_context = ContextDefault(request, self.options.get('cookies', dict())).call()
         return ContextMerger(default_context).call(self.options.get('context', dict()))
 
-    def failover(self, exception):
+    def failover(self, options, exception):
         if configuration.failover_strategy != 'throw':
-            return FailoverResponse(self.options['user_id']).call()
+            return FailoverResponse(options['user_id']).call()
         raise exception

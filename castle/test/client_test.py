@@ -38,25 +38,26 @@ class ClientTestCase(unittest.TestCase):
 
     @responses.activate
     def test_authenticate_tracked_true(self):
-        response_text = 'authenticate'
+        response_text = {'action': 'allow', 'user_id': '1234'}
         responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text, status=200)
+        client = Client(request(), {})
+        options = {'event': '$login.authenticate', 'user_id': '1234'}
+        self.assertEqual(client.authenticate(options), response_text.update(failover=False, failover_reason=None))
+
+    @responses.activate
+    def test_authenticate_tracked_true_status_500(self):
+        response_text = {'action': 'allow', 'user_id': '1234', 'failover': True, 'failover_reason': 'InternalServerError'}
+        responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json='authenticate', status=500)
         client = Client(request(), {})
         options = {'event': '$login.authenticate', 'user_id': '1234'}
         self.assertEqual(client.authenticate(options), response_text)
 
-    @responses.activate
-    def test_authenticate_tracked_true_status_401(self):
-        response_text = 'authenticate'
-        responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text, status=500)
-        client = Client(request(), {})
-        options = {'event': '$login.authenticate', 'user_id': '1234'}
-        self.assertEqual(client.authenticate(options), {'action': 'allow', 'user_id': '1234'})
-
     def test_authenticate_tracked_false(self):
+        response_text = {'action': 'allow', 'user_id': '1234', 'failover': True, 'failover_reason': 'Castle set to do not track.'}
         client = Client(request(), {})
         client.disable_tracking()
         options = {'event': '$login.authenticate', 'user_id': '1234'}
-        self.assertEqual(client.authenticate(options), {'action': 'allow', 'user_id': '1234'})
+        self.assertEqual(client.authenticate(options), response_text)
 
     @responses.activate
     def test_track_tracked_true(self):
@@ -108,12 +109,12 @@ class ClientTestCase(unittest.TestCase):
     def test_failover_strategy_not_throw(self):
         options = {'user_id': '1234'}
         client = Client(request(), options)
-        self.assertEqual(client.failover(options, Exception), {'action': 'allow', 'user_id': '1234'})
+        self.assertEqual(client.failover(options, Exception()), {'action': 'allow', 'user_id': '1234', 'failover': True, 'failover_reason': 'Exception'})
 
     def test_failover_strategy_throw(self):
         options = {'user_id': '1234'}
         client = Client(request(), options)
         configuration.failover_strategy = 'throw'
         with self.assertRaises(Exception):
-            client.failover(options, Exception)
+            client.failover(options, Exception())
         configuration.failover_strategy = 'allow'

@@ -22,4 +22,4 @@ class FailoverResponseTestCase(unittest.TestCase):
 
     def test_call(self):
         failover_response = FailoverResponse(self.user_id())
-        self.assertDictEqual(failover_response.call(), {'action': configuration.failover_strategy, 'user_id': self.user_id()})
+        self.assertDictEqual(failover_response.call(), {'action': configuration.failover_strategy, 'user_id': self.user_id(), 'failover': True, 'failover_reason': None})

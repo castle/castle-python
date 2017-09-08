@@ -17,11 +17,12 @@ class CommandsIdentify(object):
             'context': self.build_context(options.get('context', dict()))
         }
 
-        if 'active' in options and options['active']:
-            args['active'] = True
         if 'traits' in options:
             args['traits'] = options['traits']
 
+        if 'active' in args.get('context') and args.get('context').get('active'):
+            args['context']['active'] = True
+            
         return Command(method='post', endpoint='identify', data=args)
 
     def build_context(self, context):

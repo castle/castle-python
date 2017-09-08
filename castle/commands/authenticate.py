@@ -25,6 +25,9 @@ class CommandsAuthenticate(object):
         if 'properties' in options:
             args['properties'] = options['properties']
 
+        if 'active' in args.get('context') and args.get('context').get('active'):
+            args['context']['active'] = True
+
         return Command(method='post', endpoint='authenticate', data=args)
 
     def build_context(self, context):

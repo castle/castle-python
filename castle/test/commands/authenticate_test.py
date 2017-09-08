@@ -44,6 +44,17 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         self.assertEqual(command.endpoint, 'authenticate')
         self.assertEqual(command.data, command_data)
 
+    def test_build_traits(self):
+        payload = default_payload()
+        payload.update(traits={'test': '1'})
+        command_data = default_payload()
+        command_data.update(traits={'test': '1'}, context={})
+        command = CommandsAuthenticate({}).build(payload)
+        self.assertIsInstance(command, Command)
+        self.assertEqual(command.method, 'post')
+        self.assertEqual(command.endpoint, 'authenticate')
+        self.assertEqual(command.data, command_data)
+
     def test_build_active_true(self):
         payload = default_payload()
         payload.update(context={'active': True})

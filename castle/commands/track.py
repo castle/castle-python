@@ -23,6 +23,9 @@ class CommandsTrack(object):
         if 'properties' in options:
             args['properties'] = options['properties']
 
+        if 'traits' in options:
+            args['traits'] = options['traits']
+
         if 'active' in args.get('context') and args.get('context').get('active'):
             args['context']['active'] = True
 

@@ -12,6 +12,10 @@ class CommandsTrack(object):
         if event is None or event == '':
             raise InvalidParametersError
 
+        if 'active' in options.get('context', dict()):
+            if not isinstance(options.get('context').get('active'), bool):
+                del options['context']['active']
+
         args = {
             'event': event,
             'context': self.build_context(options.get('context', dict()))
@@ -25,9 +29,6 @@ class CommandsTrack(object):
 
         if 'traits' in options:
             args['traits'] = options['traits']
-
-        if 'active' in args.get('context') and args.get('context').get('active'):
-            args['context']['active'] = True
 
         return Command(method='post', endpoint='track', data=args)
 

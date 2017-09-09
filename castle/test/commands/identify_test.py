@@ -58,7 +58,7 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         payload = default_payload()
         payload.update(context={'active': 'string'})
         command_data = default_payload()
-        command_data.update(context={'active': True})
+        command_data.update(context={})
         command = CommandsIdentify({}).build(payload)
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'post')

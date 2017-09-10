@@ -12,13 +12,15 @@ class CommandsIdentify(object):
         if user_id is None or user_id == '':
             raise InvalidParametersError
 
+        if 'active' in options.get('context', dict()):
+            if not isinstance(options.get('context').get('active'), bool):
+                del options['context']['active']
+
         args = {
             'user_id': user_id,
             'context': self.build_context(options.get('context', dict()))
         }
 
-        if 'active' in options and options['active']:
-            args['active'] = True
         if 'traits' in options:
             args['traits'] = options['traits']
 

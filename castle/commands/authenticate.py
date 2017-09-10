@@ -16,6 +16,10 @@ class CommandsAuthenticate(object):
         if user_id is None or user_id == '':
             raise InvalidParametersError
 
+        if 'active' in options.get('context', dict()):
+            if not isinstance(options.get('context').get('active'), bool):
+                del options['context']['active']
+
         args = {
             'event': event,
             'user_id': user_id,
@@ -24,6 +28,9 @@ class CommandsAuthenticate(object):
 
         if 'properties' in options:
             args['properties'] = options['properties']
+
+        if 'traits' in options:
+            args['traits'] = options['traits']
 
         return Command(method='post', endpoint='authenticate', data=args)
 

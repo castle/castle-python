@@ -35,6 +35,7 @@ TEST_MODULES = [
     'castle.test.headers_formatter_test',
     'castle.test.request_test',
     'castle.test.response_test',
+    'castle.test.secure_mode_test',
     'castle.test.utils_test'
 ]
 

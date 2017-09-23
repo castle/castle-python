@@ -28,9 +28,13 @@ class Client(object):
                 response.update(failover=False, failover_reason=None)
                 return response
             except InternalServerError as exception:
-                return self.failover(options, exception)
+                return Client.failover(options, exception)
         else:
-            return FailoverResponse(options['user_id'], 'allow', 'Castle set to do not track.').call()
+            return FailoverResponse(
+                options['user_id'],
+                'allow',
+                'Castle set to do not track.'
+            ).call()
 
     def track(self, options):
         if not self.tracked():
@@ -53,7 +57,8 @@ class Client(object):
         default_context = ContextDefault(request, self.options.get('cookies', dict())).call()
         return ContextMerger(default_context).call(self.options.get('context', dict()))
 
-    def failover(self, options, exception):
+    @staticmethod
+    def failover(options, exception):
         if configuration.failover_strategy != 'throw':
             return FailoverResponse(options['user_id'], None, exception.__class__.__name__).call()
         raise exception

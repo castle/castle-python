@@ -1,5 +1,3 @@
-import json
-
 from castle.version import VERSION
 
 from castle.extractors.client_id import ExtractorsClientId
@@ -12,7 +10,7 @@ class ContextDefault(object):
     def __init__(self, request, cookies):
         self.client_id = ExtractorsClientId(request.environ, cookies).call()
         self.headers = ExtractorsHeaders(request.environ).call()
-        self.ip = ExtractorsIp(request).call()
+        self.request_ip = ExtractorsIp(request).call()
 
     def defaults(self):
         return {
@@ -20,8 +18,8 @@ class ContextDefault(object):
             'active': True,
             'origin': 'web',
             'headers': self.headers,
-            'ip': self.ip,
-            'library': { 'name': 'castle-python', 'version': __version__ }
+            'ip': self.request_ip,
+            'library': {'name': 'castle-python', 'version': __version__}
         }
 
     def defaults_extra(self):

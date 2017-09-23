@@ -18,16 +18,20 @@ class ApiTestCase(unittest.TestCase):
 
     @responses.activate
     def test_request(self):
-        responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text(), status=200)
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/authenticate',
+            json=response_text(),
+            status=200
+        )
         self.assertIsInstance(Api().request(command()), Response)
 
     @responses.activate
-    def test_response(self):
-        responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text(), status=200)
-        api = Api()
-        self.assertEqual(api.response(api.request(command())), response_text())
-
-    @responses.activate
     def test_call(self):
-        responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text(), status=200)
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/authenticate',
+            json=response_text(),
+            status=200
+        )
         self.assertEqual(Api().call(command()), response_text())

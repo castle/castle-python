@@ -1,7 +1,7 @@
 import responses
 from requests import Response
 
-from castle.test import unittest, mock
+from castle.test import unittest
 from castle.request import Request
 from castle.configuration import configuration
 
@@ -20,7 +20,12 @@ class RequestTestCase(unittest.TestCase):
         configuration.api_secret = 'api_secret'
         # JSON requires double quotes for its strings
         response_text = {"action": "allow", "user_id": "12345"}
-        responses.add(responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text, status=200)
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/authenticate',
+            json=response_text,
+            status=200
+        )
         res = Request().build_query('post', 'authenticate', data)
         self.assertIsInstance(res, Response)
         self.assertIsInstance(res.text, str)
@@ -29,10 +34,16 @@ class RequestTestCase(unittest.TestCase):
         configuration.api_secret = None
 
     def test_build_url(self):
-        self.assertEqual(Request().build_url('authenticate'), 'https://api.castle.io/v1/authenticate')
+        self.assertEqual(
+            Request().build_url('authenticate'),
+            'https://api.castle.io/v1/authenticate'
+        )
 
     def test_build_url_remove_slash(self):
-        self.assertEqual(Request().build_url('/authenticate'), 'https://api.castle.io/v1/authenticate')
+        self.assertEqual(
+            Request().build_url('/authenticate'),
+            'https://api.castle.io/v1/authenticate'
+        )
 
     def test_verify_true(self):
         self.assertEqual(Request().verify(), True)

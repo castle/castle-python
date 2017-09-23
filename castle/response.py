@@ -1,4 +1,5 @@
-from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, UserUnauthorizedError, InvalidParametersError, ApiError, InternalServerError
+from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
+    UserUnauthorizedError, InvalidParametersError, ApiError, InternalServerError
 
 RESPONSE_ERRORS = {
     400: BadRequestError,

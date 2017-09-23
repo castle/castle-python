@@ -1,13 +1,12 @@
 import json
 import requests
-import pdb
 from castle.configuration import configuration
 
 
 class Request(object):
     def __init__(self, headers=None):
         self.headers = headers or dict()
-        self.base_url = self.build_base_url()
+        self.base_url = Request.build_base_url()
 
     def build_query(self, method, endpoint, params):
         return requests.request(
@@ -16,14 +15,15 @@ class Request(object):
             auth=('', configuration.api_secret),
             # timeout=configuration.request_timeout,
             headers=self.headers,
-            verify=self.verify(),
+            verify=Request.verify(),
             data=json.dumps(params)
         )
 
     def build_url(self, endpoint):
         return '{base}/{action}'.format(base=self.base_url, action=endpoint.split('/')[-1])
 
-    def build_base_url(self):
+    @staticmethod
+    def build_base_url():
         template = 'http://{host}:{port}/{prefix}'
 
         if configuration.port == 443:
@@ -35,5 +35,6 @@ class Request(object):
             prefix=configuration.url_prefix.strip('/')
         )
 
-    def verify(self):
+    @staticmethod
+    def verify():
         return True if configuration.port == 443 else False

@@ -28,7 +28,6 @@ class RequestTestCase(unittest.TestCase):
         )
         res = Request().build_query('post', 'authenticate', data)
         self.assertIsInstance(res, Response)
-        self.assertIsInstance(res.text, str)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json(), response_text)
         configuration.api_secret = None

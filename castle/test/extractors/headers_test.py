@@ -11,7 +11,7 @@ def environ():
         'HTTP_X_FORWARDED_FOR': '1.2.3.4',
         'HTTP_OK': 'OK',
         'TEST': '1',
-        'HTTP_COOKIE': f"__cid={client_id()};other=efgh"
+        'HTTP_COOKIE': "__cid={client_id};other=efgh".format(client_id=client_id)
     }
 
 class ExtractorsHeadersTestCase(unittest.TestCase):

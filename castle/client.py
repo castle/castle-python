@@ -16,11 +16,6 @@ class Client(object):
         self.context = self.setup_context(request)
         self.api = Api()
 
-    def identify(self, options):
-        if not self.tracked():
-            return
-        return self.api.call(CommandsIdentify(self.context).build(options))
-
     def authenticate(self, options):
         if self.tracked():
             try:
@@ -35,6 +30,11 @@ class Client(object):
                 'allow',
                 'Castle set to do not track.'
             ).call()
+
+    def identify(self, options):
+        if not self.tracked():
+            return
+        return self.api.call(CommandsIdentify(self.context).build(options))
 
     def track(self, options):
         if not self.tracked():

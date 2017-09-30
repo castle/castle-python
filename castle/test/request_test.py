@@ -38,12 +38,6 @@ class RequestTestCase(unittest.TestCase):
             'https://api.castle.io/v1/authenticate'
         )
 
-    def test_build_url_remove_slash(self):
-        self.assertEqual(
-            Request().build_url('/authenticate'),
-            'https://api.castle.io/v1/authenticate'
-        )
-
     def test_verify_true(self):
         self.assertEqual(Request().verify(), True)
 

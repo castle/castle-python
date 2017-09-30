@@ -16,11 +16,11 @@ class Request(object):
             # timeout=configuration.request_timeout,
             headers=self.headers,
             verify=Request.verify(),
-            data=json.dumps(params)
+            data=None if params is None else json.dumps(params)
         )
 
     def build_url(self, endpoint):
-        return '{base}/{action}'.format(base=self.base_url, action=endpoint.split('/')[-1])
+        return '{base}/{action}'.format(base=self.base_url, action=endpoint)
 
     @staticmethod
     def build_base_url():

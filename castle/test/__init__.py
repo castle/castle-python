@@ -28,6 +28,7 @@ TEST_MODULES = [
     'castle.test.commands.authenticate_test',
     'castle.test.commands.identify_test',
     'castle.test.commands.track_test',
+    'castle.test.commands.review_test',
     'castle.test.extractors.client_id_test',
     'castle.test.extractors.headers_test',
     'castle.test.extractors.ip_test',
@@ -36,7 +37,8 @@ TEST_MODULES = [
     'castle.test.request_test',
     'castle.test.response_test',
     'castle.test.secure_mode_test',
-    'castle.test.utils_test'
+    'castle.test.utils_test',
+    'castle.test.review_test'
 ]
 
 def all():

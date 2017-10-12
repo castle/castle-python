@@ -21,6 +21,14 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         self.assertEqual(command.endpoint, 'identify')
         self.assertEqual(command.data, payload)
 
+    def test_build_no_user_id(self):
+        with self.assertRaises(InvalidParametersError):
+            CommandsIdentify({}).build({})
+
+    def test_build_properties(self):
+        with self.assertRaises(InvalidParametersError):
+            CommandsIdentify({}).build({'properties': '1234'})
+
     def test_build_traits(self):
         payload = default_payload()
         payload.update(traits={'test': '1'})
@@ -60,10 +68,6 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         self.assertEqual(command.method, 'post')
         self.assertEqual(command.endpoint, 'identify')
         self.assertEqual(command.data, command_data)
-
-    def test_validate_no_user_id(self):
-        with self.assertRaises(InvalidParametersError):
-            CommandsIdentify({}).validate({})
 
     def test_build_context(self):
         context = {'test': '1'}

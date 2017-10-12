@@ -8,16 +8,14 @@ class CommandsTrack(object):
         self.context_merger = ContextMerger(context)
 
     def build(self, options):
-        event = options.get('event')
-        if event is None or event == '':
-            raise InvalidParametersError
+        self.validate(options)
 
         if 'active' in options.get('context', dict()):
             if not isinstance(options.get('context').get('active'), bool):
                 del options['context']['active']
 
         args = {
-            'event': event,
+            'event': options['event'],
             'context': self.build_context(options.get('context', dict()))
         }
 
@@ -31,6 +29,11 @@ class CommandsTrack(object):
             args['traits'] = options['traits']
 
         return Command(method='post', endpoint='track', data=args)
+
+    def validate(self, options):
+        for key in ['event']:
+            if options.get(key) is None or options.get(key) == '':
+                raise InvalidParametersError("{key} is missing or empty".format(key=key))
 
     def build_context(self, context):
         return self.context_merger.call(context or {})

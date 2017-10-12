@@ -12,10 +12,6 @@ class CommandsTrackTestCase(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(CommandsTrack({}).context_merger, ContextMerger)
 
-    def test_build_no_event(self):
-        with self.assertRaises(InvalidParametersError):
-            CommandsTrack({}).build({'user_id': '1234'})
-
     def test_build(self):
         payload = default_payload()
         payload.update(context={'test': '1'})
@@ -86,6 +82,10 @@ class CommandsTrackTestCase(unittest.TestCase):
         self.assertEqual(command.method, 'post')
         self.assertEqual(command.endpoint, 'track')
         self.assertEqual(command.data, command_data)
+
+    def test_validate_no_event(self):
+        with self.assertRaises(InvalidParametersError):
+            CommandsTrack({}).validate({'user_id': '1234'})
 
     def test_build_context(self):
         context = {'test': '1'}

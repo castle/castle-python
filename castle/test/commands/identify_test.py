@@ -12,10 +12,6 @@ class CommandsIdentifyTestCase(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(CommandsIdentify({}).context_merger, ContextMerger)
 
-    def test_build_no_user_id(self):
-        with self.assertRaises(InvalidParametersError):
-            CommandsIdentify({}).build({})
-
     def test_build(self):
         payload = default_payload()
         payload.update(context={'test': '1'})
@@ -65,6 +61,9 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         self.assertEqual(command.endpoint, 'identify')
         self.assertEqual(command.data, command_data)
 
+    def test_validate_no_user_id(self):
+        with self.assertRaises(InvalidParametersError):
+            CommandsIdentify({}).validate({})
 
     def test_build_context(self):
         context = {'test': '1'}

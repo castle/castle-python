@@ -12,18 +12,6 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(CommandsAuthenticate({}).context_merger, ContextMerger)
 
-    def test_build_no_event(self):
-        payload = {'user_id': '1234'}
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsAuthenticate({}).build(payload)
-
-    def test_build_no_user_id(self):
-        payload = {'event': '$login.authenticate'}
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsAuthenticate({}).build(payload)
-
     def test_build(self):
         payload = default_payload()
         payload.update(context={'test': '1'})
@@ -83,6 +71,18 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         self.assertEqual(command.method, 'post')
         self.assertEqual(command.endpoint, 'authenticate')
         self.assertEqual(command.data, command_data)
+
+    def test_validate_no_event(self):
+        payload = {'user_id': '1234'}
+
+        with self.assertRaises(InvalidParametersError):
+            CommandsAuthenticate({}).validate(payload)
+
+    def test_validate_no_user_id(self):
+        payload = {'event': '$login.authenticate'}
+
+        with self.assertRaises(InvalidParametersError):
+            CommandsAuthenticate({}).validate(payload)
 
     def test_build_context(self):
         context = {'test': '1'}

@@ -5,6 +5,7 @@ from castle.test import unittest
 from castle.client import Client
 from castle.configuration import configuration
 from castle.api import Api
+from castle.version import VERSION
 
 
 def request():
@@ -21,7 +22,7 @@ class ClientTestCase(unittest.TestCase):
             'client_id': '1234',
             'headers': {'X-Forwarded-For': '217.144.192.112'},
             'ip': '217.144.192.112',
-            'library': {'name': 'castle-python', 'version': '0.1.0'},
+            'library': {'name': 'castle-python', 'version': VERSION},
             'origin': 'web'
         }
         client = Client(request(), {})
@@ -145,7 +146,7 @@ class ClientTestCase(unittest.TestCase):
             'client_id': '1234',
             'headers': {'X-Forwarded-For': '217.144.192.112'},
             'ip': '217.144.192.112',
-            'library': {'name': 'castle-python', 'version': '0.1.0'},
+            'library': {'name': 'castle-python', 'version': VERSION},
             'origin': 'web'
         }
         client = Client(request(), {})

@@ -13,6 +13,7 @@ class Client(object):
     def __init__(self, request, options):
         self.options = options or dict()
         self.do_not_track = self.default_tracking()
+        self.cookies = self.setup_cookies(request)
         self.context = self.setup_context(request)
         self.api = Api()
 
@@ -53,8 +54,14 @@ class Client(object):
     def default_tracking(self):
         return self.options['do_not_track'] if 'do_not_track' in self.options else False
 
+    def setup_cookies(self, request):
+        if hasattr(request, 'COOKIES') and request.COOKIES:
+            return request.COOKIES
+
+        return self.options.get('cookies', dict())
+
     def setup_context(self, request):
-        default_context = ContextDefault(request, self.options.get('cookies', dict())).call()
+        default_context = ContextDefault(request, self.cookies).call()
         return ContextMerger(default_context).call(self.options.get('context', dict()))
 
     @staticmethod

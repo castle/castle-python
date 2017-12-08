@@ -9,9 +9,10 @@ from castle.version import VERSION
 
 
 def request():
-    req = namedtuple('Request', ['ip', 'environ'])
+    req = namedtuple('Request', ['ip', 'environ', 'COOKIES'])
     req.ip = '217.144.192.112'
     req.environ = {'HTTP_X_FORWARDED_FOR': '217.144.192.112', 'HTTP_X_CASTLE_CLIENT_ID': '1234'}
+    req.COOKIES = {}
     return req
 
 
@@ -139,6 +140,19 @@ class ClientTestCase(unittest.TestCase):
     def test_default_tracking_false(self):
         client = Client(request(), {})
         self.assertEqual(client.default_tracking(), False)
+
+    def test_setup_cookies_request(self):
+        cookies = {'__cid': '1234'}
+        req = request()
+        req.COOKIES = cookies
+        client = Client(req, {})
+        self.assertEqual(client.setup_cookies(req), cookies)
+
+    def test_setup_cookies_options(self):
+        cookies = {'__cid': '1234'}
+        options = {'cookies': cookies}
+        client = Client(request(), options)
+        self.assertEqual(client.setup_cookies(request()), cookies)
 
     def test_setup_context(self):
         context = {

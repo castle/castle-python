@@ -13,7 +13,7 @@ def deep_merge(base, extra):
     :param extra: The dictionary to merge into the base. Keys from this
         dictionary will take precedence.
     """
-    for key in extra:
+    for key in extra.iterkeys():
         # If the key represents a dict on both given dicts, merge the sub-dicts
         if key in base and isinstance(base[key], dict)\
                 and isinstance(extra[key], dict):

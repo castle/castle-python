@@ -9,6 +9,7 @@ class UtilsTestCase(unittest.TestCase):
         self.assertEqual(params, new_params)
         self.assertIsNot(new_params, params)
 
+
 class DeepMergeTestCase(unittest.TestCase):
     def test_simple_merge(self):
         a = {'key': 'value'}

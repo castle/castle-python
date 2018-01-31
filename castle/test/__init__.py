@@ -1,4 +1,3 @@
-import pkgutil
 import logging
 import sys
 
@@ -17,6 +16,7 @@ if sys.version_info[0] == 2:
     import mock
 else:
     from unittest import mock
+
 
 TEST_MODULES = [
     'castle.test.api_test',
@@ -40,6 +40,7 @@ TEST_MODULES = [
     'castle.test.utils_test',
     'castle.test.review_test'
 ]
+
 
 def all():
     logging.basicConfig(stream=sys.stderr)

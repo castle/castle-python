@@ -8,6 +8,7 @@ from castle.exceptions import InvalidParametersError
 def default_payload():
     return {'event': '$login.authenticate'}
 
+
 class CommandsTrackTestCase(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(CommandsTrack({}).context_merger, ContextMerger)

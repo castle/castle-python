@@ -1,10 +1,14 @@
 import copy
 
+
 def clone(dict_object):
     return copy.deepcopy(dict_object)
 
+
 def deep_merge(base, extra):
-    """Deeply two dictionaries, overriding existing keys in the base.
+    """
+    Deeply merge two dictionaries, overriding existing keys in the base.
+
     :param base: The base dictionary which will be merged into.
     :param extra: The dictionary to merge into the base. Keys from this
         dictionary will take precedence.

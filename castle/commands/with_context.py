@@ -7,6 +7,7 @@ def validate(options, *args):
         if options.get(key) is None or options.get(key) == '':
             raise InvalidParametersError("{key} is missing or empty".format(key=key))
 
+
 def sanitize_active_mode(options):
     if 'active' in options.get('context', dict()):
         if not isinstance(options.get('context').get('active'), bool):

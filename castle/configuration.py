@@ -1,6 +1,7 @@
 from castle.exceptions import FailoverStrategyValueError
 from castle.headers_formatter import HeadersFormatter
 
+
 WHITELISTED = [
     'User-Agent',
     'Accept-Language',
@@ -105,5 +106,6 @@ class Configuration(object):
             self.__failover_strategy = value
         else:
             raise FailoverStrategyValueError
+
 
 configuration = Configuration()

@@ -2,8 +2,10 @@ from castle.test import unittest
 from castle.configuration import configuration
 from castle.failover_response import FailoverResponse
 
+
 def user_id():
     return '1234'
+
 
 def strategy():
     return 'deny'

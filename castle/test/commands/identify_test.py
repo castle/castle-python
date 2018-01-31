@@ -8,6 +8,7 @@ from castle.exceptions import InvalidParametersError
 def default_payload():
     return {'user_id': '1234'}
 
+
 class CommandsIdentifyTestCase(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(CommandsIdentify({}).context_merger, ContextMerger)

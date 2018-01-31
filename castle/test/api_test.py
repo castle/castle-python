@@ -6,11 +6,14 @@ from castle.api import Api
 from castle.command import Command
 from castle.request import Request
 
+
 def command():
     return Command(method='post', endpoint='authenticate', data={})
 
+
 def response_text():
     return 'authenticate'
+
 
 class ApiTestCase(unittest.TestCase):
     def test_init(self):

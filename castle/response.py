@@ -1,6 +1,7 @@
 from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
     UserUnauthorizedError, InvalidParametersError, ApiError, InternalServerError
 
+
 RESPONSE_ERRORS = {
     400: BadRequestError,
     401: UnauthorizedError,
@@ -9,6 +10,7 @@ RESPONSE_ERRORS = {
     419: UserUnauthorizedError,
     422: InvalidParametersError
 }
+
 
 class Response(object):
     def __init__(self, response):

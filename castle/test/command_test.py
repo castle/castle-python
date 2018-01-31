@@ -1,6 +1,7 @@
 from castle.test import unittest
 from castle.command import Command
 
+
 def command():
     return Command(
         method='post',

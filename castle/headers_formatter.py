@@ -1,5 +1,6 @@
 import re
 
+
 class HeadersFormatter(object):
     @staticmethod
     def call(header):

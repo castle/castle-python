@@ -7,17 +7,21 @@ from castle.context.default import ContextDefault
 def client_id():
     return 'abcd'
 
+
 def cookies():
     return {'__cid': client_id()}
 
+
 def request_ip():
     return '127.0.0.1'
+
 
 def environ():
     return {
         'HTTP_X_FORWARDED_FOR': request_ip(),
         'HTTP_COOKIE': "__cid={client_id()};other=efgh"
     }
+
 
 def environ_with_extras():
     extra = {
@@ -28,11 +32,13 @@ def environ_with_extras():
     context.update(extra)
     return context
 
+
 def request(env):
     req = mock.Mock()
     req.ip = request_ip()
     req.environ = env
     return req
+
 
 class ContextDefaultTestCase(unittest.TestCase):
     def test_default_context(self):

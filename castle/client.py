@@ -7,19 +7,51 @@ from castle.commands.identify import CommandsIdentify
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError
 from castle.failover_response import FailoverResponse
+from castle.utils import timestamp
 
 
 class Client(object):
-    def __init__(self, request, options):
-        self.options = options or dict()
-        self.do_not_track = self.default_tracking()
-        self.cookies = self.setup_cookies(request)
-        self.context = self.setup_context(request)
+
+    @classmethod
+    def from_request(cls, request, options={}):
+        return cls(
+            cls.build_client_context(request, options),
+            cls.build_client_options(options)
+        )
+
+    @classmethod
+    def build_client_context(cls, request, options={}):
+        default_context = ContextDefault(request, cls.build_client_cookies(request, options)).call()
+        return ContextMerger(default_context).call(options.get('context', {}))
+
+    @classmethod
+    def build_client_options(cls, options={}):
+        options['timestamp'] = timestamp()
+        return options
+
+    @classmethod
+    def build_client_cookies(cls, request, options={}):
+        # if the request has use them
+        if hasattr(request, 'COOKIES') and request.COOKIES:
+            return request.COOKIES
+
+        # else, they may have been passed in as options
+        return options.get('cookies', {})
+
+    def __init__(self, context, options={}):
+        self.do_not_track = options.get('do_not_track', False)
+        self.timestamp = options.get('timestamp')
+        self.context = context
         self.api = Api()
+
+    def _set_timestamp_if_necessary(self, options):
+        if self.timestamp:
+            options.setdefault(self.timestamp)
 
     def authenticate(self, options):
         if self.tracked():
             try:
+                self._set_timestamp_if_necessary(options)
                 response = self.api.call(CommandsAuthenticate(self.context).build(options))
                 response.update(failover=False, failover_reason=None)
                 return response
@@ -35,11 +67,13 @@ class Client(object):
     def identify(self, options):
         if not self.tracked():
             return
+        self._set_timestamp_if_necessary(options)
         return self.api.call(CommandsIdentify(self.context).build(options))
 
     def track(self, options):
         if not self.tracked():
             return
+        self._set_timestamp_if_necessary(options)
         return self.api.call(CommandsTrack(self.context).build(options))
 
     def disable_tracking(self):
@@ -50,19 +84,6 @@ class Client(object):
 
     def tracked(self):
         return not self.do_not_track
-
-    def default_tracking(self):
-        return self.options['do_not_track'] if 'do_not_track' in self.options else False
-
-    def setup_cookies(self, request):
-        if hasattr(request, 'COOKIES') and request.COOKIES:
-            return request.COOKIES
-
-        return self.options.get('cookies', dict())
-
-    def setup_context(self, request):
-        default_context = ContextDefault(request, self.cookies).call()
-        return ContextMerger(default_context).call(self.options.get('context', dict()))
 
     @staticmethod
     def failover(options, exception):

@@ -1,92 +1,75 @@
-from castle.test import unittest
+from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.track import CommandsTrack
 from castle.context.merger import ContextMerger
 from castle.exceptions import InvalidParametersError
+from castle.utils import clone
 
 
-def default_payload():
+def default_options():
+    """Default options include all required fields."""
     return {'event': '$login.authenticate'}
 
+
+def default_options_plus(**extra):
+    """Default options plus the given extra fields."""
+    options = default_options()
+    options.update(extra)
+    return options
+
+
+def default_command_with_data(**data):
+    """What we expect the authenticate command to look like."""
+    return Command(
+        method='post',
+        endpoint='track',
+        data=dict(sent_at=mock.sentinel.timestamp, **data)
+    )
+
+
 class CommandsTrackTestCase(unittest.TestCase):
+    def setUp(self):
+        # patch timestamp to return a known value
+        timestamp_patcher = mock.patch('castle.commands.track.timestamp')
+        self.mock_timestamp = timestamp_patcher.start()
+        self.mock_timestamp.return_value = mock.sentinel.timestamp
+        self.addCleanup(timestamp_patcher.stop)
+
     def test_init(self):
-        self.assertIsInstance(CommandsTrack({}).context_merger, ContextMerger)
+        obj = CommandsTrack({})
+        self.assertIsInstance(obj.context_merger, ContextMerger)
 
     def test_build(self):
-        payload = default_payload()
-        payload.update(context={'test': '1'})
-        command = CommandsTrack({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, payload)
+        context = {'lang': 'es'}
+        options = default_options_plus(context={'local time': '8:53pm'})
+
+        # expect the original context to have been merged with the context specified in the options
+        expected_data = clone(options)
+        expected_data.update(context={'lang': 'es', 'local time': '8:53pm'})
+        expected = default_command_with_data(**expected_data)
+
+        self.assertEqual(CommandsTrack(context).build(options), expected)
 
     def test_build_no_event(self):
+        context = {}
+        options = default_options()
+        options.pop('event')
+
         with self.assertRaises(InvalidParametersError):
-            CommandsTrack({}).build({'user_id': '1234'})
+            CommandsTrack(context).build(options)
 
-    def test_build_user_id(self):
-        payload = default_payload()
-        payload.update(user_id='1234')
-        command_data = default_payload()
-        command_data.update(user_id='1234', context={})
-        command = CommandsTrack({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, command_data)
+    def test_build_properties_allowed(self):
+        context = {}
+        options = default_options_plus(properties={'face': 'handsome'})
 
-    def test_build_properties(self):
-        payload = default_payload()
-        payload.update(properties={'test': '1'})
-        command_data = default_payload()
-        command_data.update(properties={'test': '1'}, context={})
-        command = CommandsTrack({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, command_data)
+        expected = default_command_with_data(context=context, **options)
 
-    def test_build_traits(self):
-        payload = default_payload()
-        payload.update(traits={'test': '1'})
-        command_data = default_payload()
-        command_data.update(traits={'test': '1'}, context={})
-        command = CommandsTrack({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, command_data)
+        self.assertEqual(CommandsTrack(context).build(options), expected)
 
-    def test_build_active_true(self):
-        payload = default_payload()
-        payload.update(context={'active': True})
-        command = CommandsTrack({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, payload)
+    def test_build_traits_allowed(self):
+        context = {}
+        options = default_options_plus(traits={'email': 'track@all.the.things.com'})
 
-    def test_build_active_false(self):
-        payload = default_payload()
-        payload.update(context={'active': False})
-        command = CommandsTrack({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, payload)
+        expected = default_command_with_data(context=context, **options)
 
-    def test_build_active_string(self):
-        payload = default_payload()
-        payload.update(context={'active': 'string'})
-        command_data = default_payload()
-        command_data.update(context={})
-        command = CommandsTrack({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'track')
-        self.assertEqual(command.data, command_data)
-
-    def test_build_context(self):
-        context = {'test': '1'}
-        self.assertEqual(CommandsTrack({}).build_context(context), context)
+        self.assertEqual(CommandsTrack(context).build(options), expected)

@@ -4,7 +4,9 @@ from castle.extractors.client_id import ExtractorsClientId
 from castle.extractors.headers import ExtractorsHeaders
 from castle.extractors.ip import ExtractorsIp
 
+
 __version__ = VERSION
+
 
 class ContextDefault(object):
     def __init__(self, request, cookies):

@@ -6,6 +6,7 @@ from castle.response import Response
 from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
     UserUnauthorizedError, InvalidParametersError, InternalServerError
 
+
 def response(status_code=200, body=None):
     resp = requests.Response()
     resp.raw = io.BytesIO(body)
@@ -23,7 +24,7 @@ class ResponseTestCase(unittest.TestCase):
     def test_response_authenticate(self):
         self.assertEqual(
             Response(response(body=b'{"action":"allow","user_id":"12345"}')).call(),
-            {"action":"allow", "user_id":"12345"}
+            {"action": "allow", "user_id": "12345"}
         )
 
     def test_verify_200_299(self):

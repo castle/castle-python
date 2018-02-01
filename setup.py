@@ -27,7 +27,15 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    install_requires=['requests>=2.5'],
-    tests_require=['responses'],
+    install_requires=[
+        'pytz',  # pytz is generally backwards compatible
+        'requests>=2.5',
+    ],
+    extras_require={
+        'test': ['responses'],
+    },
+    # A better way to specify test requirements
+    # see https://github.com/pypa/pip/issues/1197#issuecomment-228939212
+    tests_require=['castle[test]'],
     test_suite='castle.test.all'
 )

@@ -7,6 +7,7 @@ from castle.exceptions import InvalidParametersError
 def review_id():
     return '1234'
 
+
 class CommandsReviewTestCase(unittest.TestCase):
     def test_build_no_review_id(self):
         with self.assertRaises(InvalidParametersError):

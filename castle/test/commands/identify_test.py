@@ -1,75 +1,74 @@
-from castle.test import unittest
+from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.identify import CommandsIdentify
 from castle.context.merger import ContextMerger
 from castle.exceptions import InvalidParametersError
+from castle.utils import clone
 
 
-def default_payload():
+def default_options():
+    """Default options include all required fields."""
     return {'user_id': '1234'}
 
 
+def default_options_plus(**extra):
+    """Default options plus the given extra fields."""
+    options = default_options()
+    options.update(extra)
+    return options
+
+
+def default_command_with_data(**data):
+    """What we expect the identify command to look like."""
+    return Command(
+        method='post',
+        endpoint='identify',
+        data=dict(sent_at=mock.sentinel.timestamp, **data)
+    )
+
+
 class CommandsIdentifyTestCase(unittest.TestCase):
+    def setUp(self):
+        # patch timestamp to return a known value
+        timestamp_patcher = mock.patch('castle.commands.identify.timestamp')
+        self.mock_timestamp = timestamp_patcher.start()
+        self.mock_timestamp.return_value = mock.sentinel.timestamp
+        self.addCleanup(timestamp_patcher.stop)
+
     def test_init(self):
-        self.assertIsInstance(CommandsIdentify({}).context_merger, ContextMerger)
+        obj = CommandsIdentify({}).context_merger
+        self.assertIsInstance(obj, ContextMerger)
 
     def test_build(self):
-        payload = default_payload()
-        payload.update(context={'test': '1'})
-        command = CommandsIdentify({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'identify')
-        self.assertEqual(command.data, payload)
+        context = {'test': '1'}
+        options = default_options_plus(context={'color': 'blue'})
+
+        # expect the original context to have been merged with the context specified in the options
+        expected_data = clone(options)
+        expected_data.update(context={'test': '1', 'color': 'blue'})
+        expected = default_command_with_data(**expected_data)
+
+        self.assertEqual(CommandsIdentify(context).build(options), expected)
 
     def test_build_no_user_id(self):
+        context = {}
+        options = default_options()
+        options.pop('user_id')
+
         with self.assertRaises(InvalidParametersError):
-            CommandsIdentify({}).build({})
+            CommandsIdentify(context).build(options)
 
-    def test_build_properties(self):
-        with self.assertRaises(InvalidParametersError):
-            CommandsIdentify({}).build({'properties': '1234'})
-
-    def test_build_traits(self):
-        payload = default_payload()
-        payload.update(traits={'test': '1'})
-        command_data = default_payload()
-        command_data.update(traits={'test': '1'}, context={})
-        command = CommandsIdentify({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'identify')
-        self.assertEqual(command.data, command_data)
-
-    def test_build_active_true(self):
-        payload = default_payload()
-        payload.update(context={'active': True})
-        command = CommandsIdentify({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'identify')
-        self.assertEqual(command.data, payload)
-
-    def test_build_active_false(self):
-        payload = default_payload()
-        payload.update(context={'active': False})
-        command = CommandsIdentify({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'identify')
-        self.assertEqual(command.data, payload)
-
-    def test_build_active_string(self):
-        payload = default_payload()
-        payload.update(context={'active': 'string'})
-        command_data = default_payload()
-        command_data.update(context={})
-        command = CommandsIdentify({}).build(payload)
-        self.assertIsInstance(command, Command)
-        self.assertEqual(command.method, 'post')
-        self.assertEqual(command.endpoint, 'identify')
-        self.assertEqual(command.data, command_data)
-
-    def test_build_context(self):
+    def test_build_properties_not_allowed(self):
         context = {'test': '1'}
-        self.assertEqual(CommandsIdentify({}).build_context(context), context)
+        options = default_options_plus(properties={'hair': 'blonde'})
+
+        with self.assertRaises(InvalidParametersError):
+            CommandsIdentify(context).build(options)
+
+    def test_build_traits_allowed(self):
+        context = {}
+        options = default_options_plus(traits={'email': 'identity@its.me.com'})
+
+        expected = default_command_with_data(context=context, **options)
+
+        self.assertEqual(CommandsIdentify(context).build(options), expected)

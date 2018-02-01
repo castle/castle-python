@@ -1,4 +1,7 @@
 import copy
+from datetime import datetime
+
+import pytz
 
 
 def clone(dict_object):
@@ -22,3 +25,8 @@ def deep_merge(base, extra):
 
         # Otherwise, set the key on the base to be the value of the extra.
         base[key] = extra[key]
+
+
+def timestamp():
+    """Return an ISO8601 timestamp representing the current datetime in UTC."""
+    return datetime.utcnow().replace(tzinfo=pytz.UTC).isoformat()

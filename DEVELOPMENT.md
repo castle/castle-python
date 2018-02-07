@@ -14,3 +14,13 @@ Test
 .. code-block:: console
 
     $ python3 setup.py test
+
+Linting
+------------
+
+.. code-block:: console
+
+    $ pip3 install pylint
+    $ pylint castle
+
+

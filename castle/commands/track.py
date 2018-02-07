@@ -10,7 +10,7 @@ class CommandsTrack(object):
 
     def build(self, options):
         ValidatorsPresent.call(options, 'event')
-        context = ContextMerger.call(self.context, options['context'])
+        context = ContextMerger.call(self.context, options.get('context'))
         context = ContextSanitizer.call(context)
         options.update({'sent_at': timestamp(), 'context': context})
 

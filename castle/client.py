@@ -33,7 +33,7 @@ class Client(object):
     def failover_response_or_raise(options, exception):
         if configuration.failover_strategy == 'throw':
             raise exception
-        return FailoverResponse(options['user_id'], None, exception.__class__.__name__).call()
+        return FailoverResponse(options.get('user_id'), None, exception.__class__.__name__).call()
 
     def __init__(self, context, options={}):
         self.do_not_track = options.get('do_not_track', False)
@@ -57,7 +57,7 @@ class Client(object):
                 return Client.failover_response_or_raise(options, exception)
         else:
             return FailoverResponse(
-                options['user_id'],
+                options.get('user_id'),
                 'allow',
                 'Castle set to do not track.'
             ).call()

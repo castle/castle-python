@@ -41,7 +41,7 @@ class ClientTestCase(unittest.TestCase):
             json=response_text,
             status=200
         )
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         options = {'event': '$login.authenticate', 'user_id': '1234'}
         self.assertEqual(client.identify(options), response_text)
 
@@ -124,21 +124,12 @@ class ClientTestCase(unittest.TestCase):
         client.enable_tracking()
         self.assertEqual(client.do_not_track, False)
 
-    def test_tracked_true(self):
+    def test_dont_tracked_false(self):
         client = Client.from_request(request(), {})
         self.assertEqual(client.tracked(), True)
 
-    def test_tracked_false(self):
-        client = Client.from_request(request(), {})
-        client.disable_tracking()
-        self.assertEqual(client.tracked(), False)
-
-    def test_default_tracking_true(self):
+    def test_dont_tracking_true(self):
         client = Client.from_request(request(), {'do_not_track': True})
-        self.assertEqual(client.tracked(), True)
-
-    def test_default_tracking_false(self):
-        client = Client.from_request(request(), {})
         self.assertEqual(client.tracked(), False)
 
     def test_setup_client_id_from_cookies(self):

@@ -12,15 +12,19 @@ def deep_merge(base, extra):
     :param extra: The dictionary to merge into the base. Keys from this
         dictionary will take precedence.
     """
+    if extra is None:
+        return
+
     for key, value in extra.items():
         # If the key represents a dict on both given dicts, merge the sub-dicts
         if value is None:
-            del base[key]
-        elif isinstance(base[key], dict) and isinstance(value, dict):
+            if key in base:
+                del base[key]
+        elif isinstance(base.get(key), dict) and isinstance(value, dict):
             deep_merge(base[key], value)
         else:
             # Otherwise, set the key on the base to be the value of the extra.
-            base[key] = extra[key]
+            base[key] = value
 
 def timestamp():
     """Return an ISO8601 timestamp representing the current datetime in UTC."""

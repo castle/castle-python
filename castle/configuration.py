@@ -1,7 +1,6 @@
 from castle.exceptions import FailoverStrategyValueError
 from castle.headers_formatter import HeadersFormatter
 
-
 WHITELISTED = [
     'User-Agent',
     'Accept-Language',
@@ -23,7 +22,6 @@ BLACKLISTED = ['HTTP_COOKIE']
 # 500 milliseconds
 REQUEST_TIMEOUT = 0.5
 FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
-
 
 class Configuration(object):
     def __init__(self):
@@ -110,4 +108,5 @@ class Configuration(object):
             raise FailoverStrategyValueError
 
 
+# pylint: disable=invalid-name
 configuration = Configuration()

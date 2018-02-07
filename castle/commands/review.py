@@ -1,10 +1,10 @@
 from castle.command import Command
-from castle.validators import ValidatorsPresent
-
+from castle.validators.present import ValidatorsPresent
 
 class CommandsReview(object):
 
-    def build(self, review_id):
+    @staticmethod
+    def build(review_id):
         ValidatorsPresent.call({'review_id': review_id}, 'review_id')
 
         return Command(

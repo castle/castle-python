@@ -1,11 +1,17 @@
 from castle.command import Command
-from castle.commands.with_context import validate, WithContext
 from castle.utils import timestamp
+from castle.context.merger import ContextMerger
+from castle.context.sanitizer import ContextSanitizer
+from castle.validators.present import ValidatorsPresent
 
+class CommandsTrack(object):
+    def __init__(self, context):
+        self.context = context
 
-class CommandsTrack(WithContext):
     def build(self, options):
-        validate(options, 'event')
-        options.setdefault('sent_at', timestamp())
+        ValidatorsPresent.call(options, 'event')
+        context = ContextMerger.call(self.context, options['context'])
+        context = ContextSanitizer.call(context)
+        options.update({'sent_at': timestamp(), 'context': context})
 
-        return Command(method='post', path='track', data=self.build_context(options))
+        return Command(method='post', path='track', data=options)

@@ -35,9 +35,10 @@ class ContextDefault(object):
         context.update(self._defaults_extra())
         return context
 
+    @staticmethod
     def _fetch_cookies(request, cookies):
         if cookies:
             return cookies
         elif hasattr(request, 'COOKIES') and request.COOKIES:
             return request.COOKIES
-
+        return None

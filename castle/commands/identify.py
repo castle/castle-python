@@ -1,7 +1,9 @@
 from castle.command import Command
-from castle.context import ContextMerger, ContextSanitizer
-from castle.validators import ValidatorsPresent, ValidatorsNotSupported
-
+from castle.utils import timestamp
+from castle.context.merger import ContextMerger
+from castle.context.sanitizer import ContextSanitizer
+from castle.validators.present import ValidatorsPresent
+from castle.validators.not_supported import ValidatorsNotSupported
 
 class CommandsIdentify(object):
     def __init__(self, context):
@@ -15,4 +17,3 @@ class CommandsIdentify(object):
         options.update({'sent_at': timestamp(), 'context': context})
 
         return Command(method='post', path='identify', data=options)
-

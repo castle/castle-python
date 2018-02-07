@@ -22,7 +22,7 @@ class Client(object):
     @staticmethod
     def to_context(request, options={}):
         default_context = ContextDefault(request, options.get('cookies')).call()
-        return ContextMerger(default_context).call(options.get('context', {}))
+        return ContextMerger.call(default_context, options.get('context', {}))
 
     @staticmethod
     def to_options(options={}):
@@ -31,9 +31,9 @@ class Client(object):
 
     @staticmethod
     def failover_response_or_raise(options, exception):
-        if configuration.failover_strategy != 'throw':
-            return FailoverResponse(options['user_id'], None, exception.__class__.__name__).call()
-        raise exception
+        if configuration.failover_strategy == 'throw':
+            raise exception
+        return FailoverResponse(options['user_id'], None, exception.__class__.__name__).call()
 
     def __init__(self, context, options={}):
         self.do_not_track = options.get('do_not_track', False)
@@ -64,13 +64,13 @@ class Client(object):
 
     def identify(self, options):
         if not self.tracked():
-            return
+            return None
         self._add_timestamp_if_necessary(options)
         return self.api.call(CommandsIdentify(self.context).build(options))
 
     def track(self, options):
         if not self.tracked():
-            return
+            return None
         self._add_timestamp_if_necessary(options)
         return self.api.call(CommandsTrack(self.context).build(options))
 
@@ -82,4 +82,3 @@ class Client(object):
 
     def tracked(self):
         return not self.do_not_track
-

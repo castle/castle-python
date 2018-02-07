@@ -1,7 +1,6 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.identify import CommandsIdentify
-from castle.context.merger import ContextMerger
 from castle.exceptions import InvalidParametersError
 from castle.utils import clone
 
@@ -36,8 +35,8 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         self.addCleanup(timestamp_patcher.stop)
 
     def test_init(self):
-        obj = CommandsIdentify({}).context_merger
-        self.assertIsInstance(obj, ContextMerger)
+        obj = CommandsIdentify({})
+        self.assertEqual(obj.context, {})
 
     def test_build(self):
         context = {'test': '1'}

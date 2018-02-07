@@ -1,7 +1,6 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.authenticate import CommandsAuthenticate
-from castle.context.merger import ContextMerger
 from castle.exceptions import InvalidParametersError
 from castle.utils import clone
 
@@ -38,7 +37,7 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
 
     def test_init(self):
         obj = CommandsAuthenticate({})
-        self.assertIsInstance(obj.context_merger, ContextMerger)
+        self.assertEqual(obj.context, {})
 
     def test_build(self):
         context = {'test': '1'}

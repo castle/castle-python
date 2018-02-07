@@ -27,8 +27,7 @@ class ClientTestCase(unittest.TestCase):
             'library': {'name': 'castle-python', 'version': VERSION},
             'origin': 'web'
         }
-        client = Client(request(), {})
-        self.assertEqual(client.options, {})
+        client = Client.from_request(request(), {})
         self.assertEqual(client.do_not_track, False)
         self.assertEqual(client.context, context)
         self.assertIsInstance(client.api, Api)
@@ -47,7 +46,7 @@ class ClientTestCase(unittest.TestCase):
         self.assertEqual(client.identify(options), response_text)
 
     def test_identify_tracked_false(self):
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         client.disable_tracking()
         self.assertEqual(client.identify({}), None)
 
@@ -60,7 +59,7 @@ class ClientTestCase(unittest.TestCase):
             json=response_text,
             status=200
         )
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         options = {'event': '$login.authenticate', 'user_id': '1234'}
         response_text.update(failover=False, failover_reason=None)
         self.assertEqual(client.authenticate(options), response_text)
@@ -79,7 +78,7 @@ class ClientTestCase(unittest.TestCase):
             json='authenticate',
             status=500
         )
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         options = {'event': '$login.authenticate', 'user_id': '1234'}
         self.assertEqual(client.authenticate(options), response_text)
 
@@ -90,7 +89,7 @@ class ClientTestCase(unittest.TestCase):
             'failover': True,
             'failover_reason': 'Castle set to do not track.'
         }
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         client.disable_tracking()
         options = {'event': '$login.authenticate', 'user_id': '1234'}
         self.assertEqual(client.authenticate(options), response_text)
@@ -104,56 +103,49 @@ class ClientTestCase(unittest.TestCase):
             json=response_text,
             status=200
         )
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         options = {'event': '$login.authenticate', 'user_id': '1234'}
         self.assertEqual(client.track(options), response_text)
 
     def test_track_tracked_false(self):
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         client.disable_tracking()
         self.assertEqual(client.track({}), None)
 
     def test_disable_tracking(self):
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         client.disable_tracking()
         self.assertEqual(client.do_not_track, True)
 
     def test_enable_tracking(self):
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         client.disable_tracking()
         self.assertEqual(client.do_not_track, True)
         client.enable_tracking()
         self.assertEqual(client.do_not_track, False)
 
     def test_tracked_true(self):
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         self.assertEqual(client.tracked(), True)
 
     def test_tracked_false(self):
-        client = Client(request(), {})
+        client = Client.from_request(request(), {})
         client.disable_tracking()
         self.assertEqual(client.tracked(), False)
 
     def test_default_tracking_true(self):
-        client = Client(request(), {'do_not_track': True})
-        self.assertEqual(client.default_tracking(), True)
+        client = Client.from_request(request(), {'do_not_track': True})
+        self.assertEqual(client.tracked(), True)
 
     def test_default_tracking_false(self):
-        client = Client(request(), {})
-        self.assertEqual(client.default_tracking(), False)
+        client = Client.from_request(request(), {})
+        self.assertEqual(client.tracked(), False)
 
-    def test_setup_cookies_request(self):
-        cookies = {'__cid': '1234'}
-        req = request()
-        req.COOKIES = cookies
-        client = Client(req, {})
-        self.assertEqual(client.setup_cookies(req), cookies)
-
-    def test_setup_cookies_options(self):
+    def test_setup_client_id_from_cookies(self):
         cookies = {'__cid': '1234'}
         options = {'cookies': cookies}
-        client = Client(request(), options)
-        self.assertEqual(client.setup_cookies(request()), cookies)
+        result_context = Client.to_context(request(), options)
+        self.assertEqual(result_context['client_id'], '1234')
 
     def test_setup_context(self):
         context = {
@@ -164,14 +156,13 @@ class ClientTestCase(unittest.TestCase):
             'library': {'name': 'castle-python', 'version': VERSION},
             'origin': 'web'
         }
-        client = Client(request(), {})
-        self.assertEqual(client.setup_context(request()), context)
+        result_context = Client.to_context(request(), {})
+        self.assertEqual(result_context, context)
 
     def test_failover_strategy_not_throw(self):
         options = {'user_id': '1234'}
-        client = Client(request(), options)
         self.assertEqual(
-            client.failover(options, Exception()),
+            Client.failover_response_or_raise(options, Exception()),
             {
                 'action': 'allow',
                 'user_id': '1234',
@@ -182,8 +173,7 @@ class ClientTestCase(unittest.TestCase):
 
     def test_failover_strategy_throw(self):
         options = {'user_id': '1234'}
-        client = Client(request(), options)
         configuration.failover_strategy = 'throw'
         with self.assertRaises(Exception):
-            client.failover(options, Exception())
+            Client.failover_response_or_raise(options, Exception())
         configuration.failover_strategy = 'allow'

@@ -31,7 +31,7 @@ setup(
         'requests>=2.5',
     ],
     extras_require={
-        'test': ['responses'],
+        'test': ['responses']
     },
     # A better way to specify test requirements
     # see https://github.com/pypa/pip/issues/1197#issuecomment-228939212

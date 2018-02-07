@@ -1,5 +1,5 @@
-import responses
 from requests import Response
+import responses
 
 from castle.test import unittest
 from castle.api import Api

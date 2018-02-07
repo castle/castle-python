@@ -21,6 +21,7 @@ Linting
 .. code-block:: console
 
     $ pip3 install pylint
-    $ pylint castle
+    $ pip3 install setuptools-lint
+    $ python3 setup.py lint
 
 

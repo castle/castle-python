@@ -6,6 +6,7 @@ import sys
 # in 2.7, so if we're in 2.6 we can use the backported
 # version unittest2.
 if sys.version_info[:2] == (2, 6):
+    # pylint: disable=import-error
     import unittest2 as unittest
 else:
     import unittest
@@ -13,6 +14,7 @@ else:
 
 # Python 3 includes mocking, while 2 requires an extra module.
 if sys.version_info[0] == 2:
+    # pylint: disable=import-error
     import mock
 else:
     from unittest import mock
@@ -41,7 +43,7 @@ TEST_MODULES = [
     'castle.test.review_test'
 ]
 
-
+# pylint: disable=redefined-builtin
 def all():
     logging.basicConfig(stream=sys.stderr)
     return unittest.defaultTestLoader.loadTestsFromNames(TEST_MODULES)

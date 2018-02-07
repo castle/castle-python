@@ -1,7 +1,6 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.track import CommandsTrack
-from castle.context.merger import ContextMerger
 from castle.exceptions import InvalidParametersError
 from castle.utils import clone
 
@@ -37,7 +36,7 @@ class CommandsTrackTestCase(unittest.TestCase):
 
     def test_init(self):
         obj = CommandsTrack({})
-        self.assertIsInstance(obj.context_merger, ContextMerger)
+        self.assertEqual(obj.context, {})
 
     def test_build(self):
         context = {'lang': 'es'}

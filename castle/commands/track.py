@@ -8,4 +8,4 @@ class CommandsTrack(WithContext):
         validate(options, 'event')
         options.setdefault('sent_at', timestamp())
 
-        return Command(method='post', endpoint='track', data=self.build_context(options))
+        return Command(method='post', path='track', data=self.build_context(options))

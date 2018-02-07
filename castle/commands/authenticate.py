@@ -1,11 +1,19 @@
 from castle.command import Command
-from castle.commands.with_context import validate, WithContext
-from castle.utils import timestamp
+from castle.context import ContextMerger, ContextSanitizer
+from castle.validators import ValidatorsPresent
 
 
-class CommandsAuthenticate(WithContext):
+class CommandsAuthenticate(object):
+    def __init__(self, context):
+        self.context = context
+
     def build(self, options):
-        validate(options, 'event', 'user_id')
-        options.setdefault('sent_at', timestamp())
+        ValidatorsPresent.call(options, 'event', 'user_id')
+        context = ContextMerger.call(self.context, options['context'])
+        context = ContextSanitizer.call(context)
+        options.update({'sent_at': timestamp(), 'context': context})
 
-        return Command(method='post', endpoint='authenticate', data=self.build_context(options))
+        return Command(method='post', path='authenticate', data=options)
+
+
+

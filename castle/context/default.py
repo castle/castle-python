@@ -1,20 +1,18 @@
 from castle.version import VERSION
-
 from castle.extractors.client_id import ExtractorsClientId
 from castle.extractors.headers import ExtractorsHeaders
 from castle.extractors.ip import ExtractorsIp
 
-
 __version__ = VERSION
-
 
 class ContextDefault(object):
     def __init__(self, request, cookies):
-        self.client_id = ExtractorsClientId(request.environ, cookies).call()
+        used_cookies = self._fetch_cookies(request, cookies)
+        self.client_id = ExtractorsClientId(request.environ, used_cookies).call()
         self.headers = ExtractorsHeaders(request.environ).call()
         self.request_ip = ExtractorsIp(request).call()
 
-    def defaults(self):
+    def _defaults(self):
         return {
             'client_id': self.client_id,
             'active': True,
@@ -24,7 +22,7 @@ class ContextDefault(object):
             'library': {'name': 'castle-python', 'version': __version__}
         }
 
-    def defaults_extra(self):
+    def _defaults_extra(self):
         context = dict()
         if 'Accept-Language' in self.headers:
             context['locale'] = self.headers['Accept-Language']
@@ -33,6 +31,13 @@ class ContextDefault(object):
         return context
 
     def call(self):
-        context = dict(self.defaults())
-        context.update(self.defaults_extra())
+        context = dict(self._defaults())
+        context.update(self._defaults_extra())
         return context
+
+    def _fetch_cookies(request, cookies):
+        if cookies:
+            return cookies
+        elif hasattr(request, 'COOKIES') and request.COOKIES:
+            return request.COOKIES
+

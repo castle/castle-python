@@ -22,7 +22,7 @@ def default_command_with_data(**data):
     """What we expect the authenticate command to look like."""
     return Command(
         method='post',
-        endpoint='authenticate',
+        path='authenticate',
         data=dict(sent_at=mock.sentinel.timestamp, **data)
     )
 

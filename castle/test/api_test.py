@@ -8,7 +8,7 @@ from castle.request import Request
 
 
 def command():
-    return Command(method='post', endpoint='authenticate', data={})
+    return Command(method='post', path='authenticate', data={})
 
 
 def response_text():

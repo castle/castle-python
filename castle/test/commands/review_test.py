@@ -17,5 +17,5 @@ class CommandsReviewTestCase(unittest.TestCase):
         command = CommandsReview({}).build(review_id())
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'get')
-        self.assertEqual(command.endpoint, "reviews/1234")
+        self.assertEqual(command.path, "reviews/1234")
         self.assertEqual(command.data, None)

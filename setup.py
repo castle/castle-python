@@ -28,7 +28,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     install_requires=[
-        'pytz',  # pytz is generally backwards compatible
         'requests>=2.5',
     ],
     extras_require={

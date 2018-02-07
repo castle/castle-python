@@ -13,7 +13,9 @@ WHITELISTED = [
     'Forwarded',
     'X-Forwarded',
     'X-Real-IP',
-    'REMOTE_ADDR'
+    'REMOTE_ADDR',
+    'X-Forwarded-For',
+    'CF_CONNECTING_IP'
 ]
 
 BLACKLISTED = ['HTTP_COOKIE']

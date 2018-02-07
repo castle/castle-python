@@ -22,7 +22,7 @@ def default_command_with_data(**data):
     """What we expect the identify command to look like."""
     return Command(
         method='post',
-        endpoint='identify',
+        path='identify',
         data=dict(sent_at=mock.sentinel.timestamp, **data)
     )
 

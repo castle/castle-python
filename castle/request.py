@@ -8,10 +8,10 @@ class Request(object):
         self.headers = headers or dict()
         self.base_url = Request.build_base_url()
 
-    def build_query(self, method, endpoint, params):
+    def build_query(self, method, path, params):
         return requests.request(
             method,
-            self.build_url(endpoint),
+            self.build_url(path),
             auth=('', configuration.api_secret),
             timeout=configuration.request_timeout,
             headers=self.headers,
@@ -19,8 +19,8 @@ class Request(object):
             data=None if params is None else json.dumps(params)
         )
 
-    def build_url(self, endpoint):
-        return '{base}/{action}'.format(base=self.base_url, action=endpoint)
+    def build_url(self, path):
+        return '{base}/{action}'.format(base=self.base_url, action=path)
 
     @staticmethod
     def build_base_url():

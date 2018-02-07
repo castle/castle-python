@@ -2,9 +2,9 @@ from castle.utils import clone, deep_merge
 
 
 class ContextMerger(object):
-    def __init__(self, source):
-        self.source_copy = clone(source)
 
-    def call(self, context):
-        deep_merge(self.source_copy, context)
-        return self.source_copy
+    @staticmethod
+    def call(initial_context, request_context):
+        source_copy = clone(initial_context)
+        deep_merge(source_copy, request_context)
+        return source_copy

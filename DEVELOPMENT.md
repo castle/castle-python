@@ -24,4 +24,10 @@ Linting
     $ pip3 install setuptools-lint
     $ python3 setup.py lint
 
+Coverage
+------------
 
+.. code-block:: console
+
+    $ pip3 install coverage
+    $ coverage run setup.py test

@@ -30,11 +30,6 @@ setup(
     install_requires=[
         'requests>=2.5',
     ],
-    extras_require={
-        'test': ['responses']
-    },
-    # A better way to specify test requirements
-    # see https://github.com/pypa/pip/issues/1197#issuecomment-228939212
-    tests_require=['castle[test]'],
+    tests_require=['responses'],
     test_suite='castle.test.all'
 )

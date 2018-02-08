@@ -41,6 +41,8 @@ TEST_MODULES = [
     'castle.test.response_test',
     'castle.test.review_test',
     'castle.test.secure_mode_test',
+    'castle.test.validators.not_supported_test',
+    'castle.test.validators.present_test',
     'castle.test.utils_test'
 ]
 

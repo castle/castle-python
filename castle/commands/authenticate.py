@@ -4,6 +4,7 @@ from castle.context.merger import ContextMerger
 from castle.context.sanitizer import ContextSanitizer
 from castle.validators.present import ValidatorsPresent
 
+
 class CommandsAuthenticate(object):
     def __init__(self, context):
         self.context = context

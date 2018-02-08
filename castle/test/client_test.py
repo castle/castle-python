@@ -1,7 +1,5 @@
 from collections import namedtuple
-
 import responses
-
 from castle.test import mock, unittest
 from castle.client import Client
 from castle.configuration import configuration
@@ -12,7 +10,8 @@ from castle.version import VERSION
 def request():
     req = namedtuple('Request', ['ip', 'environ', 'COOKIES'])
     req.ip = '217.144.192.112'
-    req.environ = {'HTTP_X_FORWARDED_FOR': '217.144.192.112', 'HTTP_X_CASTLE_CLIENT_ID': '1234'}
+    req.environ = {'HTTP_X_FORWARDED_FOR': '217.144.192.112',
+                   'HTTP_X_CASTLE_CLIENT_ID': '1234'}
     req.COOKIES = {}
     return req
 
@@ -147,7 +146,8 @@ class ClientTestCase(unittest.TestCase):
 
     def test_to_options(self):
         options = Client.to_options({'foo': 'bar'})
-        self.assertEqual(options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678'})
+        self.assertEqual(
+            options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678'})
 
     def test_to_context(self):
         context = {

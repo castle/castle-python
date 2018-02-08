@@ -1,6 +1,7 @@
 from castle.test import unittest
 from castle.context.sanitizer import ContextSanitizer
 
+
 class ContextSanitizerTestCase(unittest.TestCase):
 
     def test_call_when_no_context(self):
@@ -17,4 +18,5 @@ class ContextSanitizerTestCase(unittest.TestCase):
 
     def test_call_when_have_active_flag(self):
         context = {'foo': 'bar', 'active': True}
-        self.assertEqual(ContextSanitizer.call(context), {'foo': 'bar', 'active': True})
+        self.assertEqual(ContextSanitizer.call(context),
+                         {'foo': 'bar', 'active': True})

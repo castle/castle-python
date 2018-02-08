@@ -5,6 +5,7 @@ from castle.context.sanitizer import ContextSanitizer
 from castle.validators.present import ValidatorsPresent
 from castle.validators.not_supported import ValidatorsNotSupported
 
+
 class CommandsIdentify(object):
     def __init__(self, context):
         self.context = context

@@ -23,6 +23,7 @@ BLACKLISTED = ['HTTP_COOKIE']
 REQUEST_TIMEOUT = 0.5
 FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
 
+
 class Configuration(object):
     def __init__(self):
         self.api_secret = None

@@ -68,7 +68,8 @@ class CommandsTrackTestCase(unittest.TestCase):
 
     def test_build_traits_allowed(self):
         context = {}
-        options = default_options_plus(traits={'email': 'track@all.the.things.com'})
+        options = default_options_plus(
+            traits={'email': 'track@all.the.things.com'})
         options.update({'context': context})
 
         expected = default_command_with_data(**options)

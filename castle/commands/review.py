@@ -1,6 +1,7 @@
 from castle.command import Command
 from castle.validators.present import ValidatorsPresent
 
+
 class CommandsReview(object):
 
     @staticmethod

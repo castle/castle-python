@@ -23,13 +23,15 @@ class ResponseTestCase(unittest.TestCase):
 
     def test_response_authenticate(self):
         self.assertEqual(
-            Response(response(body=b'{"action":"allow","user_id":"12345"}')).call(),
+            Response(
+                response(body=b'{"action":"allow","user_id":"12345"}')).call(),
             {"action": "allow", "user_id": "12345"}
         )
 
     def test_verify_200_299(self):
         for status_code in range(200, 299):
-            self.assertEqual(Response(response(status_code=status_code)).verify(), None)
+            self.assertEqual(
+                Response(response(status_code=status_code)).verify(), None)
 
     def test_verify_400(self):
         with self.assertRaises(BadRequestError):

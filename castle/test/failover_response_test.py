@@ -20,7 +20,8 @@ class FailoverResponseTestCase(unittest.TestCase):
     def test_strategy_not_passed(self):
         failover_response = FailoverResponse(user_id())
         self.assertEqual(failover_response.user_id, user_id())
-        self.assertEqual(failover_response.strategy, configuration.failover_strategy)
+        self.assertEqual(failover_response.strategy,
+                         configuration.failover_strategy)
 
     def test_call(self):
         failover_response = FailoverResponse(user_id())

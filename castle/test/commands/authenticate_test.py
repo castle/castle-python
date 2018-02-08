@@ -30,7 +30,8 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
 
     def setUp(self):
         # patch timestamp to return a known value
-        timestamp_patcher = mock.patch('castle.commands.authenticate.timestamp')
+        timestamp_patcher = mock.patch(
+            'castle.commands.authenticate.timestamp')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = mock.sentinel.timestamp
         self.addCleanup(timestamp_patcher.stop)
@@ -48,7 +49,8 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         expected_data.update(context={'test': '1', 'spam': True})
         expected = default_command_with_data(**expected_data)
 
-        self.assertEqual(CommandsAuthenticate(context).build(options), expected)
+        self.assertEqual(CommandsAuthenticate(
+            context).build(options), expected)
 
     def test_build_no_event(self):
         context = {}
@@ -73,7 +75,8 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsAuthenticate(context).build(options), expected)
+        self.assertEqual(CommandsAuthenticate(
+            context).build(options), expected)
 
     def test_build_traits_allowed(self):
         context = {}
@@ -82,4 +85,5 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsAuthenticate(context).build(options), expected)
+        self.assertEqual(CommandsAuthenticate(
+            context).build(options), expected)

@@ -5,10 +5,12 @@ from castle.extractors.ip import ExtractorsIp
 
 __version__ = VERSION
 
+
 class ContextDefault(object):
     def __init__(self, request, cookies):
         used_cookies = self._fetch_cookies(request, cookies)
-        self.client_id = ExtractorsClientId(request.environ, used_cookies).call()
+        self.client_id = ExtractorsClientId(
+            request.environ, used_cookies).call()
         self.headers = ExtractorsHeaders(request.environ).call()
         self.request_ip = ExtractorsIp(request).call()
 

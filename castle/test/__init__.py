@@ -47,6 +47,8 @@ TEST_MODULES = [
 ]
 
 # pylint: disable=redefined-builtin
+
+
 def all():
     logging.basicConfig(stream=sys.stderr)
     return unittest.defaultTestLoader.loadTestsFromNames(TEST_MODULES)

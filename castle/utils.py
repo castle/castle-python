@@ -1,8 +1,10 @@
 import copy
 from datetime import datetime
 
+
 def clone(dict_object):
     return copy.deepcopy(dict_object)
+
 
 def deep_merge(base, extra):
     """
@@ -25,6 +27,7 @@ def deep_merge(base, extra):
         else:
             # Otherwise, set the key on the base to be the value of the extra.
             base[key] = value
+
 
 def timestamp():
     """Return an ISO8601 timestamp representing the current datetime in UTC."""

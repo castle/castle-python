@@ -5,8 +5,10 @@ from castle.extractors.ip import ExtractorsIp
 def request_ip():
     return '127.0.0.1'
 
+
 def request_ip_next():
     return '127.0.0.2'
+
 
 def request():
     req = mock.Mock(spec=['ip'])
@@ -25,10 +27,12 @@ def request_without_ip_x_forwarded_for():
     req.environ = {'HTTP_X_FORWARDED_FOR': request_ip()}
     return req
 
+
 def request_without_ip_cf_connecting_ip():
     req = mock.Mock(spec=['environ'])
     req.environ = {'HTTP_CF_CONNECTING_IP': request_ip_next()}
     return req
+
 
 class ExtractorsIpTestCase(unittest.TestCase):
     def test_extract_ip(self):

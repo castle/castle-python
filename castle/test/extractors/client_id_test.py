@@ -27,7 +27,8 @@ class ExtractorsClientIdTestCase(unittest.TestCase):
         )
 
     def test_extract_client_id_from_environ(self):
-        self.assertEqual(ExtractorsClientId(environ(), {}).call(), client_id_environ())
+        self.assertEqual(ExtractorsClientId(
+            environ(), {}).call(), client_id_environ())
 
     def test_extract_client_id_unavailable(self):
         self.assertEqual(ExtractorsClientId({}, {}).call(), '')

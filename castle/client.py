@@ -21,7 +21,8 @@ class Client(object):
 
     @staticmethod
     def to_context(request, options={}):
-        default_context = ContextDefault(request, options.get('cookies')).call()
+        default_context = ContextDefault(
+            request, options.get('cookies')).call()
         return ContextMerger.call(default_context, options.get('context', {}))
 
     @staticmethod

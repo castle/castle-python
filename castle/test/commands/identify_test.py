@@ -35,8 +35,9 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         self.addCleanup(timestamp_patcher.stop)
 
     def test_init(self):
-        obj = CommandsIdentify({})
-        self.assertEqual(obj.context, {})
+        context = mock.sentinel.test_init_context
+        obj = CommandsIdentify(context)
+        self.assertEqual(obj.context, context)
 
     def test_build(self):
         context = {'test': '1'}

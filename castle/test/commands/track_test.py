@@ -35,8 +35,9 @@ class CommandsTrackTestCase(unittest.TestCase):
         self.addCleanup(timestamp_patcher.stop)
 
     def test_init(self):
-        obj = CommandsTrack({})
-        self.assertEqual(obj.context, {})
+        context = mock.sentinel.test_init_context
+        obj = CommandsTrack(context)
+        self.assertEqual(obj.context, context)
 
     def test_build(self):
         context = {'lang': 'es'}

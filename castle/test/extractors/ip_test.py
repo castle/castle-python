@@ -16,19 +16,19 @@ def request():
     return req
 
 
-def request_without_ip_remote_addr():
+def request_with_ip_remote_addr():
     req = mock.Mock(spec=['environ'])
     req.environ = {'REMOTE_ADDR': request_ip()}
     return req
 
 
-def request_without_ip_x_forwarded_for():
+def request_with_ip_x_forwarded_for():
     req = mock.Mock(spec=['environ'])
     req.environ = {'HTTP_X_FORWARDED_FOR': request_ip()}
     return req
 
 
-def request_without_ip_cf_connecting_ip():
+def request_with_ip_cf_connecting_ip():
     req = mock.Mock(spec=['environ'])
     req.environ = {'HTTP_CF_CONNECTING_IP': request_ip_next()}
     return req
@@ -40,18 +40,18 @@ class ExtractorsIpTestCase(unittest.TestCase):
 
     def test_extract_ip_from_wsgi_request_remote_addr(self):
         self.assertEqual(
-            ExtractorsIp(request_without_ip_remote_addr()).call(),
+            ExtractorsIp(request_with_ip_remote_addr()).call(),
             request_ip()
         )
 
     def test_extract_ip_from_wsgi_request_x_forwarded_for(self):
         self.assertEqual(
-            ExtractorsIp(request_without_ip_x_forwarded_for()).call(),
+            ExtractorsIp(request_with_ip_x_forwarded_for()).call(),
             request_ip()
         )
 
     def test_extract_ip_from_wsgi_request_cf_connection_ip(self):
         self.assertEqual(
-            ExtractorsIp(request_without_ip_cf_connecting_ip()).call(),
+            ExtractorsIp(request_with_ip_cf_connecting_ip()).call(),
             request_ip_next()
         )

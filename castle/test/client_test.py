@@ -130,11 +130,11 @@ class ClientTestCase(unittest.TestCase):
         client.enable_tracking()
         self.assertEqual(client.do_not_track, False)
 
-    def test_dont_tracked_false(self):
+    def test_tracked_when_do_not_track_false(self):
         client = Client.from_request(request(), {})
         self.assertEqual(client.tracked(), True)
 
-    def test_dont_tracking_true(self):
+    def test_tracked_when_do_not_track_true(self):
         client = Client.from_request(request(), {'do_not_track': True})
         self.assertEqual(client.tracked(), False)
 

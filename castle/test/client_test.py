@@ -2,7 +2,7 @@ from collections import namedtuple
 
 import responses
 
-from castle.test import unittest
+from castle.test import mock, unittest
 from castle.client import Client
 from castle.configuration import configuration
 from castle.api import Api
@@ -18,6 +18,13 @@ def request():
 
 
 class ClientTestCase(unittest.TestCase):
+    def setUp(self):
+        # patch timestamp to return a known value
+        timestamp_patcher = mock.patch('castle.client.timestamp')
+        self.mock_timestamp = timestamp_patcher.start()
+        self.mock_timestamp.return_value = '2018-01-02T03:04:05.678'
+        self.addCleanup(timestamp_patcher.stop)
+
     def test_init(self):
         context = {
             'active': True,
@@ -138,7 +145,11 @@ class ClientTestCase(unittest.TestCase):
         result_context = Client.to_context(request(), options)
         self.assertEqual(result_context['client_id'], '1234')
 
-    def test_setup_context(self):
+    def test_to_options(self):
+        options = Client.to_options({'foo': 'bar'})
+        self.assertEqual(options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678'})
+
+    def test_to_context(self):
         context = {
             'active': True,
             'client_id': '1234',

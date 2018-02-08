@@ -8,7 +8,6 @@ WHITELISTED = [
     'Accept-Charset',
     'Accept',
     'Accept-Datetime',
-    'X-Forwarded-For',
     'Forwarded',
     'X-Forwarded',
     'X-Real-IP',

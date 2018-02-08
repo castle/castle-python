@@ -18,10 +18,10 @@ def deep_merge(base, extra):
         return
 
     for key, value in extra.items():
-        # If the key represents a dict on both given dicts, merge the sub-dicts
         if value is None:
             if key in base:
                 del base[key]
+        # If the key represents a dict on both given dicts, merge the sub-dicts
         elif isinstance(base.get(key), dict) and isinstance(value, dict):
             deep_merge(base[key], value)
         else:

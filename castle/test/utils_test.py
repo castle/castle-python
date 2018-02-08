@@ -59,6 +59,18 @@ class DeepMergeTestCase(unittest.TestCase):
         deep_merge(a, b)
         self.assertEqual(a, {'key': 'othervalue'})
 
+    def test_merge_when_no_extra(self):
+        a = {'key': 'value'}
+        b = None
+        deep_merge(a, b)
+        self.assertEqual(a, {'key': 'value'})
+
+    def test_merge_none_deletes_from_base(self):
+        a = {'key': 'value', 'other': 'value'}
+        b = {'other': None}
+        deep_merge(a, b)
+        self.assertEqual(a, {'key': 'value'})
+
     def test_merge_overrides_value(self):
         # The value from b is always taken, even when it's a different type
         a = {'key': 'original'}

@@ -5,6 +5,7 @@
 - Client has additional timestamp and sent_at time values are automatically added to the requests
 - when data is sent in batches you may want to wrap data options with Client.to_options method before you send it to the worker (see README) to include proper timestamp in the query
 - added X-Forwarded-For and CF_CONNECTING_IP to whitelisted headers
+- fetch IP from CF_CONNECTING_IP if possible
 
 ### Breaking Changes:
 - Client does not not build context object anymore to use previous functionality use Castle::Client.from_request

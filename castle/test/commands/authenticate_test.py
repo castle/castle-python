@@ -69,15 +69,17 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
     def test_build_properties_allowed(self):
         context = {}
         options = default_options_plus(properties={'test': '1'})
+        options.update({'context': context})
 
-        expected = default_command_with_data(context=context, **options)
+        expected = default_command_with_data(**options)
 
         self.assertEqual(CommandsAuthenticate(context).build(options), expected)
 
     def test_build_traits_allowed(self):
         context = {}
         options = default_options_plus(traits={'email': 'a@b.com'})
+        options.update({'context': context})
 
-        expected = default_command_with_data(context=context, **options)
+        expected = default_command_with_data(**options)
 
         self.assertEqual(CommandsAuthenticate(context).build(options), expected)

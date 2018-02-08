@@ -60,15 +60,17 @@ class CommandsTrackTestCase(unittest.TestCase):
     def test_build_properties_allowed(self):
         context = {}
         options = default_options_plus(properties={'face': 'handsome'})
+        options.update({'context': context})
 
-        expected = default_command_with_data(context=context, **options)
+        expected = default_command_with_data(**options)
 
         self.assertEqual(CommandsTrack(context).build(options), expected)
 
     def test_build_traits_allowed(self):
         context = {}
         options = default_options_plus(traits={'email': 'track@all.the.things.com'})
+        options.update({'context': context})
 
-        expected = default_command_with_data(context=context, **options)
+        expected = default_command_with_data(**options)
 
         self.assertEqual(CommandsTrack(context).build(options), expected)

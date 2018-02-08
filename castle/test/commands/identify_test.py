@@ -67,7 +67,8 @@ class CommandsIdentifyTestCase(unittest.TestCase):
     def test_build_traits_allowed(self):
         context = {}
         options = default_options_plus(traits={'email': 'identity@its.me.com'})
+        options.update({'context': context})
 
-        expected = default_command_with_data(context=context, **options)
+        expected = default_command_with_data(**options)
 
         self.assertEqual(CommandsIdentify(context).build(options), expected)

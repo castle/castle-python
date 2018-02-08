@@ -9,7 +9,7 @@ class ContextSanitizer(object):
 
     @classmethod
     def _sanitize_active_mode(cls, context):
-        if not context:
+        if context is None:
             return None
         elif 'active' not in context:
             return context

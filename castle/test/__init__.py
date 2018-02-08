@@ -26,6 +26,7 @@ TEST_MODULES = [
     'castle.test.configuration_test',
     'castle.test.context.default_test',
     'castle.test.context.merger_test',
+    'castle.test.context.sanitizer_test',
     'castle.test.command_test',
     'castle.test.commands.authenticate_test',
     'castle.test.commands.identify_test',
@@ -38,9 +39,9 @@ TEST_MODULES = [
     'castle.test.headers_formatter_test',
     'castle.test.request_test',
     'castle.test.response_test',
+    'castle.test.review_test',
     'castle.test.secure_mode_test',
-    'castle.test.utils_test',
-    'castle.test.review_test'
+    'castle.test.utils_test'
 ]
 
 # pylint: disable=redefined-builtin

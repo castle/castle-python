@@ -1,14 +1,16 @@
-## master
+## 2.0.0 (2018-02-09)
+
 ### Features:
 - code reorganization
-- added Castle.to_context method which allows to generate context object from the request
-- Client has additional timestamp and sent_at time values are automatically added to the requests
-- when data is sent in batches you may want to wrap data options with Client.to_options method before you send it to the worker (see README) to include proper timestamp in the query
+- added `Client.to_context` method which allows to generate context object from the request
+- additional timestamp and sent_at time values are automatically added to the requests
+- when data is sent in batches you may want to wrap data options with `Client.to_options` method before you send it to the worker (see README) to include proper timestamp in the query
 - added X-Forwarded-For and CF_CONNECTING_IP to whitelisted headers
 - fetch IP from CF_CONNECTING_IP if possible
 
 ### Breaking Changes:
-- Client does not not build context object anymore to use previous functionality use Castle::Client.from_request
+- Client does not build context object anymore to use previous functionality use `Client.from_request`
+- code reorganization
 
 ## 1.0.1 (2017-12-08)
 * Handle cookies from Django request

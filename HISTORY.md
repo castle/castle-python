@@ -1,3 +1,8 @@
+## master
+
+### Breaking Changes:
+- switched configuration request_timeout from seconds to milliseconds
+
 ## 2.0.0 (2018-02-09)
 
 ### Features:

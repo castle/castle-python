@@ -13,7 +13,7 @@ class Request(object):
             method,
             self.build_url(path),
             auth=('', configuration.api_secret),
-            timeout=configuration.request_timeout,
+            timeout=configuration.request_timeout / 1000.0,
             headers=self.headers,
             verify=Request.verify(),
             data=None if params is None else json.dumps(params)

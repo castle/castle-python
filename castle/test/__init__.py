@@ -30,6 +30,7 @@ TEST_MODULES = [
     'castle.test.command_test',
     'castle.test.commands.authenticate_test',
     'castle.test.commands.identify_test',
+    'castle.test.commands.impersonate_test',
     'castle.test.commands.track_test',
     'castle.test.commands.review_test',
     'castle.test.extractors.client_id_test',

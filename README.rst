@@ -102,6 +102,12 @@ and use it later in a way
     client = Client(context)
     client.track(options)
 
+Impersonation mode
+----------
+
+<https://castle.io/docs/impersonation>
+
+
 Exceptions
 ----------
 

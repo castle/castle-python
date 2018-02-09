@@ -4,6 +4,7 @@ from castle.context.default import ContextDefault
 from castle.context.merger import ContextMerger
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
+from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError
 from castle.failover_response import FailoverResponse
@@ -68,6 +69,10 @@ class Client(object):
             return None
         self._add_timestamp_if_necessary(options)
         return self.api.call(CommandsIdentify(self.context).build(options))
+
+    def impersonate(self, options):
+        self._add_timestamp_if_necessary(options)
+        return self.api.call(CommandsImpersonate(self.context).build(options))
 
     def track(self, options):
         if not self.tracked():

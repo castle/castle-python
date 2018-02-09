@@ -11,6 +11,7 @@ def request():
     req = namedtuple('Request', ['ip', 'environ', 'COOKIES'])
     req.ip = '217.144.192.112'
     req.environ = {'HTTP_X_FORWARDED_FOR': '217.144.192.112',
+                   'HTTP-User-Agent': 'test',
                    'HTTP_X_CASTLE_CLIENT_ID': '1234'}
     req.COOKIES = {}
     return req
@@ -28,15 +29,29 @@ class ClientTestCase(unittest.TestCase):
         context = {
             'active': True,
             'client_id': '1234',
-            'headers': {'X-Forwarded-For': '217.144.192.112'},
+            'headers': {'User-Agent': 'test', 'X-Forwarded-For': '217.144.192.112'},
             'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION},
-            'origin': 'web'
+            'origin': 'web',
+            'user_agent': 'test'
         }
         client = Client.from_request(request(), {})
         self.assertEqual(client.do_not_track, False)
         self.assertEqual(client.context, context)
         self.assertIsInstance(client.api, Api)
+
+    @responses.activate
+    def test_impersonate(self):
+        response_text = 'impersonate'
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/impersonate',
+            json=response_text,
+            status=200
+        )
+        client = Client.from_request(request(), {})
+        options = {'impersonator': 'admin', 'user_id': '1234'}
+        self.assertEqual(client.impersonate(options), response_text)
 
     @responses.activate
     def test_identify_tracked_true(self):
@@ -153,10 +168,11 @@ class ClientTestCase(unittest.TestCase):
         context = {
             'active': True,
             'client_id': '1234',
-            'headers': {'X-Forwarded-For': '217.144.192.112'},
+            'headers': {'User-Agent': 'test', 'X-Forwarded-For': '217.144.192.112'},
             'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION},
-            'origin': 'web'
+            'origin': 'web',
+            'user_agent': 'test'
         }
         result_context = Client.to_context(request(), {})
         self.assertEqual(result_context, context)

@@ -1,18 +1,26 @@
-# Python SDK for Castle
+Python SDK for Castle
+=====================
 
-[![Build Status](https://travis-ci.org/castle/castle-python.svg?branch=master)](https://travis-ci.org/castle/castle-python)
+.. image:: https://travis-ci.org/castle/castle-python.png
+   :alt: Build Status
+   :target: https://travis-ci.org/castle/castle-python
 
-**[Castle](https://castle.io) analyzes device, location, and interaction patterns in your web and mobile apps and lets you stop account takeover attacks in real-time.**
+**`Castle <https://castle.io>`__ analyzes device, location, and
+interaction patterns in your web and mobile apps and lets you stop
+account takeover attacks in real-time.**
 
-## Installation
+Installation
+------------
 
-`pip install castle`
+``pip install castle``
 
-## Configuration
+Configuration
+-------------
 
 import and configure the library with your Castle API secret.
 
-```python
+.. code:: python
+
     from castle.configuration import configuration
 
     # Same as setting it through Castle.api_secret
@@ -34,41 +42,43 @@ import and configure the library with your Castle API secret.
     configuration.blacklisted = ['HTTP-X-header']
     # or append to default
     configuration.blacklisted = configuration.blacklisted + ['X_HEADER']
-```
 
-## Tracking
+Tracking
+--------
 
 Here is a simple example of track event.
 
-```python
+.. code:: python
+
     from castle.client import Client
 
     castle = Client.from_request(request)
-    castle.track(
-        {
-            'event': '$login.succeeded',
-            'user_id': 'user_id'
-        }
-    )
-```
+    castle.track({
+      'event': '$login.succeeded',
+      'user_id': 'user_id'
+    })
+
 The client will automatically configure the context for each request.
 
-## Signature
+Signature
+---------
 
-```python
+.. code:: python
 
     from secure_mode import signature
 
     signature(user_id)
-```
 
 will create a signed user_id.
 
-## Async tracking
+Async tracking
+--------------
 
-By default Castle sends requests synchronously. To send requests in a background worker you can generate data for a worker:
+By default Castle sends requests synchronously. To send requests in a
+background worker you can generate data for a worker:
 
-```python
+.. code:: python
+
     from castle.client import Client
 
     context = Client.to_context(request)
@@ -82,22 +92,28 @@ By default Castle sends requests synchronously. To send requests in a background
         'key': 'value'
       }
     })
-```
 
 and use it later in a way
 
-```python
+.. code:: python
+
     from castle.client import Client
 
     client = Client(context)
     client.track(options)
-```
 
-## Exceptions
+Exceptions
+----------
 
-`CastleError` will be thrown if the Castle API returns a 400 or a 500 level HTTP response. You can also choose to catch a more [finegrained error](https://github.com/castle/castle-python/blob/master/castle/exceptions.py).
+``CastleError`` will be thrown if the Castle API returns a 400 or a 500
+level HTTP response. You can also choose to catch a more `finegrained
+error <https://github.com/castle/castle-python/blob/master/castle/exceptions.py>`__.
 
-## Documentation
+Documentation
+-------------
 
 Documentation and links to additional resources are available at
 https://castle.io/docs
+
+.. |Build Status| image:: https://travis-ci.org/castle/castle-python.svg?branch=master
+   :target: https://travis-ci.org/castle/castle-python

@@ -10,7 +10,7 @@ setup(
     author_email="info@castle.io",
     license="MIT License",
     description="Castle protects your users from account compromise",
-    long_description=open("README.md").read(),
+    long_description=open("README.rst").read(),
     url="https://github.com/castle/castle-python",
     packages=find_packages(),
     classifiers=[

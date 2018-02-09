@@ -7,7 +7,7 @@ from castle.commands.identify import CommandsIdentify
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError
 from castle.failover_response import FailoverResponse
-from castle.utils import timestamp
+from castle.utils import timestamp as generate_timestamp
 
 
 class Client(object):
@@ -27,7 +27,7 @@ class Client(object):
 
     @staticmethod
     def to_options(options={}):
-        options.setdefault('timestamp', timestamp())
+        options.setdefault('timestamp', generate_timestamp())
         return options
 
     @staticmethod
@@ -38,13 +38,13 @@ class Client(object):
 
     def __init__(self, context, options={}):
         self.do_not_track = options.get('do_not_track', False)
-        self.timestamp = options['timestamp']
+        self.timestamp = options.get('timestamp')
         self.context = context
         self.api = Api()
 
     def _add_timestamp_if_necessary(self, options):
         if self.timestamp:
-            options.setdefault(self.timestamp)
+            options.setdefault('timestamp', self.timestamp)
 
     def authenticate(self, options):
         if self.tracked():

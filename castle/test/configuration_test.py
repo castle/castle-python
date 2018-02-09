@@ -15,7 +15,7 @@ class ConfigurationTestCase(unittest.TestCase):
                          HeadersFormatter.call(v) for v in WHITELISTED])
         self.assertEqual(config.blacklisted, [
                          HeadersFormatter.call(v) for v in BLACKLISTED])
-        self.assertEqual(config.request_timeout, 0.5)
+        self.assertEqual(config.request_timeout, 500)
         self.assertEqual(config.failover_strategy, 'allow')
 
     def test_api_secret_setter(self):
@@ -70,8 +70,8 @@ class ConfigurationTestCase(unittest.TestCase):
 
     def test_request_timeout_setter(self):
         config = Configuration()
-        config.request_timeout = 5
-        self.assertEqual(config.request_timeout, 5.0)
+        config.request_timeout = 5000
+        self.assertEqual(config.request_timeout, 5000)
 
     def test_failover_strategy_setter_valid(self):
         config = Configuration()

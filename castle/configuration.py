@@ -19,7 +19,7 @@ WHITELISTED = [
 BLACKLISTED = ['HTTP_COOKIE']
 
 # 500 milliseconds
-REQUEST_TIMEOUT = 0.5
+REQUEST_TIMEOUT = 500
 FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
 
 

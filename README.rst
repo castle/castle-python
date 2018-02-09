@@ -5,7 +5,7 @@ Python SDK for Castle
    :alt: Build Status
    :target: https://travis-ci.org/castle/castle-python
 
-** `Castle <https://castle.io>`_ analyzes device, location, and
+**`Castle <https://castle.io>`_ analyzes device, location, and
 interaction patterns in your web and mobile apps and lets you stop
 account takeover attacks in real-time.**
 

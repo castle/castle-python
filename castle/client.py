@@ -7,39 +7,72 @@ from castle.commands.identify import CommandsIdentify
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError
 from castle.failover_response import FailoverResponse
+from castle.utils import timestamp as generate_timestamp
 
 
 class Client(object):
-    def __init__(self, request, options):
-        self.options = options or dict()
-        self.do_not_track = self.default_tracking()
-        self.cookies = self.setup_cookies(request)
-        self.context = self.setup_context(request)
+
+    @classmethod
+    def from_request(cls, request, options={}):
+        return cls(
+            cls.to_context(request, options),
+            cls.to_options(options)
+        )
+
+    @staticmethod
+    def to_context(request, options={}):
+        default_context = ContextDefault(
+            request, options.get('cookies')).call()
+        return ContextMerger.call(default_context, options.get('context', {}))
+
+    @staticmethod
+    def to_options(options={}):
+        options.setdefault('timestamp', generate_timestamp())
+        return options
+
+    @staticmethod
+    def failover_response_or_raise(options, exception):
+        if configuration.failover_strategy == 'throw':
+            raise exception
+        return FailoverResponse(options.get('user_id'), None, exception.__class__.__name__).call()
+
+    def __init__(self, context, options={}):
+        self.do_not_track = options.get('do_not_track', False)
+        self.timestamp = options.get('timestamp')
+        self.context = context
         self.api = Api()
+
+    def _add_timestamp_if_necessary(self, options):
+        if self.timestamp:
+            options.setdefault('timestamp', self.timestamp)
 
     def authenticate(self, options):
         if self.tracked():
+            self._add_timestamp_if_necessary(options)
+            command = CommandsAuthenticate(self.context).build(options)
             try:
-                response = self.api.call(CommandsAuthenticate(self.context).build(options))
+                response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)
                 return response
             except InternalServerError as exception:
-                return Client.failover(options, exception)
+                return Client.failover_response_or_raise(options, exception)
         else:
             return FailoverResponse(
-                options['user_id'],
+                options.get('user_id'),
                 'allow',
                 'Castle set to do not track.'
             ).call()
 
     def identify(self, options):
         if not self.tracked():
-            return
+            return None
+        self._add_timestamp_if_necessary(options)
         return self.api.call(CommandsIdentify(self.context).build(options))
 
     def track(self, options):
         if not self.tracked():
-            return
+            return None
+        self._add_timestamp_if_necessary(options)
         return self.api.call(CommandsTrack(self.context).build(options))
 
     def disable_tracking(self):
@@ -50,22 +83,3 @@ class Client(object):
 
     def tracked(self):
         return not self.do_not_track
-
-    def default_tracking(self):
-        return self.options['do_not_track'] if 'do_not_track' in self.options else False
-
-    def setup_cookies(self, request):
-        if hasattr(request, 'COOKIES') and request.COOKIES:
-            return request.COOKIES
-
-        return self.options.get('cookies', dict())
-
-    def setup_context(self, request):
-        default_context = ContextDefault(request, self.cookies).call()
-        return ContextMerger(default_context).call(self.options.get('context', dict()))
-
-    @staticmethod
-    def failover(options, exception):
-        if configuration.failover_strategy != 'throw':
-            return FailoverResponse(options['user_id'], None, exception.__class__.__name__).call()
-        raise exception

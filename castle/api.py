@@ -7,7 +7,7 @@ class Api(object):
         self.req = Request({'Content-Type': 'application/json'})
 
     def request(self, command):
-        return self.req.build_query(command.method, command.endpoint, command.data)
+        return self.req.build_query(command.method, command.path, command.data)
 
     def call(self, command):
         return Response(self.request(command)).call()

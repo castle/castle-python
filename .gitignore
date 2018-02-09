@@ -1,5 +1,9 @@
 *.pyc
 *.pyo
 *.egg-info
+.eggs
+.pytest_cache
 /dist
 /build
+.coverage
+/htmlcov

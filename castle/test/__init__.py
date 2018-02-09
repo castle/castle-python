@@ -1,4 +1,3 @@
-import pkgutil
 import logging
 import sys
 
@@ -7,6 +6,7 @@ import sys
 # in 2.7, so if we're in 2.6 we can use the backported
 # version unittest2.
 if sys.version_info[:2] == (2, 6):
+    # pylint: disable=import-error
     import unittest2 as unittest
 else:
     import unittest
@@ -14,9 +14,11 @@ else:
 
 # Python 3 includes mocking, while 2 requires an extra module.
 if sys.version_info[0] == 2:
+    # pylint: disable=import-error
     import mock
 else:
     from unittest import mock
+
 
 TEST_MODULES = [
     'castle.test.api_test',
@@ -24,6 +26,7 @@ TEST_MODULES = [
     'castle.test.configuration_test',
     'castle.test.context.default_test',
     'castle.test.context.merger_test',
+    'castle.test.context.sanitizer_test',
     'castle.test.command_test',
     'castle.test.commands.authenticate_test',
     'castle.test.commands.identify_test',
@@ -36,10 +39,15 @@ TEST_MODULES = [
     'castle.test.headers_formatter_test',
     'castle.test.request_test',
     'castle.test.response_test',
+    'castle.test.review_test',
     'castle.test.secure_mode_test',
-    'castle.test.utils_test',
-    'castle.test.review_test'
+    'castle.test.validators.not_supported_test',
+    'castle.test.validators.present_test',
+    'castle.test.utils_test'
 ]
+
+# pylint: disable=redefined-builtin
+
 
 def all():
     logging.basicConfig(stream=sys.stderr)

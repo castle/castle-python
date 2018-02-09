@@ -8,11 +8,12 @@ WHITELISTED = [
     'Accept-Charset',
     'Accept',
     'Accept-Datetime',
-    'X-Forwarded-For',
     'Forwarded',
     'X-Forwarded',
     'X-Real-IP',
-    'REMOTE_ADDR'
+    'REMOTE_ADDR',
+    'X-Forwarded-For',
+    'CF_CONNECTING_IP'
 ]
 
 BLACKLISTED = ['HTTP_COOKIE']
@@ -106,4 +107,6 @@ class Configuration(object):
         else:
             raise FailoverStrategyValueError
 
+
+# pylint: disable=invalid-name
 configuration = Configuration()

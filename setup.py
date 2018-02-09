@@ -10,7 +10,7 @@ setup(
     author_email="info@castle.io",
     license="MIT License",
     description="Castle protects your users from account compromise",
-    long_description=open("README.rst").read(),
+    long_description=open("README.md").read(),
     url="https://github.com/castle/castle-python",
     packages=find_packages(),
     classifiers=[
@@ -27,7 +27,9 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    install_requires=['requests>=2.5'],
+    install_requires=[
+        'requests>=2.5',
+    ],
     tests_require=['responses'],
     test_suite='castle.test.all'
 )

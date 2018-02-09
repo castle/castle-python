@@ -1,5 +1,7 @@
-from castle.test import unittest
-from castle.utils import clone, deep_merge
+from datetime import datetime
+
+from castle.test import mock, unittest
+from castle.utils import clone, deep_merge, timestamp
 
 
 class UtilsTestCase(unittest.TestCase):
@@ -8,6 +10,7 @@ class UtilsTestCase(unittest.TestCase):
         new_params = clone(params)
         self.assertEqual(params, new_params)
         self.assertIsNot(new_params, params)
+
 
 class DeepMergeTestCase(unittest.TestCase):
     def test_simple_merge(self):
@@ -56,6 +59,18 @@ class DeepMergeTestCase(unittest.TestCase):
         deep_merge(a, b)
         self.assertEqual(a, {'key': 'othervalue'})
 
+    def test_merge_when_no_extra(self):
+        a = {'key': 'value'}
+        b = None
+        deep_merge(a, b)
+        self.assertEqual(a, {'key': 'value'})
+
+    def test_merge_none_deletes_from_base(self):
+        a = {'key': 'value', 'other': 'value'}
+        b = {'other': None}
+        deep_merge(a, b)
+        self.assertEqual(a, {'key': 'value'})
+
     def test_merge_overrides_value(self):
         # The value from b is always taken, even when it's a different type
         a = {'key': 'original'}
@@ -99,3 +114,13 @@ class DeepMergeTestCase(unittest.TestCase):
             }
         }
         self.assertEqual(a, expected)
+
+
+class TimestampTestCase(unittest.TestCase):
+
+    @mock.patch('castle.utils.datetime')
+    def test_it_should_use_iso_format(self, mock_datetime):
+        mock_datetime.utcnow.return_value = datetime(
+            2018, 1, 2, 3, 4, 5, 678901)
+        expected = '2018-01-02T03:04:05.678901'
+        self.assertEqual(timestamp(), expected)

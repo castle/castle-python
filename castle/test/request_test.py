@@ -1,6 +1,5 @@
-import responses
 from requests import Response
-
+import responses
 from castle.test import unittest
 from castle.request import Request
 from castle.configuration import configuration

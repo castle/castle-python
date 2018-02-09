@@ -1,5 +1,10 @@
 ## master
 
+## 2.1.0 (2018-02-09)
+
+### Features:
+- add support for impersonation
+
 ### Breaking Changes:
 - switched configuration request_timeout from seconds to milliseconds
 

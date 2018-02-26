@@ -19,9 +19,17 @@ def default_options_plus(**extra):
 
 
 def default_command_with_data(**data):
-    """What we expect the authenticate command to look like."""
+    """What we expect the impersonate command to look like."""
     return Command(
         method='post',
+        path='impersonate',
+        data=dict(sent_at=mock.sentinel.timestamp, **data)
+    )
+
+def default_reset_command_with_data(**data):
+    """What we expect the impersonate command to look like."""
+    return Command(
+        method='delete',
         path='impersonate',
         data=dict(sent_at=mock.sentinel.timestamp, **data)
     )
@@ -43,14 +51,34 @@ class CommandsImpersonateTestCase(unittest.TestCase):
     def test_build(self):
         context = {'lang': 'es'}
         options = default_options_plus(
-            context={'local time': '8:53pm', 'ip': '127.0.0.1', 'user_agent': 'Chrome'})
+            context={'local time': '8:53pm', 'ip': '127.0.0.1', 'user_agent': 'Chrome'}
+        )
 
         # expect the original context to have been merged with the context specified in the options
         expected_data = clone(options)
-        expected_data.update(context={
-                             'lang': 'es', 'local time': '8:53pm',
-                             'ip': '127.0.0.1', 'user_agent': 'Chrome'})
+        expected_data.update(
+            context={'lang': 'es', 'local time': '8:53pm',
+                     'ip': '127.0.0.1', 'user_agent': 'Chrome'}
+        )
         expected = default_command_with_data(**expected_data)
+
+        self.assertEqual(CommandsImpersonate(context).build(options), expected)
+
+    def test_reset_build(self):
+        context = {'lang': 'es'}
+        options = default_options_plus(
+            reset=True,
+            context={'lang': 'es', 'local time': '8:53pm',
+                     'ip': '127.0.0.1', 'user_agent': 'Chrome'}
+        )
+
+        # expect the original context to have been merged with the context specified in the options
+        expected_data = clone(options)
+        expected_data.update(
+            context={'lang': 'es', 'local time': '8:53pm',
+                     'ip': '127.0.0.1', 'user_agent': 'Chrome'}
+        )
+        expected = default_reset_command_with_data(**expected_data)
 
         self.assertEqual(CommandsImpersonate(context).build(options), expected)
 

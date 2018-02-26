@@ -18,4 +18,6 @@ class CommandsImpersonate(object):
 
         options.update({'sent_at': timestamp(), 'context': context})
 
-        return Command(method='post', path='impersonate', data=options)
+        method = ('delete' if options.get('reset', False) else 'post')
+
+        return Command(method=method, path='impersonate', data=options)

@@ -1,5 +1,8 @@
 ## master
 
+### Features:
+- add reset option to impersonation
+
 ## 2.1.0 (2018-02-09)
 
 ### Features:

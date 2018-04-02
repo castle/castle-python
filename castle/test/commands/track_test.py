@@ -67,10 +67,10 @@ class CommandsTrackTestCase(unittest.TestCase):
 
         self.assertEqual(CommandsTrack(context).build(options), expected)
 
-    def test_build_traits_allowed(self):
+    def test_build_user_traits_allowed(self):
         context = {}
         options = default_options_plus(
-            traits={'email': 'track@all.the.things.com'})
+            user_traits={'email': 'track@all.the.things.com'})
         options.update({'context': context})
 
         expected = default_command_with_data(**options)

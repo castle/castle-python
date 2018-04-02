@@ -88,7 +88,7 @@ background worker you can generate data for a worker:
       'properties': {
         'key': 'value'
       },
-      'traits': {
+      'user_traits': {
         'key': 'value'
       }
     })

@@ -79,9 +79,9 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         self.assertEqual(CommandsAuthenticate(
             context).build(options), expected)
 
-    def test_build_traits_allowed(self):
+    def test_build_user_traits_allowed(self):
         context = {}
-        options = default_options_plus(traits={'email': 'a@b.com'})
+        options = default_options_plus(user_traits={'email': 'a@b.com'})
         options.update({'context': context})
 
         expected = default_command_with_data(**options)

@@ -9,7 +9,7 @@ from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError
 from castle.failover_response import FailoverResponse
 from castle.utils import timestamp as generate_timestamp
-
+import warnings
 
 class Client(object):
 
@@ -29,6 +29,9 @@ class Client(object):
     @staticmethod
     def to_options(options={}):
         options.setdefault('timestamp', generate_timestamp())
+        if 'traits' in options:
+            warnings.warn('use user_traits instead of traits key', DeprecationWarning)
+
         return options
 
     @staticmethod

@@ -3,6 +3,7 @@ import responses
 from castle.test import mock, unittest
 from castle.client import Client
 from castle.configuration import configuration
+from castle.exceptions import ImpersonationFailed
 from castle.api import Api
 from castle.version import VERSION
 
@@ -42,7 +43,7 @@ class ClientTestCase(unittest.TestCase):
 
     @responses.activate
     def test_impersonate(self):
-        response_text = 'impersonate'
+        response_text = {'success': True}
         responses.add(
             responses.POST,
             'https://api.castle.io/v1/impersonate',
@@ -52,6 +53,20 @@ class ClientTestCase(unittest.TestCase):
         client = Client.from_request(request(), {})
         options = {'impersonator': 'admin', 'user_id': '1234'}
         self.assertEqual(client.impersonate(options), response_text)
+
+    @responses.activate
+    def test_impersonate_failed(self):
+        response_text = {}
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/impersonate',
+            json=response_text,
+            status=200
+        )
+        client = Client.from_request(request(), {})
+        options = {'impersonator': 'admin', 'user_id': '1234'}
+        with self.assertRaises(ImpersonationFailed):
+            client.impersonate(options)
 
     @responses.activate
     def test_identify_tracked_true(self):

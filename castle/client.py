@@ -6,7 +6,7 @@ from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
-from castle.exceptions import InternalServerError, RequestError
+from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover_response import FailoverResponse
 from castle.utils import timestamp as generate_timestamp
 import warnings
@@ -75,7 +75,10 @@ class Client(object):
 
     def impersonate(self, options):
         self._add_timestamp_if_necessary(options)
-        return self.api.call(CommandsImpersonate(self.context).build(options))
+        response = self.api.call(CommandsImpersonate(self.context).build(options))
+        if not response.get('success'):
+            raise ImpersonationFailed
+        return response
 
     def track(self, options):
         if not self.tracked():

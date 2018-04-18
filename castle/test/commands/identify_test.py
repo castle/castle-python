@@ -65,9 +65,9 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         with self.assertRaises(InvalidParametersError):
             CommandsIdentify(context).build(options)
 
-    def test_build_traits_allowed(self):
+    def test_build_user_traits_allowed(self):
         context = {}
-        options = default_options_plus(traits={'email': 'identity@its.me.com'})
+        options = default_options_plus(user_traits={'email': 'identity@its.me.com'})
         options.update({'context': context})
 
         expected = default_command_with_data(**options)

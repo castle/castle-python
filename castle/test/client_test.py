@@ -164,6 +164,11 @@ class ClientTestCase(unittest.TestCase):
         self.assertEqual(
             options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678'})
 
+    def test_to_options_with_deprecation(self):
+        options = Client.to_options({'foo': 'bar', 'traits': {}})
+        self.assertEqual(
+            options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678', 'traits': {}})
+
     def test_to_context(self):
         context = {
             'active': True,

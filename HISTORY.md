@@ -4,6 +4,10 @@
 
 - [#35](github.com/castle/castle-python/pull/35) usage of `traits` key is deprecated, use `user_traits` instead
 
+### Enhancements:
+
+- [#37](github.com/castle/castle-python/pull/37) `X-Castle-Client-Id` takes precedence over `cid` from `cookies`
+
 ## 2.1.1 (2018-02-26)
 
 ### Features:

@@ -4,4 +4,4 @@ class ExtractorsClientId(object):
         self.cookies = cookies or dict()
 
     def call(self):
-        return self.cookies.get('__cid', self.environ.get('HTTP_X_CASTLE_CLIENT_ID', ''))
+        return self.environ.get('HTTP_X_CASTLE_CLIENT_ID', self.cookies.get('__cid', ''))

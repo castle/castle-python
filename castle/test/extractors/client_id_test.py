@@ -20,9 +20,15 @@ def environ():
 
 
 class ExtractorsClientIdTestCase(unittest.TestCase):
-    def test_extract_client_id_from_cookies(self):
+    def test_extract_client_id_from_cookiesand_environ(self):
         self.assertEqual(
             ExtractorsClientId(environ(), cookies()).call(),
+            client_id_environ()
+        )
+
+    def test_extract_client_id_from_cookies(self):
+        self.assertEqual(
+            ExtractorsClientId({}, cookies()).call(),
             client_id()
         )
 

@@ -1,5 +1,7 @@
 ## master
 
+## 2.2.0 (2018-04-18)
+
 ### Breaking Changes:
 
 - [#35](github.com/castle/castle-python/pull/35) usage of `traits` key is deprecated, use `user_traits` instead

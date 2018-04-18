@@ -4,14 +4,14 @@
 
 ### Breaking Changes:
 
-- [#35](github.com/castle/castle-python/pull/35) usage of `traits` key is deprecated, use `user_traits` instead
-- [#38](github.com/castle/castle-python/pull/38) make api related errors inherit from `ApiError`
-- [#38](github.com/castle/castle-python/pull/38) rename `FailoverStrategyValueError` to `ConfigurationError`
+- [#35](https://github.com/castle/castle-python/pull/35) usage of `traits` key is deprecated, use `user_traits` instead
+- [#38](https://github.com/castle/castle-python/pull/38) make api related errors inherit from `ApiError`
+- [#38](https://github.com/castle/castle-python/pull/38) rename `FailoverStrategyValueError` to `ConfigurationError`
 
 ### Enhancements:
 
-- [#37](github.com/castle/castle-python/pull/37) `X-Castle-Client-Id` takes precedence over `cid` from `cookies`
-- [#36](github.com/castle/castle-python/pull/36) raise `ImpersonationFailed` when impersonation request failed
+- [#37](https://github.com/castle/castle-python/pull/37) `X-Castle-Client-Id` takes precedence over `cid` from `cookies`
+- [#36](https://github.com/castle/castle-python/pull/36) raise `ImpersonationFailed` when impersonation request failed
 
 ## 2.1.1 (2018-02-26)
 

@@ -9,6 +9,7 @@
 ### Enhancements:
 
 - [#37](github.com/castle/castle-python/pull/37) `X-Castle-Client-Id` takes precedence over `cid` from `cookies`
+- [#36](github.com/castle/castle-python/pull/36) raise `ImpersonationFailed` when impersonation request failed
 
 ## 2.1.1 (2018-02-26)
 

@@ -36,3 +36,6 @@ class NotFoundError(ApiError):
 
 class InternalServerError(ApiError):
     pass
+
+class ImpersonationFailed(ApiError):
+    pass

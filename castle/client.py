@@ -6,7 +6,7 @@ from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
-from castle.exceptions import InternalServerError
+from castle.exceptions import InternalServerError, RequestError
 from castle.failover_response import FailoverResponse
 from castle.utils import timestamp as generate_timestamp
 import warnings
@@ -58,7 +58,7 @@ class Client(object):
                 response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)
                 return response
-            except InternalServerError as exception:
+            except (RequestError, InternalServerError) as exception:
                 return Client.failover_response_or_raise(options, exception)
         else:
             return FailoverResponse(

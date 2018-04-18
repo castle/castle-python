@@ -7,35 +7,36 @@ class CastleError(Exception):
 class FailoverStrategyValueError(CastleError):
     pass
 
-
-# Raised when invalid parameter are passed
-class InvalidParametersError(CastleError):
+class RequestError(CastleError):
     pass
 
-
-class BadRequestError(CastleError):
+class SecurityError(CastleError):
     pass
 
-
-class UnauthorizedError(CastleError):
+class ConfigurationError(CastleError):
     pass
-
-
-class ForbiddenError(CastleError):
-    pass
-
-
-class NotFoundError(CastleError):
-    pass
-
-
-class UserUnauthorizedError(CastleError):
-    pass
-
 
 class ApiError(CastleError):
     pass
 
 
-class InternalServerError(CastleError):
+class InvalidParametersError(ApiError):
+    pass
+
+class BadRequestError(ApiError):
+    pass
+
+class UnauthorizedError(ApiError):
+    pass
+
+class UserUnauthorizedError(ApiError):
+    pass
+
+class ForbiddenError(ApiError):
+    pass
+
+class NotFoundError(ApiError):
+    pass
+
+class InternalServerError(ApiError):
     pass

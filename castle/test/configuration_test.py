@@ -1,5 +1,5 @@
 from castle.test import unittest
-from castle.exceptions import FailoverStrategyValueError
+from castle.exceptions import ConfigurationError
 from castle.configuration import Configuration, WHITELISTED, BLACKLISTED
 from castle.headers_formatter import HeadersFormatter
 
@@ -80,5 +80,5 @@ class ConfigurationTestCase(unittest.TestCase):
 
     def test_failover_strategy_setter_invalid(self):
         config = Configuration()
-        with self.assertRaises(FailoverStrategyValueError):
+        with self.assertRaises(ConfigurationError):
             config.failover_strategy = 'invalid'

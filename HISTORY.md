@@ -4,6 +4,7 @@
 
 - [#35](github.com/castle/castle-python/pull/35) usage of `traits` key is deprecated, use `user_traits` instead
 - [#38](github.com/castle/castle-python/pull/38) make api related errors inherit from `ApiError`
+- [#38](github.com/castle/castle-python/pull/38) rename `FailoverStrategyValueError` to `ConfigurationError`
 
 ### Enhancements:
 

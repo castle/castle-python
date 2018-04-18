@@ -1,4 +1,4 @@
-from castle.exceptions import FailoverStrategyValueError
+from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
 WHITELISTED = [
@@ -105,7 +105,7 @@ class Configuration(object):
         if value in FAILOVER_STRATEGIES:
             self.__failover_strategy = value
         else:
-            raise FailoverStrategyValueError
+            raise ConfigurationError
 
 
 # pylint: disable=invalid-name

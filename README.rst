@@ -103,7 +103,7 @@ and use it later in a way
     client.track(options)
 
 Impersonation mode
-----------
+------------------
 
 https://castle.io/docs/impersonation
 

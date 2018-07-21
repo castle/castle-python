@@ -10,7 +10,7 @@ class CommandsAuthenticate(object):
         self.context = context
 
     def build(self, options):
-        ValidatorsPresent.call(options, 'event', 'user_id')
+        ValidatorsPresent.call(options, 'event')
         context = ContextMerger.call(self.context, options.get('context'))
         context = ContextSanitizer.call(context)
         if context:

@@ -15,6 +15,8 @@ class CommandsIdentify(object):
         ValidatorsNotSupported.call(options, 'properties')
         context = ContextMerger.call(self.context, options.get('context'))
         context = ContextSanitizer.call(context)
-        options.update({'sent_at': timestamp(), 'context': context})
+        if context:
+            options.update({'context': context})
+        options.update({'sent_at': timestamp()})
 
         return Command(method='post', path='identify', data=options)

@@ -19,6 +19,9 @@ if sys.version_info[0] == 2:
 else:
     from unittest import mock
 
+if sys.version_info[:2] == (2, 6):
+    import subprocess
+    subprocess.call(["sed", "-i", "-e",  's/import _io/import io as _io/g', "/home/travis/build/castle/castle-python/.eggs/responses-0.6.2-py2.6.egg/responses.py"])
 
 TEST_MODULES = [
     'castle.test.api_test',

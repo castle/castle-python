@@ -1,5 +1,7 @@
 ## master
 
+## 2.2.1 (2018-09-04)
+
 - [#41](https://github.com/castle/castle-python/pull/41) add python 2.6, python 3.7
 
 ## 2.2.0 (2018-04-18)

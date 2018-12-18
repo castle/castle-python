@@ -16,7 +16,9 @@ class CommandsImpersonate(object):
         context = ContextSanitizer.call(context)
         ValidatorsPresent.call(context, 'user_agent', 'ip')
 
-        options.update({'sent_at': timestamp(), 'context': context})
+        if context:
+            options.update({'context': context})
+        options.update({'sent_at': timestamp()})
 
         method = ('delete' if options.get('reset', False) else 'post')
 

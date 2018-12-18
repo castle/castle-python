@@ -66,8 +66,9 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         options = default_options()
         options.pop('user_id')
 
-        with self.assertRaises(InvalidParametersError):
-            CommandsAuthenticate(context).build(options)
+        expected = default_command_with_data(**options)
+
+        self.assertEqual(CommandsAuthenticate(context).build(options), expected)
 
     def test_build_properties_allowed(self):
         context = {}

@@ -13,7 +13,7 @@ INSTALL_REQUIRES = [
 ]
 
 if sys.version_info[:2] == (2, 6):
-    TESTS_REQUIRE = ['responses<0.11', 'unittest2']
+    TESTS_REQUIRE = ['responses<0.7', 'unittest2']
 else:
     TESTS_REQUIRE = ['responses']
 

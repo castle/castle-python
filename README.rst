@@ -51,10 +51,11 @@ Here is a simple example of track event.
 .. code:: python
 
     from castle.client import Client
+    from castle import events
 
     castle = Client.from_request(request)
     castle.track({
-      'event': '$login.succeeded',
+      'event': events.LOGIN_SUCCEEDED,
       'user_id': 'user_id'
     })
 
@@ -80,10 +81,11 @@ background worker you can generate data for a worker:
 .. code:: python
 
     from castle.client import Client
+    from castle import events
 
     context = Client.to_context(request)
     options = Client.to_options({
-      'event': '$login.succeeded',
+      'event': events.LOGIN_SUCCEEDED,
       'user_id': user.id,
       'properties': {
         'key': 'value'

@@ -1,15 +1,16 @@
 import json
-import requests
 from castle.configuration import configuration
+from castle.session import SessionSharer
 
 
 class Request(object):
     def __init__(self, headers=None):
         self.headers = headers or dict()
         self.base_url = Request.build_base_url()
+        self.sharer = SessionSharer()
 
     def build_query(self, method, path, params):
-        return requests.request(
+        return self.sharer.session.request(
             method,
             self.build_url(path),
             auth=('', configuration.api_secret),

@@ -1,5 +1,9 @@
 ## master
 
+## 2.3.0 (2019-01-16)
+
+- [#48](https://github.com/castle/castle-python/pull/48) add connection pooling
+- [#47](https://github.com/castle/castle-python/pull/47) add event constants
 - [#40](https://github.com/castle/castle-python/pull/40) remove requirement for `user_id`
 
 ## 2.2.1 (2018-09-04)

@@ -14,20 +14,26 @@ import warnings
 class Client(object):
 
     @classmethod
-    def from_request(cls, request, options={}):
+    def from_request(cls, request, options=None):
+        if options is None:
+            options = {}
         return cls(
             cls.to_context(request, options),
             cls.to_options(options)
         )
 
     @staticmethod
-    def to_context(request, options={}):
+    def to_context(request, options=None):
+        if options is None:
+            options = {}
         default_context = ContextDefault(
             request, options.get('cookies')).call()
         return ContextMerger.call(default_context, options.get('context', {}))
 
     @staticmethod
-    def to_options(options={}):
+    def to_options(options=None):
+        if options is None:
+            options = {}
         options.setdefault('timestamp', generate_timestamp())
         if 'traits' in options:
             warnings.warn('use user_traits instead of traits key', DeprecationWarning)
@@ -40,7 +46,9 @@ class Client(object):
             raise exception
         return FailoverResponse(options.get('user_id'), None, exception.__class__.__name__).call()
 
-    def __init__(self, context, options={}):
+    def __init__(self, context, options=None):
+        if options is None:
+            options = {}
         self.do_not_track = options.get('do_not_track', False)
         self.timestamp = options.get('timestamp')
         self.context = context

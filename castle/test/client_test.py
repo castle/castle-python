@@ -1,3 +1,4 @@
+import json
 from collections import namedtuple
 import responses
 from castle.test import mock, unittest
@@ -215,3 +216,25 @@ class ClientTestCase(unittest.TestCase):
         with self.assertRaises(Exception):
             Client.failover_response_or_raise(options, Exception())
         configuration.failover_strategy = 'allow'
+
+    @responses.activate
+    def test_timestamps_are_not_global(self):
+        response_text = {'action': 'allow', 'user_id': '1234'}
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/authenticate',
+            json=response_text,
+            status=200
+        )
+        options1 = {'event': '$login.authenticate', 'user_id': '1234'}
+        options2 = {'event': '$login.authenticate', 'user_id': '1234'}
+        client1 = Client.from_request(request())
+        client1.authenticate(options1)
+        self.mock_timestamp.return_value = '2018-01-02T04:04:05.678'
+        client2 = Client.from_request(request())
+        client2.authenticate(options2)
+
+        response_body1 = json.loads(responses.calls[0].request.body)
+        response_body2 = json.loads(responses.calls[1].request.body)
+
+        self.assertNotEqual(response_body1['timestamp'], response_body2['timestamp'])

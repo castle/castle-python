@@ -1,5 +1,7 @@
 ## master
 
+- [#50](https://github.com/castle/castle-python/pull/50) avoid dict as default parameter
+
 ## 2.3.0 (2019-01-16)
 
 - [#48](https://github.com/castle/castle-python/pull/48) add connection pooling

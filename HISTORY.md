@@ -1,6 +1,8 @@
 ## master
 
-- [#50](https://github.com/castle/castle-python/pull/50) avoid dict as default parameter
+## 2.3.1 (2019-04-05)
+
+- [#50](https://github.com/castle/castle-python/pull/50) generate new default timestamps for each call
 
 ## 2.3.0 (2019-01-16)
 

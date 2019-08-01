@@ -107,7 +107,7 @@ and use it later in a way
 Impersonation mode
 ------------------
 
-https://castle.io/docs/impersonation
+https://castle.io/docs/impersonation_mode
 
 
 Exceptions

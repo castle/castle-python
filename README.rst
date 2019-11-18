@@ -21,7 +21,7 @@ import and configure the library with your Castle API secret.
 
 .. code:: python
 
-    from castle.configuration import configuration
+    from castle.configuration import configuration, WHITE_LIST
 
     # Same as setting it through Castle.api_secret
     configuration.api_secret = ':YOUR-API-SECRET'
@@ -33,15 +33,15 @@ import and configure the library with your Castle API secret.
     configuration.request_timeout = 1000
 
     # Whitelisted and Blacklisted headers are case insensitive and allow to use _ and - as a separator, http prefixes are removed
+    # By default all headers are passed, but some are automatically scrubbed.
+    # If you need to apply a whitelist, we recommend using the minimum set of
+    # standard headers that we've exposed in the `WHITE_LIST` constant.
     # Whitelisted headers
-    configuration.whitelisted = ['X_HEADER']
-    # or append to default
-    configuration.whitelisted = configuration.whitelisted + ['http-x-header']
+    configuration.white_list = WHITE_LIST + ['X_HEADER']
 
-    # Blacklisted headers take advantage over whitelisted elements
-    configuration.blacklisted = ['HTTP-X-header']
-    # or append to default
-    configuration.blacklisted = configuration.blacklisted + ['X_HEADER']
+    # Blacklisted headers take advantage over white_list elements. Note that
+    # some headers are always scrubbed, for security reasons.
+    configuration.black_list = ['HTTP-X-header']
 
 Tracking
 --------

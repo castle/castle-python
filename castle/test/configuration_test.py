@@ -1,6 +1,6 @@
 from castle.test import unittest
 from castle.exceptions import ConfigurationError
-from castle.configuration import Configuration, WHITELISTED, BLACKLISTED
+from castle.configuration import Configuration, WHITE_LIST, BLACK_LIST
 from castle.headers_formatter import HeadersFormatter
 
 
@@ -11,9 +11,9 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.host, 'api.castle.io')
         self.assertEqual(config.port, 443)
         self.assertEqual(config.url_prefix, '/v1')
-        self.assertEqual(config.whitelisted, [])
-        self.assertEqual(config.blacklisted, [
-                         HeadersFormatter.call(v) for v in BLACKLISTED])
+        self.assertEqual(config.white_list, [])
+        self.assertEqual(config.black_list, [
+                         HeadersFormatter.call(v) for v in BLACK_LIST])
         self.assertEqual(config.request_timeout, 500)
         self.assertEqual(config.failover_strategy, 'allow')
 
@@ -37,35 +37,35 @@ class ConfigurationTestCase(unittest.TestCase):
         config.url_prefix = '/v2'
         self.assertEqual(config.url_prefix, '/v2')
 
-    def test_whitelisted_setter_list(self):
+    def test_white_list_setter_list(self):
         config = Configuration()
-        config.whitelisted = ['test']
-        self.assertEqual(config.whitelisted, ['Test'])
+        config.white_list = ['test']
+        self.assertEqual(config.white_list, ['Test'])
 
-    def test_whitelisted_setter_none(self):
+    def test_white_list_setter_none(self):
         config = Configuration()
-        config.whitelisted = None
-        self.assertEqual(config.whitelisted, [])
+        config.white_list = None
+        self.assertEqual(config.white_list, [])
 
-    def test_whitelisted_setter_empty(self):
+    def test_white_list_setter_empty(self):
         config = Configuration()
-        config.whitelisted = ''
-        self.assertEqual(config.whitelisted, [])
+        config.white_list = ''
+        self.assertEqual(config.white_list, [])
 
-    def test_blacklisted_setter_list(self):
+    def test_black_list_setter_list(self):
         config = Configuration()
-        config.blacklisted = ['test']
-        self.assertEqual(config.blacklisted, ['Test'])
+        config.black_list = ['test']
+        self.assertEqual(config.black_list, ['Test'])
 
-    def test_blacklisted_setter_none(self):
+    def test_black_list_setter_none(self):
         config = Configuration()
-        config.blacklisted = None
-        self.assertEqual(config.blacklisted, [])
+        config.black_list = None
+        self.assertEqual(config.black_list, [])
 
-    def test_blacklisted_setter_empty(self):
+    def test_black_list_setter_empty(self):
         config = Configuration()
-        config.blacklisted = ''
-        self.assertEqual(config.blacklisted, [])
+        config.black_list = ''
+        self.assertEqual(config.black_list, [])
 
     def test_request_timeout_setter(self):
         config = Configuration()

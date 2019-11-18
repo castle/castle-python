@@ -9,13 +9,13 @@ class ExtractorsHeaders(object):
 
     def call(self):
         headers = dict()
-        has_whitelist = len(configuration.whitelisted) > 0
+        has_whitelist = len(configuration.white_list) > 0
 
         for key, value in self.environ.items():
             name = self.formatter.call(key)
-            if has_whitelist and name not in configuration.whitelisted:
+            if has_whitelist and name not in configuration.white_list:
                 continue
-            if name in configuration.blacklisted:
+            if name in configuration.black_list:
                 continue
             headers[name] = value
 

@@ -1,9 +1,9 @@
 from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
-BLACKLISTED = ['HTTP_COOKIE']
+BLACK_LIST = ['HTTP_COOKIE', 'HTTP_AUTHORIZATION']
 
-WHITELISTED = [
+WHITE_LIST = [
     "Accept",
     "Accept-Charset",
     "Accept-Datetime",
@@ -32,8 +32,8 @@ class Configuration(object):
         self.host = 'api.castle.io'
         self.port = 443
         self.url_prefix = '/v1'
-        self.whitelisted = []
-        self.blacklisted = BLACKLISTED
+        self.white_list = []
+        self.black_list = BLACK_LIST
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = 'allow'
 
@@ -70,26 +70,26 @@ class Configuration(object):
         self.__url_prefix = value
 
     @property
-    def whitelisted(self):
-        return self.__whitelisted
+    def white_list(self):
+        return self.__white_list
 
-    @whitelisted.setter
-    def whitelisted(self, value):
+    @white_list.setter
+    def white_list(self, value):
         if value:
-            self.__whitelisted = [HeadersFormatter.call(v) for v in value]
+            self.__white_list = [HeadersFormatter.call(v) for v in value]
         else:
-            self.__whitelisted = []
+            self.__white_list = []
 
     @property
-    def blacklisted(self):
-        return self.__blacklisted
+    def black_list(self):
+        return self.__black_list
 
-    @blacklisted.setter
-    def blacklisted(self, value):
+    @black_list.setter
+    def black_list(self, value):
         if value:
-            self.__blacklisted = [HeadersFormatter.call(v) for v in value]
+            self.__black_list = [HeadersFormatter.call(v) for v in value] + BLACK_LIST
         else:
-            self.__blacklisted = []
+            self.__black_list = BLACK_LIST
 
     @property
     def request_timeout(self):

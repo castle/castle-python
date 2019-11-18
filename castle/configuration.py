@@ -1,7 +1,7 @@
 from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
-BLACK_LIST = ['HTTP_COOKIE', 'HTTP_AUTHORIZATION']
+BLACK_LIST = ['Cookie', 'Authorization']
 
 WHITE_LIST = [
     "Accept",

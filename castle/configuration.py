@@ -87,9 +87,9 @@ class Configuration(object):
     @black_list.setter
     def black_list(self, value):
         if value:
-            self.__black_list = [HeadersFormatter.call(v) for v in value] + BLACK_LIST
+            self.__black_list = [HeadersFormatter.call(v) for v in value]
         else:
-            self.__black_list = BLACK_LIST
+            self.__black_list = []
 
     @property
     def request_timeout(self):

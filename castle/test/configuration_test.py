@@ -1,6 +1,6 @@
 from castle.test import unittest
 from castle.exceptions import ConfigurationError
-from castle.configuration import Configuration, WHITE_LIST, BLACK_LIST
+from castle.configuration import Configuration, BLACK_LIST
 from castle.headers_formatter import HeadersFormatter
 
 

@@ -46,7 +46,7 @@ class ContextDefaultTestCase(unittest.TestCase):
         self.assertEqual(context['client_id'], client_id())
         self.assertEqual(context['active'], True)
         self.assertEqual(context['origin'], 'web')
-        self.assertEqual(context['headers'], {'X-Forwarded-For': request_ip()})
+        self.assertEqual(context['headers'], {'X-Forwarded-For': request_ip(), 'Cookie': True})
         self.assertEqual(context['ip'], request_ip())
         self.assertDictEqual(context['library'], {
                              'name': 'castle-python', 'version': __version__})
@@ -59,8 +59,12 @@ class ContextDefaultTestCase(unittest.TestCase):
         self.assertEqual(context['origin'], 'web')
         self.assertEqual(
             context['headers'],
-            {'X-Forwarded-For': request_ip(), 'Accept-Language': 'en',
-             'User-Agent': 'test'}
+            {
+                'X-Forwarded-For': request_ip(),
+                'Accept-Language': 'en',
+                'User-Agent': 'test',
+                'Cookie': True
+            }
         )
         self.assertEqual(context['ip'], request_ip())
         self.assertDictEqual(

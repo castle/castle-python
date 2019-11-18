@@ -1,5 +1,5 @@
 from castle.test import unittest
-from castle.configuration import configuration
+from castle.configuration import configuration, WHITELISTED
 from castle.extractors.headers import ExtractorsHeaders
 
 
@@ -19,12 +19,12 @@ def environ():
 class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_extract_headers(self):
         self.assertEqual(ExtractorsHeaders(environ()).call(),
-                         {'Test': '1', 'User-Agent': 'requests'})
+                         {'User-Agent': 'requests', 'Ok': 'OK', 'Test': '1'})
 
     def test_add_whitelisted_headers(self):
-        configuration.whitelisted += ['TEST']
+        configuration.whitelisted = WHITELISTED + ['TEST']
         self.assertEqual(
             ExtractorsHeaders(environ()).call(),
             {'User-Agent': 'requests', 'Test': '1'}
         )
-        configuration.whitelisted.remove('Test')
+        configuration.whitelisted = []

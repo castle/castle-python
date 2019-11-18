@@ -11,8 +11,7 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.host, 'api.castle.io')
         self.assertEqual(config.port, 443)
         self.assertEqual(config.url_prefix, '/v1')
-        self.assertEqual(config.whitelisted, [
-                         HeadersFormatter.call(v) for v in WHITELISTED])
+        self.assertEqual(config.whitelisted, [])
         self.assertEqual(config.blacklisted, [
                          HeadersFormatter.call(v) for v in BLACKLISTED])
         self.assertEqual(config.request_timeout, 500)

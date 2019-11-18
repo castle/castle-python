@@ -31,7 +31,11 @@ class ClientTestCase(unittest.TestCase):
         context = {
             'active': True,
             'client_id': '1234',
-            'headers': {'User-Agent': 'test', 'X-Forwarded-For': '217.144.192.112'},
+            'headers': {
+                'User-Agent': 'test',
+                'X-Forwarded-For': '217.144.192.112',
+                'X-Castle-Client-Id': '1234'
+            },
             'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION},
             'origin': 'web',
@@ -189,7 +193,11 @@ class ClientTestCase(unittest.TestCase):
         context = {
             'active': True,
             'client_id': '1234',
-            'headers': {'User-Agent': 'test', 'X-Forwarded-For': '217.144.192.112'},
+            'headers': {
+                'User-Agent': 'test',
+                'X-Forwarded-For': '217.144.192.112',
+                'X-Castle-Client-Id': '1234'
+            },
             'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION},
             'origin': 'web',

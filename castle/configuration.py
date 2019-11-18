@@ -33,7 +33,7 @@ class Configuration(object):
         self.port = 443
         self.url_prefix = '/v1'
         self.white_list = []
-        self.black_list = BLACK_LIST
+        self.black_list = []
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = 'allow'
 

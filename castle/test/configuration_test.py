@@ -12,8 +12,7 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.port, 443)
         self.assertEqual(config.url_prefix, '/v1')
         self.assertEqual(config.white_list, [])
-        self.assertEqual(config.black_list, [
-                         HeadersFormatter.call(v) for v in BLACK_LIST])
+        self.assertEqual(config.black_list, [])
         self.assertEqual(config.request_timeout, 500)
         self.assertEqual(config.failover_strategy, 'allow')
 

@@ -16,7 +16,10 @@ WHITELISTED = [
     "Origin",
     "Pragma",
     "Referer",
+    "TE",
+    "Upgrade-Insecure-Requests",
     "User-Agent",
+    "X-Castle-Client-Id",
 ]
 
 # 500 milliseconds

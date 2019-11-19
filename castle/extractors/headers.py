@@ -1,7 +1,8 @@
 from castle.headers_formatter import HeadersFormatter
 from castle.configuration import configuration
 
-BLACKLISTED = ['Cookie', 'Authorization']
+DEFAULT_BLACKLIST = ['Cookie', 'Authorization']
+DEFAULT_WHITELIST = ['User-Agent']
 
 
 class ExtractorsHeaders(object):
@@ -12,14 +13,13 @@ class ExtractorsHeaders(object):
     def call(self):
         headers = dict()
         has_whitelist = len(configuration.whitelisted) > 0
-        extended_blacklisted = configuration.blacklisted + BLACKLISTED
 
         for key, value in self.environ.items():
             name = self.formatter.call(key)
-            if has_whitelist and name not in configuration.whitelisted:
+            if has_whitelist and name not in configuration.whitelisted and name not in DEFAULT_WHITELIST:
                 headers[name] = True
                 continue
-            if name in extended_blacklisted:
+            if name in configuration.blacklisted or name in DEFAULT_BLACKLIST:
                 headers[name] = True
                 continue
             headers[name] = value

@@ -1,5 +1,9 @@
 ## master
 
+## 2.3.2 (2019-11-20)
+
+- [#53](https://github.com/castle/castle-python/pull/53) Update whitelisting and blacklisting behavior
+
 ## 2.3.1 (2019-04-05)
 
 - [#50](https://github.com/castle/castle-python/pull/50) generate new default timestamps for each call

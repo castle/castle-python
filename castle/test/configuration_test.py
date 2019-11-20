@@ -1,6 +1,6 @@
 from castle.test import unittest
 from castle.exceptions import ConfigurationError
-from castle.configuration import Configuration, WHITELISTED, BLACKLISTED
+from castle.configuration import Configuration
 from castle.headers_formatter import HeadersFormatter
 
 
@@ -11,10 +11,8 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.host, 'api.castle.io')
         self.assertEqual(config.port, 443)
         self.assertEqual(config.url_prefix, '/v1')
-        self.assertEqual(config.whitelisted, [
-                         HeadersFormatter.call(v) for v in WHITELISTED])
-        self.assertEqual(config.blacklisted, [
-                         HeadersFormatter.call(v) for v in BLACKLISTED])
+        self.assertEqual(config.whitelisted, [])
+        self.assertEqual(config.blacklisted, [])
         self.assertEqual(config.request_timeout, 500)
         self.assertEqual(config.failover_strategy, 'allow')
 

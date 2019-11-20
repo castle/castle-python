@@ -2,21 +2,25 @@ from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
 WHITELISTED = [
-    'User-Agent',
-    'Accept-Language',
-    'Accept-Encoding',
-    'Accept-Charset',
-    'Accept',
-    'Accept-Datetime',
-    'Forwarded',
-    'X-Forwarded',
-    'X-Real-IP',
-    'REMOTE_ADDR',
-    'X-Forwarded-For',
-    'CF_CONNECTING_IP'
+    "Accept",
+    "Accept-Charset",
+    "Accept-Datetime",
+    "Accept-Encoding",
+    "Accept-Language",
+    "Cache-Control",
+    "Connection",
+    "Content-Length",
+    "Content-Type",
+    "Cookie",
+    "Host",
+    "Origin",
+    "Pragma",
+    "Referer",
+    "TE",
+    "Upgrade-Insecure-Requests",
+    "User-Agent",
+    "X-Castle-Client-Id",
 ]
-
-BLACKLISTED = ['HTTP_COOKIE']
 
 # 500 milliseconds
 REQUEST_TIMEOUT = 500
@@ -29,8 +33,8 @@ class Configuration(object):
         self.host = 'api.castle.io'
         self.port = 443
         self.url_prefix = '/v1'
-        self.whitelisted = WHITELISTED
-        self.blacklisted = BLACKLISTED
+        self.whitelisted = []
+        self.blacklisted = []
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = 'allow'
 

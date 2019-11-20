@@ -1,5 +1,5 @@
 from castle.test import unittest
-from castle.configuration import configuration
+from castle.configuration import configuration, WHITELISTED
 from castle.extractors.headers import ExtractorsHeaders
 
 
@@ -9,7 +9,7 @@ def client_id():
 
 def environ():
     return {
-        'HTTP_X_FORWARDED_FOR': '1.2.3.4',
+        'HTTP_USER_AGENT': 'requests',
         'HTTP_OK': 'OK',
         'TEST': '1',
         'HTTP_COOKIE': "__cid={client_id};other=efgh".format(client_id=client_id)
@@ -18,13 +18,14 @@ def environ():
 
 class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_extract_headers(self):
+        configuration.whitelisted = []
         self.assertEqual(ExtractorsHeaders(environ()).call(),
-                         {'X-Forwarded-For': '1.2.3.4'})
+                         {'User-Agent': 'requests', 'Ok': 'OK', 'Test': '1', 'Cookie': True})
 
-    def test_extend_whitelisted_headers(self):
-        configuration.whitelisted += ['TEST']
+    def test_add_whitelisted_headers(self):
+        configuration.whitelisted = WHITELISTED + ['TEST']
         self.assertEqual(
             ExtractorsHeaders(environ()).call(),
-            {'X-Forwarded-For': '1.2.3.4', 'Test': '1'}
+            {'User-Agent': 'requests', 'Test': '1', 'Cookie': True, 'Ok': True}
         )
-        configuration.whitelisted.remove('Test')
+        configuration.whitelisted = []

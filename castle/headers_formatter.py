@@ -1,5 +1,4 @@
 import re
-import sys
 
 
 class HeadersFormatter(object):
@@ -9,7 +8,4 @@ class HeadersFormatter(object):
 
     @staticmethod
     def split(header):
-        if sys.version_info[:2] == (2, 6):
-            return re.split(r'_|-', re.sub(re.compile(r'^HTTP(?:_|-)', re.IGNORECASE), '', header))
-        else:
-            return re.split(r'_|-', re.sub(r'^HTTP(?:_|-)', '', header, flags=re.IGNORECASE))
+        return re.split(r'_|-', re.sub(r'^HTTP(?:_|-)', '', header, flags=re.IGNORECASE))

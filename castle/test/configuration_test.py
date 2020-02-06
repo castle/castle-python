@@ -15,6 +15,7 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.blacklisted, [])
         self.assertEqual(config.request_timeout, 500)
         self.assertEqual(config.failover_strategy, 'allow')
+        self.assertEqual(config.ip_headers, [])
 
     def test_api_secret_setter(self):
         config = Configuration()
@@ -80,3 +81,14 @@ class ConfigurationTestCase(unittest.TestCase):
         config = Configuration()
         with self.assertRaises(ConfigurationError):
             config.failover_strategy = 'invalid'
+
+    def test_ip_headers_setter_valid(self):
+        config = Configuration()
+        ip_headers = ['X-Forwarded-For']
+        config.ip_headers = ip_headers
+        self.assertEqual(config.ip_headers, ip_headers)
+
+    def test_ip_headers_setter_invalid(self):
+        config = Configuration()
+        with self.assertRaises(ConfigurationError):
+            config.ip_headers = 'invalid'

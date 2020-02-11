@@ -2,6 +2,10 @@
 
 - [#59](https://github.com/castle/castle-python/pull/59) drop requests min version in ci
 
+### Breaking Changes:
+
+- [#57](https://github.com/castle/castle-python/pull/57) dropped support for python 2
+
 ## 2.4.0 (2019-11-20)
 
 - [#53](https://github.com/castle/castle-python/pull/53) Update whitelisting and blacklisting behavior

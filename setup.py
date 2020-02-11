@@ -1,5 +1,3 @@
-import sys
-
 try:
     from setuptools import find_packages, setup
 except ImportError:
@@ -7,11 +5,6 @@ except ImportError:
 
 from castle.version import VERSION
 
-
-if sys.version_info[:2] == (2, 6):
-    tests_require = ['responses<0.7', 'unittest2']
-else:
-    tests_require = ['responses']
 
 setup(
     name="castle",
@@ -29,9 +22,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
@@ -41,6 +31,6 @@ setup(
     install_requires=[
         'requests>=2.5',
     ],
-    tests_require=tests_require,
+    tests_require=['responses'],
     test_suite='castle.test.all'
 )

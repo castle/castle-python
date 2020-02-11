@@ -1,27 +1,8 @@
 import logging
 import sys
+import unittest
+from unittest import mock
 
-
-# The unittest module got a significant overhaul
-# in 2.7, so if we're in 2.6 we can use the backported
-# version unittest2.
-if sys.version_info[:2] == (2, 6):
-    # pylint: disable=import-error
-    import unittest2 as unittest
-else:
-    import unittest
-
-
-# Python 3 includes mocking, while 2 requires an extra module.
-if sys.version_info[0] == 2:
-    # pylint: disable=import-error
-    import mock
-else:
-    from unittest import mock
-
-if sys.version_info[:2] == (2, 6):
-    import subprocess
-    subprocess.call(["sed", "-i", "-e",  's/import _io/import io as _io/g', "/home/travis/build/castle/castle-python/.eggs/responses-0.6.2-py2.6.egg/responses.py"])
 
 TEST_MODULES = [
     'castle.test.api_test',

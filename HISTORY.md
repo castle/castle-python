@@ -1,6 +1,7 @@
 ## master
 
 - [#59](https://github.com/castle/castle-python/pull/59) drop requests min version in ci
+- [#56](https://github.com/castle/castle-python/pull/56) drop special ip header behavior
 
 ### Breaking Changes:
 

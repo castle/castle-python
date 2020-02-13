@@ -84,7 +84,7 @@ class ConfigurationTestCase(unittest.TestCase):
 
     def test_ip_headers_setter_valid(self):
         config = Configuration()
-        ip_headers = ['X-Forwarded-For']
+        ip_headers = ['HTTP_X_FORWARDED_FOR']
         config.ip_headers = ip_headers
         self.assertEqual(config.ip_headers, ip_headers)
 

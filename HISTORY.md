@@ -1,5 +1,7 @@
 ## master
 
+## 3.0.0 (2020-02-13)
+
 - [#59](https://github.com/castle/castle-python/pull/59) drop requests min version in ci
 - [#56](https://github.com/castle/castle-python/pull/56) drop special ip header behavior
 - [#58](https://github.com/castle/castle-python/pull/58) Adds `ip_header` configuration option

@@ -37,6 +37,7 @@ class Configuration(object):
         self.blacklisted = []
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = 'allow'
+        self.ip_headers = []
 
     @property
     def api_secret(self):
@@ -108,6 +109,17 @@ class Configuration(object):
     def failover_strategy(self, value):
         if value in FAILOVER_STRATEGIES:
             self.__failover_strategy = value
+        else:
+            raise ConfigurationError
+
+    @property
+    def ip_headers(self):
+        return self.__ip_headers
+
+    @ip_headers.setter
+    def ip_headers(self, value):
+        if isinstance(value, list):
+            self.__ip_headers = value
         else:
             raise ConfigurationError
 

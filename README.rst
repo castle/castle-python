@@ -43,8 +43,9 @@ import and configure the library with your Castle API secret.
     # some headers are always scrubbed, for security reasons.
     configuration.blacklisted = ['HTTP-X-header']
 
-    # Castle needs the original IP of the client, not the IP of your proxy or load balancer. If that IP is sent as a header
-    # you can configure the SDK to extract it automatically.
+    # Castle needs the original IP of the client, not the IP of your proxy or load balancer.
+    # If that IP is sent as a header you can configure the SDK to extract it automatically.
+    # Note that format, it should be prefixed with `HTTP`, capitalized and separated by underscores.
     configuration.ip_headers = ["HTTP_X_FORWARDED_FOR"]
 
 Tracking

@@ -16,6 +16,7 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.request_timeout, 500)
         self.assertEqual(config.failover_strategy, 'allow')
         self.assertEqual(config.ip_headers, [])
+        self.assertEqual(config.trusted_proxies, [])
 
     def test_api_secret_setter(self):
         config = Configuration()
@@ -84,11 +85,20 @@ class ConfigurationTestCase(unittest.TestCase):
 
     def test_ip_headers_setter_valid(self):
         config = Configuration()
-        ip_headers = ['HTTP_X_FORWARDED_FOR']
-        config.ip_headers = ip_headers
-        self.assertEqual(config.ip_headers, ip_headers)
+        config.ip_headers = ['HTTP_X_FORWARDED_FOR']
+        self.assertEqual(config.ip_headers, ['X-Forwarded-For'])
 
     def test_ip_headers_setter_invalid(self):
         config = Configuration()
         with self.assertRaises(ConfigurationError):
             config.ip_headers = 'invalid'
+
+    def test_trusted_proxies_setter_valid(self):
+        config = Configuration()
+        config.trusted_proxies = ['2.2.2.2']
+        self.assertEqual(config.trusted_proxies, ['2.2.2.2'])
+
+    def test_trusted_proxies_setter_invalid(self):
+        config = Configuration()
+        with self.assertRaises(ConfigurationError):
+            config.trusted_proxies = 'invalid'

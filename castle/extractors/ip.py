@@ -7,6 +7,7 @@ DEFAULT = ['X-Forwarded-For', 'Client-Ip', 'Remote-Addr']
 # default header fallback when ip is not found
 FALLBACK = 'Remote-Addr'
 
+
 class ExtractorsIp(object):
     def __init__(self, headers):
         self.headers = headers
@@ -39,11 +40,10 @@ class ExtractorsIp(object):
 
     def _is_proxy(self, ip_address):
         for proxy_re in self.proxies:
-            if re.match(proxy_re, ip_address, flags=re.I|re.X):
+            if re.match(proxy_re, ip_address, flags=re.I | re.X):
                 return True
 
         return False
-
 
     def _ips_from(self, header):
         value = self.headers.get(header)

@@ -45,7 +45,6 @@ class ContextDefault(object):
             context['user_agent'] = self.pre_headers.get('User-Agent')
         return context
 
-
     @staticmethod
     def _fetch_cookies(request, cookies):
         if cookies:

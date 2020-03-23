@@ -11,6 +11,7 @@ from castle.exceptions import InternalServerError, RequestError, ImpersonationFa
 from castle.failover_response import FailoverResponse
 from castle.utils import timestamp as generate_timestamp
 
+
 class Client(object):
 
     @classmethod

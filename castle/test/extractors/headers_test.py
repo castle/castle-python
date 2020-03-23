@@ -46,6 +46,7 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
              }
         )
 #
+
     def test_restricted_blacklisted_headers(self):
         configuration.blacklisted = ['User-Agent']
         self.assertEqual(
@@ -74,6 +75,7 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
              }
         )
 #
+
     def test_blacklisted_and_whitelisted_headers(self):
         configuration.blacklisted = ['Accept']
         configuration.whitelisted = ['Accept']

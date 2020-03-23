@@ -37,6 +37,7 @@ TRUSTED_PROXIES = [r"""
         \Aunix\Z|
         \Aunix:"""]
 
+
 class Configuration(object):
     def __init__(self):
         self.api_secret = None
@@ -144,6 +145,7 @@ class Configuration(object):
             self.__trusted_proxies = value
         else:
             raise ConfigurationError
+
 
 # pylint: disable=invalid-name
 configuration = Configuration()

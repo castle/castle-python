@@ -1,4 +1,3 @@
-import sys
 import threading
 from requests import Response
 import responses
@@ -11,6 +10,7 @@ try:
 except ImportError:
     from http.server import BaseHTTPRequestHandler, HTTPServer
 
+
 def run_server():
     class SimpleHandler(BaseHTTPRequestHandler):
         def do_POST(self):
@@ -20,7 +20,6 @@ def run_server():
             self.send_header('content-length', len(body))
             self.end_headers()
             self.wfile.write(body)
-
 
     server = HTTPServer(('', 65521), SimpleHandler)
     httpd_thread = threading.Thread(target=server.serve_forever)
@@ -67,7 +66,6 @@ class RequestTestCase(unittest.TestCase):
         configuration.host = 'api.castle.io'
         configuration.port = 443
         self.assertEqual(num_pools, 1)
-
 
     def test_build_url(self):
         self.assertEqual(

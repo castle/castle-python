@@ -24,6 +24,7 @@ def environ():
         'HTTP-User-Agent': 'test'
     }
 
+
 def request(env):
     req = mock.Mock()
     req.ip = request_ip()

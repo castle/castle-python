@@ -1,7 +1,6 @@
 from castle.test import unittest
 from castle.exceptions import ConfigurationError
 from castle.configuration import Configuration
-from castle.headers_formatter import HeadersFormatter
 
 
 class ConfigurationTestCase(unittest.TestCase):

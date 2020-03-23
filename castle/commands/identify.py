@@ -2,7 +2,6 @@ from castle.command import Command
 from castle.utils import timestamp
 from castle.context.merger import ContextMerger
 from castle.context.sanitizer import ContextSanitizer
-from castle.validators.present import ValidatorsPresent
 from castle.validators.not_supported import ValidatorsNotSupported
 
 

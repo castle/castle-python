@@ -4,7 +4,7 @@ import re
 class HeadersFormatter(object):
     @staticmethod
     def call(header):
-        return HeadersFormatter.format(re.sub(r'^HTTP(?:_|-)', '', header, flags=re.IGNORECASE))
+        return HeadersFormatter.format(re.sub(r'^HTTP(?:_|-)', '', header, flags=re.I))
 
     @staticmethod
     def format(header):

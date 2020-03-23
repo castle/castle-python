@@ -13,25 +13,16 @@ def cookies():
 
 
 def request_ip():
-    return '127.0.0.1'
+    return '5.5.5.5'
 
 
 def environ():
     return {
         'HTTP_X_FORWARDED_FOR': request_ip(),
-        'HTTP_COOKIE': "__cid={client_id()};other=efgh"
-    }
-
-
-def environ_with_extras():
-    extra = {
+        'HTTP_COOKIE': "__cid={client_id()};other=efgh",
         'HTTP-Accept-Language': 'en',
         'HTTP-User-Agent': 'test'
     }
-    context = dict(environ())
-    context.update(extra)
-    return context
-
 
 def request(env):
     req = mock.Mock()
@@ -41,19 +32,10 @@ def request(env):
 
 
 class ContextDefaultTestCase(unittest.TestCase):
-    def test_default_context(self):
-        context = ContextDefault(request(environ()), cookies()).call()
-        self.assertEqual(context['client_id'], client_id())
-        self.assertEqual(context['active'], True)
-        self.assertEqual(context['origin'], 'web')
-        self.assertEqual(context['headers'], {'X-Forwarded-For': request_ip(), 'Cookie': True})
-        self.assertEqual(context['ip'], request_ip())
-        self.assertDictEqual(context['library'], {
-                             'name': 'castle-python', 'version': __version__})
 
-    def test_default_context_with_extras(self):
+    def test_default_context(self):
         context = ContextDefault(
-            request(environ_with_extras()), cookies()).call()
+            request(environ()), cookies()).call()
         self.assertEqual(context['client_id'], client_id())
         self.assertEqual(context['active'], True)
         self.assertEqual(context['origin'], 'web')
@@ -71,3 +53,4 @@ class ContextDefaultTestCase(unittest.TestCase):
             context['library'],
             {'name': 'castle-python', 'version': __version__}
         )
+        self.assertEqual(context['user_agent'], 'test')

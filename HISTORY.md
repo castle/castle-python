@@ -1,5 +1,9 @@
 ## master
 
+- [#61](https://github.com/castle/castle-python/pull/61) improve headers and ip extractions, improve ip_headers config, add trusted proxies config, added more events to events list
+
+https://github.com/castle/castle-python/pull/61
+
 ## 3.0.0 (2020-02-13)
 
 - [#59](https://github.com/castle/castle-python/pull/59) drop requests min version in ci
@@ -12,7 +16,7 @@
 
 ## 2.4.0 (2019-11-20)
 
-- [#53](https://github.com/castle/castle-python/pull/53) Update whitelisting and blacklisting behavior
+- [#53](https://github.com/castle/castle-python/pull/53) update whitelisting and blacklisting behavior
 
 ## 2.3.1 (2019-04-05)
 

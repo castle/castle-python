@@ -5,6 +5,8 @@ from castle.test import unittest
 from castle.api import Api
 from castle.command import Command
 from castle.apis.request import ApisRequest
+from castle.configuration import configuration
+from castle.exceptions import ConfigurationError
 
 
 def command():
@@ -16,6 +18,12 @@ def response_text():
 
 
 class ApiTestCase(unittest.TestCase):
+    def setUp(self):
+        configuration.api_secret = 'test'
+
+    def tearDown(self):
+        configuration.api_secret = None
+
     def test_init(self):
         self.assertIsInstance(Api().req, ApisRequest)
 
@@ -38,3 +46,9 @@ class ApiTestCase(unittest.TestCase):
             status=200
         )
         self.assertEqual(Api().call(command()), response_text())
+
+    @responses.activate
+    def test_no_api_secret(self):
+        configuration.api_secret = ''
+        with self.assertRaises(ConfigurationError):
+            Api().call(command())

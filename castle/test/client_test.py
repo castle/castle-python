@@ -26,6 +26,10 @@ class ClientTestCase(unittest.TestCase):
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = '2018-01-02T03:04:05.678'
         self.addCleanup(timestamp_patcher.stop)
+        configuration.api_secret = 'test'
+
+    def tearDown(self):
+        configuration.api_secret = None
 
     def test_init(self):
         context = {

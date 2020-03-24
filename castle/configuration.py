@@ -51,6 +51,9 @@ class Configuration(object):
         self.ip_headers = []
         self.trusted_proxies = []
 
+    def isValid(self):
+        return self.host and self.port and self.api_secret
+
     @property
     def api_secret(self):
         return self.__api_secret

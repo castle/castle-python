@@ -7,7 +7,7 @@ from unittest import mock
 TEST_MODULES = [
     'castle.test.apis.request_test',
     'castle.test.apis.response_test',
-    'castle.test.apis.session_sharer_test',
+    'castle.test.apis.session_test',
     'castle.test.api_test',
     'castle.test.client_test',
     'castle.test.configuration_test',

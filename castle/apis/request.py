@@ -1,16 +1,16 @@
 import json
 from castle.configuration import configuration
-from castle.apis.session_sharer import ApisSessionSharer
+from castle.apis.session import ApisSession
 
 
 class ApisRequest(object):
     def __init__(self, headers=None):
         self.headers = headers or dict()
         self.base_url = ApisRequest.build_base_url()
-        self.sharer = ApisSessionSharer()
+        self.session = ApisSession()
 
     def build_query(self, method, path, params):
-        return self.sharer.session.request(
+        return self.session.get().request(
             method,
             self.build_url(path),
             auth=('', configuration.api_secret),

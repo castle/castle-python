@@ -13,7 +13,7 @@ def request():
     return req
 
 
-class SessionTestCase(unittest.TestCase):
+class ApisSessionSharerTestCase(unittest.TestCase):
     def test_init(self):
         client = Client.from_request(request(), {})
         client2 = Client.from_request(request(), {})

@@ -2,7 +2,7 @@ import threading
 from requests import Response
 import responses
 from castle.test import unittest
-from castle.request import Request
+from castle.apis.request import ApisRequest
 from castle.configuration import configuration
 
 try:
@@ -28,13 +28,13 @@ def run_server():
     return httpd_thread
 
 
-class RequestTestCase(unittest.TestCase):
+class ApisRequestTestCase(unittest.TestCase):
     def test_init_headers(self):
         headers = {'X-Castle-Client-Id': '1234'}
-        self.assertEqual(Request(headers).headers, headers)
+        self.assertEqual(ApisRequest(headers).headers, headers)
 
     def test_init_base_url(self):
-        self.assertEqual(Request().base_url, 'https://api.castle.io/v1')
+        self.assertEqual(ApisRequest().base_url, 'https://api.castle.io/v1')
 
     @responses.activate
     def test_build_query(self):
@@ -48,7 +48,7 @@ class RequestTestCase(unittest.TestCase):
             json=response_text,
             status=200
         )
-        res = Request().build_query('post', 'authenticate', data)
+        res = ApisRequest().build_query('post', 'authenticate', data)
         self.assertIsInstance(res, Response)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json(), response_text)
@@ -59,7 +59,7 @@ class RequestTestCase(unittest.TestCase):
         configuration.host = 'localhost'
         configuration.port = 65521
         run_server()
-        request = Request()
+        request = ApisRequest()
         data = {'event': '$login.authenticate', 'user_id': '12345'}
         response = request.build_query('post', 'authenticate', data)
         num_pools = len(response.connection.poolmanager.pools.keys())
@@ -69,14 +69,14 @@ class RequestTestCase(unittest.TestCase):
 
     def test_build_url(self):
         self.assertEqual(
-            Request().build_url('authenticate'),
+            ApisRequest().build_url('authenticate'),
             'https://api.castle.io/v1/authenticate'
         )
 
     def test_verify_true(self):
-        self.assertEqual(Request().verify(), True)
+        self.assertEqual(ApisRequest().verify(), True)
 
     def test_verify_false(self):
         configuration.port = 3001
-        self.assertEqual(Request().verify(), False)
+        self.assertEqual(ApisRequest().verify(), False)
         configuration.port = 443

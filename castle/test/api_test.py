@@ -4,7 +4,7 @@ import responses
 from castle.test import unittest
 from castle.api import Api
 from castle.command import Command
-from castle.request import Request
+from castle.apis.request import ApisRequest
 
 
 def command():
@@ -17,7 +17,7 @@ def response_text():
 
 class ApiTestCase(unittest.TestCase):
     def test_init(self):
-        self.assertIsInstance(Api().req, Request)
+        self.assertIsInstance(Api().req, ApisRequest)
 
     @responses.activate
     def test_request(self):

@@ -1,31 +1,84 @@
 from castle.test import unittest
-from castle.configuration import configuration, WHITELISTED
+from castle.configuration import configuration
 from castle.extractors.headers import ExtractorsHeaders
 
 
-def client_id():
-    return 'abcd'
-
-
-def environ():
-    return {
-        'HTTP_USER_AGENT': 'requests',
-        'HTTP_OK': 'OK',
-        'TEST': '1',
-        'HTTP_COOKIE': "__cid={client_id};other=efgh".format(client_id=client_id)
-    }
+def formatted_headers():
+    return dict({
+        'Content-Length': '0',
+        'Authorization': 'Basic 123456',
+        'Cookie': '__cid=abcd;other=efgh',
+        'Ok': 'OK',
+        'Accept': 'application/json',
+        'X-Forwarded-For': '1.2.3.4',
+        'User-Agent': 'Mozilla 1234'
+    })
 
 
 class ExtractorsHeadersTestCase(unittest.TestCase):
-    def test_extract_headers(self):
-        configuration.whitelisted = []
-        self.assertEqual(ExtractorsHeaders(environ()).call(),
-                         {'User-Agent': 'requests', 'Ok': 'OK', 'Test': '1', 'Cookie': True})
 
-    def test_add_whitelisted_headers(self):
-        configuration.whitelisted = WHITELISTED + ['TEST']
-        self.assertEqual(
-            ExtractorsHeaders(environ()).call(),
-            {'User-Agent': 'requests', 'Test': '1', 'Cookie': True, 'Ok': True}
-        )
+    def tearDown(self):
         configuration.whitelisted = []
+        configuration.blacklisted = []
+
+    def test_extract_headers(self):
+        self.assertEqual(ExtractorsHeaders(formatted_headers()).call(),
+                         {'Accept': 'application/json',
+                          'Authorization': True,
+                          'Cookie': True,
+                          'Content-Length': '0',
+                          'Ok': 'OK',
+                          'User-Agent': 'Mozilla 1234',
+                          'X-Forwarded-For': '1.2.3.4'
+                          })
+
+    def test_whitelisted_headers(self):
+        configuration.whitelisted = ['Accept', 'OK']
+        self.assertEqual(
+            ExtractorsHeaders(formatted_headers()).call(),
+            {'Accept': 'application/json',
+             'Authorization': True,
+             'Cookie': True,
+             'Content-Length': True,
+             'Ok': 'OK',
+             'User-Agent': 'Mozilla 1234',
+             'X-Forwarded-For': True
+             }
+        )
+#
+
+    def test_restricted_blacklisted_headers(self):
+        configuration.blacklisted = ['User-Agent']
+        self.assertEqual(
+            ExtractorsHeaders(formatted_headers()).call(),
+            {'Accept': 'application/json',
+             'Authorization': True,
+             'Cookie': True,
+             'Content-Length': '0',
+             'Ok': 'OK',
+             'User-Agent': 'Mozilla 1234',
+             'X-Forwarded-For': '1.2.3.4'
+             }
+        )
+
+    def test_blacklisted_headers(self):
+        configuration.blacklisted = ['Accept']
+        self.assertEqual(
+            ExtractorsHeaders(formatted_headers()).call(),
+            {'Accept': True,
+             'Authorization': True,
+             'Cookie': True,
+             'Content-Length': '0',
+             'Ok': 'OK',
+             'User-Agent': 'Mozilla 1234',
+             'X-Forwarded-For': '1.2.3.4'
+             }
+        )
+#
+
+    def test_blacklisted_and_whitelisted_headers(self):
+        configuration.blacklisted = ['Accept']
+        configuration.whitelisted = ['Accept']
+        self.assertEqual(
+            ExtractorsHeaders(formatted_headers()).call()['Accept'], True
+        )

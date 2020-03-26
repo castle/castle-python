@@ -7,13 +7,13 @@ class ContextSanitizer(object):
             return sanitized_context
         return dict()
 
-    @classmethod
-    def _sanitize_active_mode(cls, context):
+    @staticmethod
+    def _sanitize_active_mode(context):
         if context is None:
             return None
-        elif 'active' not in context:
+        if 'active' not in context:
             return context
-        elif isinstance(context.get('active'), bool):
+        if isinstance(context.get('active'), bool):
             return context
 
         context_copy = context.copy()

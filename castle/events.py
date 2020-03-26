@@ -35,3 +35,8 @@ CHALLENGE_REQUESTED = '$challenge.requested'
 CHALLENGE_SUCCEEDED = '$challenge.succeeded'
 # Record when additional verification failed.
 CHALLENGE_FAILED = '$challenge.failed'
+# Record when a user attempts an in-app transaction, such as a purchase or withdrawal.
+TRANSACTION_ATTEMPTED = '$transaction.attempted'
+# Record when a user session is extended, or use any time you want
+# to re-authenticate a user mid-session.
+SESSION_EXTENDED = '$session.extended'

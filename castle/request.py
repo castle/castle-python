@@ -38,4 +38,4 @@ class Request(object):
 
     @staticmethod
     def verify():
-        return True if configuration.port == 443 else False
+        return configuration.port == 443

@@ -16,7 +16,7 @@ def cookies():
 
 
 def environ():
-    return {'HTTP_X_CASTLE_CLIENT_ID': client_id_environ()}
+    return {'X-Castle-Client-Id': client_id_environ()}
 
 
 class ExtractorsClientIdTestCase(unittest.TestCase):

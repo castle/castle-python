@@ -26,6 +26,7 @@ def default_command_with_data(**data):
         data=dict(sent_at=mock.sentinel.timestamp, **data)
     )
 
+
 def default_reset_command_with_data(**data):
     """What we expect the impersonate command to look like."""
     return Command(

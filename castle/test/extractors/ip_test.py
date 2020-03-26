@@ -1,66 +1,55 @@
-from castle.test import unittest, mock
+from castle.test import unittest
 from castle.extractors.ip import ExtractorsIp
 from castle.configuration import configuration
 
 
-def request_ip():
-    return '127.0.0.1'
-
-
-def request_ip_next():
-    return '127.0.0.2'
-
-
-def request():
-    req = mock.Mock(spec=['ip'])
-    req.ip = request_ip()
-    return req
-
-
-def request_with_ip_remote_addr():
-    req = mock.Mock(spec=['environ'])
-    req.environ = {'REMOTE_ADDR': request_ip()}
-    return req
-
-
-def request_with_ip_x_forwarded_for():
-    req = mock.Mock(spec=['environ'])
-    req.environ = {'HTTP_X_FORWARDED_FOR': request_ip()}
-    return req
-
-
-def request_with_ip_cf_connecting_ip():
-    req = mock.Mock(spec=['environ'])
-    req.environ = {'HTTP_CF_CONNECTING_IP': request_ip_next()}
-    return req
-
-
 class ExtractorsIpTestCase(unittest.TestCase):
-    @classmethod
-    def tearDownClass(cls):
+    def tearDown(self):
         configuration.ip_headers = []
+        configuration.trusted_proxies = []
 
     def test_extract_ip(self):
-        self.assertEqual(ExtractorsIp(request()).call(), request_ip())
+        headers = {'X-Forwarded-For': '1.2.3.5'}
+        self.assertEqual(ExtractorsIp(headers).call(), '1.2.3.5')
 
-    def test_extract_ip_from_wsgi_request_remote_addr(self):
-        self.assertEqual(
-            ExtractorsIp(request_with_ip_remote_addr()).call(),
-            request_ip()
-        )
-
-    def test_extract_ip_from_wsgi_request_configured_ip_header_first(self):
+    def test_extract_ip_when_second_header(self):
+        headers = {'Cf-Connecting-Ip': '1.2.3.4', 'X-Forwarded-For': '1.1.1.1, 1.2.2.2, 1.2.3.5'}
         configuration.ip_headers = ["HTTP_CF_CONNECTING_IP"]
         self.assertEqual(
-            ExtractorsIp(request_with_ip_cf_connecting_ip()).call(),
-            request_ip_next()
+            ExtractorsIp(headers).call(),
+            '1.2.3.4'
         )
-        configuration.ip_headers = []
 
-    def test_extract_ip_from_wsgi_request_configured_ip_header_second(self):
-        configuration.ip_headers = ["HTTP_CF_CONNECTING_IP", "HTTP_X_FORWARDED_FOR"]
+    def test_extract_ip_when_second_header_with_different_setting(self):
+        headers = {'Cf-Connecting-Ip': '1.2.3.4', 'X-Forwarded-For': '1.1.1.1, 1.2.2.2, 1.2.3.5'}
+        configuration.ip_headers = ["CF-CONNECTING-IP"]
         self.assertEqual(
-            ExtractorsIp(request_with_ip_x_forwarded_for()).call(),
-            request_ip()
+            ExtractorsIp(headers).call(),
+            '1.2.3.4'
         )
-        configuration.ip_headers = []
+
+    def test_extract_ip_when_all_trusted_proxies(self):
+        xf_header = """
+           127.0.0.1,10.0.0.1,172.31.0.1,192.168.0.1,::1,fd00::,localhost,unix,unix:/tmp/sock
+        """
+        headers = {'Remote-Addr': '127.0.0.1', 'X-Forwarded-For': xf_header}
+        self.assertEqual(
+            ExtractorsIp(headers).call(),
+            '127.0.0.1'
+        )
+
+    def test_extract_ip_for_spoof_ip_attempt(self):
+        headers = {'Client-Ip': '6.6.6.6', 'X-Forwarded-For': '6.6.6.6, 2.2.2.3, 192.168.0.7'}
+        self.assertEqual(
+            ExtractorsIp(headers).call(),
+            '2.2.2.3'
+        )
+#
+
+    def test_extract_ip_for_spoof_ip_attempt_when_all_trusted_proxies(self):
+        headers = {'Client-Ip': '6.6.6.6', 'X-Forwarded-For': '6.6.6.6, 2.2.2.3, 192.168.0.7'}
+        configuration.trusted_proxies = [r'^2.2.2.\d$']
+        self.assertEqual(
+            ExtractorsIp(headers).call(),
+            '6.6.6.6'
+        )

@@ -1,7 +1,7 @@
 class ExtractorsClientId(object):
-    def __init__(self, environ, cookies=None):
-        self.environ = environ
+    def __init__(self, headers, cookies=None):
+        self.headers = headers
         self.cookies = cookies or dict()
 
     def call(self):
-        return self.environ.get('HTTP_X_CASTLE_CLIENT_ID', self.cookies.get('__cid', ''))
+        return self.headers.get('X-Castle-Client-Id', self.cookies.get('__cid', ''))

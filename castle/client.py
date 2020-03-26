@@ -1,3 +1,4 @@
+import warnings
 from castle.configuration import configuration
 from castle.api import Api
 from castle.context.default import ContextDefault
@@ -9,7 +10,7 @@ from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover_response import FailoverResponse
 from castle.utils import timestamp as generate_timestamp
-import warnings
+
 
 class Client(object):
 

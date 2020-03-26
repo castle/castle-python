@@ -1,7 +1,7 @@
 from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
-WHITELISTED = [
+DEFAULT_WHITELIST = [
     "Accept",
     "Accept-Charset",
     "Accept-Datetime",
@@ -25,19 +25,31 @@ WHITELISTED = [
 # 500 milliseconds
 REQUEST_TIMEOUT = 500
 FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
+HOST = 'api.castle.io'
+PORT = 443
+URL_PREFIX = '/v1'
+FAILOVER_STRATEGY = 'allow'
+TRUSTED_PROXIES = [r"""
+        \A127\.0\.0\.1\Z|
+        \A(10|172\.(1[6-9]|2[0-9]|30|31)|192\.168)\.|
+        \A::1\Z|\Afd[0-9a-f]{2}:.+|
+        \Alocalhost\Z|
+        \Aunix\Z|
+        \Aunix:"""]
 
 
 class Configuration(object):
     def __init__(self):
         self.api_secret = None
-        self.host = 'api.castle.io'
-        self.port = 443
-        self.url_prefix = '/v1'
+        self.host = HOST
+        self.port = PORT
+        self.url_prefix = URL_PREFIX
         self.whitelisted = []
         self.blacklisted = []
         self.request_timeout = REQUEST_TIMEOUT
-        self.failover_strategy = 'allow'
+        self.failover_strategy = FAILOVER_STRATEGY
         self.ip_headers = []
+        self.trusted_proxies = []
 
     @property
     def api_secret(self):
@@ -119,7 +131,18 @@ class Configuration(object):
     @ip_headers.setter
     def ip_headers(self, value):
         if isinstance(value, list):
-            self.__ip_headers = value
+            self.__ip_headers = [HeadersFormatter.call(v) for v in value]
+        else:
+            raise ConfigurationError
+
+    @property
+    def trusted_proxies(self):
+        return self.__trusted_proxies
+
+    @trusted_proxies.setter
+    def trusted_proxies(self, value):
+        if isinstance(value, list):
+            self.__trusted_proxies = value
         else:
             raise ConfigurationError
 

@@ -1,15 +1,15 @@
 dist: xenial
 language: python
+os: linux
 
 python:
   - "3.4"
   - "3.5"
   - "3.6"
 
-matrix:
+jobs:
   include:
     - python: "3.7"
-      sudo: true
       env:
       - REQUESTS="requests" # latest
 

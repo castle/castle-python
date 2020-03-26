@@ -13,9 +13,9 @@ def request():
     return req
 
 
-class SessionTestCase(unittest.TestCase):
+class ApisSessionTestCase(unittest.TestCase):
     def test_init(self):
         client = Client.from_request(request(), {})
         client2 = Client.from_request(request(), {})
         self.assertNotEqual(client.api.request, client2.api.request)
-        self.assertEqual(client.api.req.sharer, client2.api.req.sharer)
+        self.assertEqual(client.api.req.session.get(), client2.api.req.session.get())

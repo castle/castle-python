@@ -3,9 +3,16 @@ import responses
 
 from castle.test import unittest
 from castle.review import Review
+from castle.configuration import configuration
 
 
 class ReviewTestCase(unittest.TestCase):
+    def setUp(self):
+        configuration.api_secret = 'test'
+
+    def tearDown(self):
+        configuration.api_secret = None
+
     @responses.activate
     def test_retrieve(self):
         # pylint: disable=line-too-long

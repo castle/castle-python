@@ -5,6 +5,9 @@ from unittest import mock
 
 
 TEST_MODULES = [
+    'castle.test.apis.request_test',
+    'castle.test.apis.response_test',
+    'castle.test.apis.session_test',
     'castle.test.api_test',
     'castle.test.client_test',
     'castle.test.configuration_test',
@@ -22,11 +25,8 @@ TEST_MODULES = [
     'castle.test.extractors.ip_test',
     'castle.test.failover_response_test',
     'castle.test.headers_formatter_test',
-    'castle.test.request_test',
-    'castle.test.response_test',
     'castle.test.review_test',
     'castle.test.secure_mode_test',
-    'castle.test.session_test',
     'castle.test.validators.not_supported_test',
     'castle.test.validators.present_test',
     'castle.test.utils_test'

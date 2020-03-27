@@ -1,5 +1,7 @@
 ## master
 
+## 3.1.0 (2020-02-27)
+
 - [#61](https://github.com/castle/castle-python/pull/61) improve headers and ip extractions, improve ip_headers config, add trusted proxies config, added more events to events list
 - [#62](https://github.com/castle/castle-python/pull/62) move request,response, session to apis namespace, add config check before doing request
 

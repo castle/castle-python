@@ -1,14 +1,16 @@
 Releasing
 =========
 
-1. Update `VERSION` in `castle/version.py` to the new version
-2. Update the `HISTORY.md` for the impending release
-3. `git commit -am "release X.Y.Z"` (where X.Y.Z is the new version)
-4. `git tag vX.Y.Z` (where X.Y.Z is the new version)
-5. `git push --tags`
-6. `rm -rf dist`
-7. `python3 setup.py sdist bdist_wheel`
-8. `twine upload dist/*`
+1. Create branch `X.Y.Z`.
+2. Update `VERSION` in `castle/version.py` to the new version
+3. Update the `HISTORY.md` for the impending release
+4. `git commit -am "release X.Y.Z"` (where X.Y.Z is the new version)
+5. Push to Github, make PR, and when ok, merge.
+6. Make a release on Github, specify tag as `vX.Y.Z` to create a tag.
+7. `git checkout master && git pull`
+8. `rm -rf dist`
+9. `python3 setup.py sdist bdist_wheel`
+10. `twine upload dist/*`
 
 
 When you change something in the README.rst make sure it is in the correct format, as pypi

@@ -3,31 +3,34 @@ from castle.configuration import configuration, TRUSTED_PROXIES
 
 
 # ordered list of ip headers for ip extraction
-DEFAULT = ['X-Forwarded-For', 'Client-Ip', 'Remote-Addr']
-# default header fallback when ip is not found
-FALLBACK = 'Remote-Addr'
+DEFAULT = ['X-Forwarded-For', 'Remote-Addr']
 
 
 class ExtractorsIp(object):
     def __init__(self, headers):
         self.headers = headers
-        self.ip_headers = configuration.ip_headers + DEFAULT
+        if len(configuration.ip_headers) > 0:
+            self.ip_headers = configuration.ip_headers
+        else:
+            self.ip_headers = DEFAULT
         self.proxies = configuration.trusted_proxies + TRUSTED_PROXIES
 
     def call(self):
+        all_ips = []
+
         for ip_header in self.ip_headers:
-            ip_value = self._calculate_ip(ip_header)
-            if ip_value:
-                return ip_value
+            ips = self._ips_from(ip_header)
+            filtered_ips = self._remove_proxies(ips)
 
-        return self.headers.get(FALLBACK, None)
+            if len(filtered_ips) > 0:
+                return filtered_ips[-1]
 
-    def _calculate_ip(self, header):
-        ips = self._ips_from(header)
-        filtered_ips = self._remove_proxies(ips)
+            all_ips = all_ips + ips
 
-        if len(filtered_ips) > 0:
-            return filtered_ips[0]
+        # fallback to first whatever ip
+        if len(all_ips) > 0:
+            return all_ips[0]
+
         return None
 
     def _remove_proxies(self, ips):
@@ -51,4 +54,4 @@ class ExtractorsIp(object):
         if not value:
             return []
 
-        return re.split(r'[,\s]+', value.strip())[::-1]
+        return re.split(r'[,\s]+', value.strip())

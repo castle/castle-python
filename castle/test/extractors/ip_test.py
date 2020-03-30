@@ -14,7 +14,7 @@ class ExtractorsIpTestCase(unittest.TestCase):
 
     def test_extract_ip_when_second_header(self):
         headers = {'Cf-Connecting-Ip': '1.2.3.4', 'X-Forwarded-For': '1.1.1.1, 1.2.2.2, 1.2.3.5'}
-        configuration.ip_headers = ["HTTP_CF_CONNECTING_IP"]
+        configuration.ip_headers = ["HTTP_CF_CONNECTING_IP", "X-Forwarded-For"]
         self.assertEqual(
             ExtractorsIp(headers).call(),
             '1.2.3.4'
@@ -22,7 +22,7 @@ class ExtractorsIpTestCase(unittest.TestCase):
 
     def test_extract_ip_when_second_header_with_different_setting(self):
         headers = {'Cf-Connecting-Ip': '1.2.3.4', 'X-Forwarded-For': '1.1.1.1, 1.2.2.2, 1.2.3.5'}
-        configuration.ip_headers = ["CF-CONNECTING-IP"]
+        configuration.ip_headers = ["CF-CONNECTING-IP", "X-Forwarded-For"]
         self.assertEqual(
             ExtractorsIp(headers).call(),
             '1.2.3.4'

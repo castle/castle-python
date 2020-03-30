@@ -1,5 +1,7 @@
 ## master
 
+- dropped X-Client-Id from calculation of ip, drop appending default ip headers to the ip_header list config when config is provided (in that case default headers have to explicitly provided)
+
 ## 3.1.0 (2020-02-27)
 
 - [#61](https://github.com/castle/castle-python/pull/61) improve headers and ip extractions, improve ip_headers config, add trusted proxies config, added more events to events list

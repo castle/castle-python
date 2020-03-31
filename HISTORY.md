@@ -1,5 +1,7 @@
 ## master
 
+## 3.2.0 (2020-02-31)
+
 - [#64](https://github.com/castle/castle-python/pull/64)dropped X-Client-Id from calculation of ip, drop appending default ip headers to the ip_header list config when config is provided (in that case default headers have to explicitly provided)
 
 ## 3.1.0 (2020-02-27)

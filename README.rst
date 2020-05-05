@@ -116,11 +116,10 @@ and use it later in a way
     client = Client(context)
     client.track(options)
 
-## Events
+Events
+--------------
 
-List of Recognized Events can be found [here](https://github.com/castle/castle-python/tree/master/castle/events.py) or in the [docs](https://docs.castle.io/api_reference/#list-of-recognized-events)
-
-
+List of Recognized Events can be found `here <https://github.com/castle/castle-python/tree/master/castle/events.py>`_ or in the `docs <https://docs.castle.io/api_reference/#list-of-recognized-events>`_.
 
 Impersonation mode
 ------------------

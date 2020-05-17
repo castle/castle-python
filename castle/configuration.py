@@ -50,6 +50,8 @@ class Configuration(object):
         self.failover_strategy = FAILOVER_STRATEGY
         self.ip_headers = []
         self.trusted_proxies = []
+        self.trust_proxy_chain = False
+        self.trusted_proxy_depth = None
 
     def isValid(self):
         return self.host and self.port and self.api_secret
@@ -149,6 +151,27 @@ class Configuration(object):
         else:
             raise ConfigurationError
 
+    @property
+    def trust_proxy_chain(self):
+        return self.__trust_proxy_chain
+
+    @trust_proxy_chain.setter
+    def trust_proxy_chain(self, value):
+        if isinstance(value, bool):
+            self.__trust_proxy_chain = value
+        else:
+            raise ConfigurationError
+
+    @property
+    def trusted_proxies_depth(self):
+        return self.__trusted_proxies_depth
+
+    @trusted_proxies_depth.setter
+    def trusted_proxies_depth(self, value):
+        if isinstance(value, (int, type(None))):
+            self.__trusted_proxies_depth = int(0 if value is None else value)
+        else:
+            raise ConfigurationError
 
 # pylint: disable=invalid-name
 configuration = Configuration()

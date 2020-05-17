@@ -163,13 +163,13 @@ class Configuration(object):
             raise ConfigurationError
 
     @property
-    def trusted_proxies_depth(self):
-        return self.__trusted_proxies_depth
+    def trusted_proxy_depth(self):
+        return self.__trusted_proxy_depth
 
-    @trusted_proxies_depth.setter
-    def trusted_proxies_depth(self, value):
+    @trusted_proxy_depth.setter
+    def trusted_proxy_depth(self, value):
         if isinstance(value, (int, type(None))):
-            self.__trusted_proxies_depth = int(0 if value is None else value)
+            self.__trusted_proxy_depth = int(0 if value is None else value)
         else:
             raise ConfigurationError
 

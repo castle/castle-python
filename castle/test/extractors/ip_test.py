@@ -44,7 +44,6 @@ class ExtractorsIpTestCase(unittest.TestCase):
             ExtractorsIp(headers).call(),
             '2.2.2.3'
         )
-#
 
     def test_extract_ip_for_spoof_ip_attempt_when_all_trusted_proxies(self):
         headers = {'Client-Ip': '6.6.6.6', 'X-Forwarded-For': '6.6.6.6, 2.2.2.3, 192.168.0.7'}

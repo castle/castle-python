@@ -28,11 +28,7 @@ class ExtractorsIp(object):
                 return ip_value
             all_ips += ips
 
-        # fallback to first listed ip
-        if len(all_ips) > 0:
-            return all_ips[0]
-
-        return None
+        return next(iter(all_ips), None)
 
     def _remove_proxies(self, ips):
         if self.trust_proxy_chain:

@@ -1,8 +1,12 @@
 ## master
 
+## 3.3.0 (2020-05-22)
+
+- [#67](https://github.com/castle/castle-python/pull/67) add `trusted_proxy_depth` and `trust_proxy_chain` configuration options
+
 ## 3.2.0 (2020-02-31)
 
-- [#64](https://github.com/castle/castle-python/pull/64)dropped X-Client-Id from calculation of ip, drop appending default ip headers to the ip_header list config when config is provided (in that case default headers have to explicitly provided)
+- [#64](https://github.com/castle/castle-python/pull/64) dropped X-Client-Id from calculation of ip, drop appending default ip headers to the ip_header list config when config is provided (in that case default headers have to explicitly provided)
 
 ## 3.1.0 (2020-02-27)
 
@@ -83,4 +87,3 @@
 ## 1.0.0 (2017-10-16)
 
 * Initial release
-

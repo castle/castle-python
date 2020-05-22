@@ -4,7 +4,8 @@ from castle.configuration import configuration, TRUSTED_PROXIES
 
 # ordered list of ip headers for ip extraction
 DEFAULT = ['X-Forwarded-For', 'Remote-Addr']
-
+# list of header which are used with proxy depth setting
+DEPTH_RELATED = ['X-Forwarded-For']
 
 class ExtractorsIp(object):
     def __init__(self, headers):
@@ -14,32 +15,27 @@ class ExtractorsIp(object):
         else:
             self.ip_headers = DEFAULT
         self.proxies = configuration.trusted_proxies + TRUSTED_PROXIES
+        self.trust_proxy_chain = configuration.trust_proxy_chain
+        self.trusted_proxy_depth = configuration.trusted_proxy_depth
 
     def call(self):
         all_ips = []
 
         for ip_header in self.ip_headers:
             ips = self._ips_from(ip_header)
-            filtered_ips = self._remove_proxies(ips)
+            ip_value = self._remove_proxies(ips)
+            if ip_value:
+                return ip_value
+            all_ips += ips
 
-            if len(filtered_ips) > 0:
-                return filtered_ips[-1]
-
-            all_ips = all_ips + ips
-
-        # fallback to first whatever ip
-        if len(all_ips) > 0:
-            return all_ips[0]
-
-        return None
+        return next(iter(all_ips), None)
 
     def _remove_proxies(self, ips):
-        result = []
+        if self.trust_proxy_chain:
+            return next(iter(ips), None)
 
-        for ip_address in ips:
-            if not self._is_proxy(ip_address):
-                result.append(ip_address)
-        return result
+        result = [ip_address for ip_address in ips if not self._is_proxy(ip_address)]
+        return (result or [None])[-1]
 
     def _is_proxy(self, ip_address):
         for proxy_re in self.proxies:
@@ -54,4 +50,12 @@ class ExtractorsIp(object):
         if not value:
             return []
 
-        return re.split(r'[,\s]+', value.strip())
+        ips = re.split(r'[,\s]+', value.strip())
+
+        return self._limit_proxy_depth(ips, header)
+
+    def _limit_proxy_depth(self, ips, ip_header):
+        if ip_header in DEPTH_RELATED:
+            ips = ips[:len(ips)-self.trusted_proxy_depth]
+
+        return ips

@@ -60,7 +60,7 @@ class ClientTestCase(unittest.TestCase):
             status=200
         )
         client = Client.from_request(request(), {})
-        options = {'impersonator': 'admin', 'user_id': '1234'}
+        options = {'properties': {'impersonator': 'admin'}, 'user_id': '1234'}
         self.assertEqual(client.impersonate(options), response_text)
 
     @responses.activate
@@ -73,7 +73,7 @@ class ClientTestCase(unittest.TestCase):
             status=200
         )
         client = Client.from_request(request(), {})
-        options = {'impersonator': 'admin', 'user_id': '1234'}
+        options = {'properties': {'impersonator': 'admin'}, 'user_id': '1234'}
         with self.assertRaises(ImpersonationFailed):
             client.impersonate(options)
 

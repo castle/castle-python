@@ -7,7 +7,7 @@ from castle.utils import clone
 
 def default_options():
     """Default options include all required fields."""
-    return {'impersonator': 'admin', 'user_id': '1234',
+    return {'properties': {'impersonator': 'admin'}, 'user_id': '1234',
             'context': {'ip': '127.0.0.1', 'user_agent': 'Chrome'}}
 
 

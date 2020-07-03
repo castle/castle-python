@@ -1,7 +1,7 @@
 from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
-DEFAULT_WHITELIST = [
+DEFAULT_ALLOWLIST = [
     "Accept",
     "Accept-Charset",
     "Accept-Datetime",
@@ -11,11 +11,15 @@ DEFAULT_WHITELIST = [
     "Connection",
     "Content-Length",
     "Content-Type",
-    "Cookie",
+    "Dnt",
     "Host",
     "Origin",
     "Pragma",
     "Referer",
+    "Sec-Fetch-Dest",
+    "Sec-Fetch-Mode",
+    "Sec-Fetch-Site",
+    "Sec-Fetch-User",
     "TE",
     "Upgrade-Insecure-Requests",
     "User-Agent",

@@ -21,7 +21,7 @@ import and configure the library with your Castle API secret.
 
 .. code:: python
 
-    from castle.configuration import configuration, ALLOWLISTED
+    from castle.configuration import configuration, DEFAULT_ALLOWLIST
 
     # Same as setting it through Castle.api_secret
     configuration.api_secret = ':YOUR-API-SECRET'
@@ -36,9 +36,9 @@ import and configure the library with your Castle API secret.
     # and allow to use _ and - as a separator, http prefixes are removed
     # By default all headers are passed, but some are automatically scrubbed.
     # If you need to apply an allowlist, we recommend using the minimum set of
-    # standard headers that we've exposed in the `ALLOWLISTED` constant.
+    # standard headers that we've exposed in the `DEFAULT_ALLOWLIST` constant.
     # Allowlisted headers
-    configuration.allowlisted = ALLOWLISTED + ['X_HEADER']
+    configuration.allowlisted = DEFAULT_ALLOWLIST + ['X_HEADER']
 
     # Denylisted headers take advantage over allowlisted elements. Note that
     # some headers are always scrubbed, for security reasons.

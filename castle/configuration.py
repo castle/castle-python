@@ -45,7 +45,7 @@ class Configuration(object):
         self.port = PORT
         self.url_prefix = URL_PREFIX
         self.allowlisted = []
-        self.blocklisted = []
+        self.denylisted = []
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = FAILOVER_STRATEGY
         self.ip_headers = []
@@ -100,15 +100,15 @@ class Configuration(object):
             self.__allowlisted = []
 
     @property
-    def blocklisted(self):
-        return self.__blocklisted
+    def denylisted(self):
+        return self.__denylisted
 
-    @blocklisted.setter
-    def blocklisted(self, value):
+    @denylisted.setter
+    def denylisted(self, value):
         if value:
-            self.__blocklisted = [HeadersFormatter.call(v) for v in value]
+            self.__denylisted = [HeadersFormatter.call(v) for v in value]
         else:
-            self.__blocklisted = []
+            self.__denylisted = []
 
     @property
     def request_timeout(self):

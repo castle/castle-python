@@ -32,7 +32,7 @@ import and configure the library with your Castle API secret.
     # Castle::RequestError is raised when timing out in milliseconds (default: 500 milliseconds)
     configuration.request_timeout = 1000
 
-    # Allowlisted and Blocklisted headers are case insensitive
+    # Allowlisted and Denylisted headers are case insensitive
     # and allow to use _ and - as a separator, http prefixes are removed
     # By default all headers are passed, but some are automatically scrubbed.
     # If you need to apply an allowlist, we recommend using the minimum set of
@@ -40,9 +40,9 @@ import and configure the library with your Castle API secret.
     # Allowlisted headers
     configuration.allowlisted = ALLOWLISTED + ['X_HEADER']
 
-    # Blocklisted headers take advantage over allowlisted elements. Note that
+    # Denylisted headers take advantage over allowlisted elements. Note that
     # some headers are always scrubbed, for security reasons.
-    configuration.blocklisted = ['HTTP-X-header']
+    configuration.denylisted = ['HTTP-X-header']
 
     # Castle needs the original IP of the client, not the IP of your proxy or load balancer.
     # The SDK will only trust the proxy chain as defined in the configuration.

@@ -173,5 +173,6 @@ class Configuration(object):
         else:
             raise ConfigurationError
 
+
 # pylint: disable=invalid-name
 configuration = Configuration()

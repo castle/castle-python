@@ -7,6 +7,7 @@ DEFAULT = ['X-Forwarded-For', 'Remote-Addr']
 # list of header which are used with proxy depth setting
 DEPTH_RELATED = ['X-Forwarded-For']
 
+
 class ExtractorsIp(object):
     def __init__(self, headers):
         self.headers = headers

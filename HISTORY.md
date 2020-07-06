@@ -1,5 +1,13 @@
 ## master
 
+## 4.0.0 (2020-07-06)
+
+### Features:
+- [#69](https://github.com/castle/castle-python/pull/69/files) added impersonator to properties
+
+### Breaking Changes:
+- [#70](https://github.com/castle/castle-python/pull/70) dropped blacklist and whitelist support, in favour of denylist and allowlist
+
 ## 3.3.0 (2020-05-22)
 
 - [#67](https://github.com/castle/castle-python/pull/67) add `trusted_proxy_depth` and `trust_proxy_chain` configuration options

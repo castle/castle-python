@@ -1,7 +1,7 @@
 from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
-DEFAULT_WHITELIST = [
+DEFAULT_ALLOWLIST = [
     "Accept",
     "Accept-Charset",
     "Accept-Datetime",
@@ -11,11 +11,15 @@ DEFAULT_WHITELIST = [
     "Connection",
     "Content-Length",
     "Content-Type",
-    "Cookie",
+    "Dnt",
     "Host",
     "Origin",
     "Pragma",
     "Referer",
+    "Sec-Fetch-Dest",
+    "Sec-Fetch-Mode",
+    "Sec-Fetch-Site",
+    "Sec-Fetch-User",
     "TE",
     "Upgrade-Insecure-Requests",
     "User-Agent",
@@ -44,8 +48,8 @@ class Configuration(object):
         self.host = HOST
         self.port = PORT
         self.url_prefix = URL_PREFIX
-        self.whitelisted = []
-        self.blacklisted = []
+        self.allowlisted = []
+        self.denylisted = []
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = FAILOVER_STRATEGY
         self.ip_headers = []
@@ -89,26 +93,26 @@ class Configuration(object):
         self.__url_prefix = value
 
     @property
-    def whitelisted(self):
-        return self.__whitelisted
+    def allowlisted(self):
+        return self.__allowlisted
 
-    @whitelisted.setter
-    def whitelisted(self, value):
+    @allowlisted.setter
+    def allowlisted(self, value):
         if value:
-            self.__whitelisted = [HeadersFormatter.call(v) for v in value]
+            self.__allowlisted = [HeadersFormatter.call(v) for v in value]
         else:
-            self.__whitelisted = []
+            self.__allowlisted = []
 
     @property
-    def blacklisted(self):
-        return self.__blacklisted
+    def denylisted(self):
+        return self.__denylisted
 
-    @blacklisted.setter
-    def blacklisted(self, value):
+    @denylisted.setter
+    def denylisted(self, value):
         if value:
-            self.__blacklisted = [HeadersFormatter.call(v) for v in value]
+            self.__denylisted = [HeadersFormatter.call(v) for v in value]
         else:
-            self.__blacklisted = []
+            self.__denylisted = []
 
     @property
     def request_timeout(self):
@@ -172,6 +176,7 @@ class Configuration(object):
             self.__trusted_proxy_depth = int(0 if value is None else value)
         else:
             raise ConfigurationError
+
 
 # pylint: disable=invalid-name
 configuration = Configuration()

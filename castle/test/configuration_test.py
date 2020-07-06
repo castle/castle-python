@@ -10,8 +10,8 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.host, 'api.castle.io')
         self.assertEqual(config.port, 443)
         self.assertEqual(config.url_prefix, '/v1')
-        self.assertEqual(config.whitelisted, [])
-        self.assertEqual(config.blacklisted, [])
+        self.assertEqual(config.allowlisted, [])
+        self.assertEqual(config.denylisted, [])
         self.assertEqual(config.request_timeout, 500)
         self.assertEqual(config.failover_strategy, 'allow')
         self.assertEqual(config.ip_headers, [])
@@ -37,35 +37,35 @@ class ConfigurationTestCase(unittest.TestCase):
         config.url_prefix = '/v2'
         self.assertEqual(config.url_prefix, '/v2')
 
-    def test_whitelisted_setter_list(self):
+    def test_allowlisted_setter_list(self):
         config = Configuration()
-        config.whitelisted = ['test']
-        self.assertEqual(config.whitelisted, ['Test'])
+        config.allowlisted = ['test']
+        self.assertEqual(config.allowlisted, ['Test'])
 
-    def test_whitelisted_setter_none(self):
+    def test_allowlisted_setter_none(self):
         config = Configuration()
-        config.whitelisted = None
-        self.assertEqual(config.whitelisted, [])
+        config.allowlisted = None
+        self.assertEqual(config.allowlisted, [])
 
-    def test_whitelisted_setter_empty(self):
+    def test_allowlisted_setter_empty(self):
         config = Configuration()
-        config.whitelisted = ''
-        self.assertEqual(config.whitelisted, [])
+        config.allowlisted = ''
+        self.assertEqual(config.allowlisted, [])
 
-    def test_blacklisted_setter_list(self):
+    def test_denylisted_setter_list(self):
         config = Configuration()
-        config.blacklisted = ['test']
-        self.assertEqual(config.blacklisted, ['Test'])
+        config.denylisted = ['test']
+        self.assertEqual(config.denylisted, ['Test'])
 
-    def test_blacklisted_setter_none(self):
+    def test_denylisted_setter_none(self):
         config = Configuration()
-        config.blacklisted = None
-        self.assertEqual(config.blacklisted, [])
+        config.denylisted = None
+        self.assertEqual(config.denylisted, [])
 
-    def test_blacklisted_setter_empty(self):
+    def test_denylisted_setter_empty(self):
         config = Configuration()
-        config.blacklisted = ''
-        self.assertEqual(config.blacklisted, [])
+        config.denylisted = ''
+        self.assertEqual(config.denylisted, [])
 
     def test_request_timeout_setter(self):
         config = Configuration()

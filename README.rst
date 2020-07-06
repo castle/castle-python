@@ -21,7 +21,7 @@ import and configure the library with your Castle API secret.
 
 .. code:: python
 
-    from castle.configuration import configuration, WHITELISTED
+    from castle.configuration import configuration, DEFAULT_ALLOWLIST
 
     # Same as setting it through Castle.api_secret
     configuration.api_secret = ':YOUR-API-SECRET'
@@ -32,16 +32,17 @@ import and configure the library with your Castle API secret.
     # Castle::RequestError is raised when timing out in milliseconds (default: 500 milliseconds)
     configuration.request_timeout = 1000
 
-    # Whitelisted and Blacklisted headers are case insensitive and allow to use _ and - as a separator, http prefixes are removed
+    # Allowlisted and Denylisted headers are case insensitive
+    # and allow to use _ and - as a separator, http prefixes are removed
     # By default all headers are passed, but some are automatically scrubbed.
-    # If you need to apply a whitelist, we recommend using the minimum set of
-    # standard headers that we've exposed in the `WHITELISTED` constant.
-    # Whitelisted headers
-    configuration.whitelisted = WHITELISTED + ['X_HEADER']
+    # If you need to apply an allowlist, we recommend using the minimum set of
+    # standard headers that we've exposed in the `DEFAULT_ALLOWLIST` constant.
+    # Allowlisted headers
+    configuration.allowlisted = DEFAULT_ALLOWLIST + ['X_HEADER']
 
-    # Blacklisted headers take advantage over whitelisted elements. Note that
+    # Denylisted headers take advantage over allowlisted elements. Note that
     # some headers are always scrubbed, for security reasons.
-    configuration.blacklisted = ['HTTP-X-header']
+    configuration.denylisted = ['HTTP-X-header']
 
     # Castle needs the original IP of the client, not the IP of your proxy or load balancer.
     # The SDK will only trust the proxy chain as defined in the configuration.

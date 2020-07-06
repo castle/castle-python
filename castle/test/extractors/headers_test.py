@@ -1,5 +1,5 @@
 from castle.test import unittest
-from castle.configuration import configuration
+from castle.configuration import configuration, DEFAULT_ALLOWLIST
 from castle.extractors.headers import ExtractorsHeaders
 
 
@@ -18,8 +18,8 @@ def formatted_headers():
 class ExtractorsHeadersTestCase(unittest.TestCase):
 
     def tearDown(self):
-        configuration.whitelisted = []
-        configuration.blacklisted = []
+        configuration.allowlisted = []
+        configuration.denylisted = []
 
     def test_extract_headers(self):
         self.assertEqual(ExtractorsHeaders(formatted_headers()).call(),
@@ -32,8 +32,8 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
                           'X-Forwarded-For': '1.2.3.4'
                           })
 
-    def test_whitelisted_headers(self):
-        configuration.whitelisted = ['Accept', 'OK']
+    def test_allowlisted_headers(self):
+        configuration.allowlisted = ['Accept', 'OK']
         self.assertEqual(
             ExtractorsHeaders(formatted_headers()).call(),
             {'Accept': 'application/json',
@@ -45,10 +45,23 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
              'X-Forwarded-For': True
              }
         )
-#
 
-    def test_restricted_blacklisted_headers(self):
-        configuration.blacklisted = ['User-Agent']
+    def test_only_default_allowlisted_headers(self):
+        configuration.allowlisted = DEFAULT_ALLOWLIST
+        self.assertEqual(
+            ExtractorsHeaders(formatted_headers()).call(),
+            {'Accept': 'application/json',
+             'Authorization': True,
+             'Cookie': True,
+             'Ok': True,
+             'Content-Length': '0',
+             'User-Agent': 'Mozilla 1234',
+             'X-Forwarded-For': True
+             }
+        )
+
+    def test_restricted_denylisted_headers(self):
+        configuration.denylisted = ['User-Agent']
         self.assertEqual(
             ExtractorsHeaders(formatted_headers()).call(),
             {'Accept': 'application/json',
@@ -61,8 +74,8 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
              }
         )
 
-    def test_blacklisted_headers(self):
-        configuration.blacklisted = ['Accept']
+    def test_denylisted_headers(self):
+        configuration.denylisted = ['Accept']
         self.assertEqual(
             ExtractorsHeaders(formatted_headers()).call(),
             {'Accept': True,
@@ -74,11 +87,10 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
              'X-Forwarded-For': '1.2.3.4'
              }
         )
-#
 
-    def test_blacklisted_and_whitelisted_headers(self):
-        configuration.blacklisted = ['Accept']
-        configuration.whitelisted = ['Accept']
+    def test_denylisted_and_allowlisted_headers(self):
+        configuration.denylisted = ['Accept']
+        configuration.allowlisted = ['Accept']
         self.assertEqual(
             ExtractorsHeaders(formatted_headers()).call()['Accept'], True
         )

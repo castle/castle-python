@@ -1,9 +1,9 @@
 Python SDK for Castle
 =====================
 
-.. image:: https://travis-ci.org/castle/castle-python.png
+.. image:: https://circleci.com/gh/castle/castle-python.svg?style=svg
    :alt: Build Status
-   :target: https://travis-ci.org/castle/castle-python
+   :target: https://circleci.com/gh/castle/castle-python
 
 `Castle <https://castle.io>`_ **analyzes device, location, and
 interaction patterns in your web and mobile apps and lets you stop

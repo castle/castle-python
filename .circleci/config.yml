@@ -1,0 +1,47 @@
+version: 2.1
+
+aliases:
+  - &with-requests
+    environment:
+      REQUESTS: requests
+  - &job-defaults
+    steps:
+      - checkout
+      - run: pip install $REQUESTS
+      - run: python setup.py test
+
+jobs:
+  python-3_4:
+    docker:
+      - image: circleci/python:3.4
+        <<: *with-requests
+    <<: *job-defaults
+  python-3_5:
+    docker:
+      - image: circleci/python:3.5
+        <<: *with-requests
+    <<: *job-defaults
+  python-3_6:
+    docker:
+      - image: circleci/python:3.6
+        <<: *with-requests
+    <<: *job-defaults
+  python-3_7:
+    docker:
+      - image: circleci/python:3.7
+        <<: *with-requests
+    <<: *job-defaults
+  python-3_8:
+    docker:
+      - image: circleci/python:3.8
+        <<: *with-requests
+    <<: *job-defaults
+
+workflows:
+  main:
+    jobs:
+      - python-3_4
+      - python-3_5
+      - python-3_6
+      - python-3_7
+      - python-3_8

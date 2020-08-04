@@ -1,7 +1,7 @@
 Python SDK for Castle
 =====================
 
-.. image:: https://circleci.com/gh/castle/castle-python.svg?style=shield
+.. image:: https://circleci.com/gh/castle/castle-python.svg?style=shield&branch=master
    :alt: Build Status
    :target: https://circleci.com/gh/castle/castle-python
 

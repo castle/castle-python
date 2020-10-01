@@ -3,8 +3,14 @@ try:
 except ImportError:
     from distutils.core import find_packages, setup
 
+import sys
 from castle.version import VERSION
 
+install_requires = ['requests>=2.5']
+test_require = ['responses']
+
+if sys.version_info[:2] == (3, 4):
+    test_require = ['responses<0.10.16']
 
 setup(
     name="castle",
@@ -28,9 +34,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    install_requires=[
-        'requests>=2.5',
-    ],
-    tests_require=['responses'],
+    install_requires=install_requires,
+    tests_require=test_require,
     test_suite='castle.test.all'
 )

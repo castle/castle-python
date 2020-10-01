@@ -10,7 +10,7 @@ install_requires = ['requests>=2.5']
 test_require = ['responses']
 
 if sys.version_info[:2] == (3, 4):
-    test_require.append('urllib3>=1.21.1,<1.25')
+    test_require = ['responses<0.10.16']
 
 setup(
     name="castle",

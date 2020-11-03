@@ -2,6 +2,7 @@ import json
 from castle.configuration import configuration
 from castle.apis.session import ApisSession
 
+HTTPS_SCHEME = 'https'
 
 class ApisRequest(object):
     def __init__(self, headers=None):
@@ -27,15 +28,15 @@ class ApisRequest(object):
     def build_base_url():
         template = 'http://{host}:{port}/{prefix}'
 
-        if configuration.port == 443:
+        if configuration.base_url.scheme == HTTPS_SCHEME:
             template = 'https://{host}/{prefix}'
 
         return template.format(
-            host=configuration.host.strip('/'),
-            port=configuration.port,
-            prefix=configuration.url_prefix.strip('/')
+            host=configuration.base_url.hostname,
+            port=configuration.base_url.port,
+            prefix=configuration.base_url.path
         )
 
     @staticmethod
     def verify():
-        return configuration.port == 443
+        return configuration.base_url.port == 443

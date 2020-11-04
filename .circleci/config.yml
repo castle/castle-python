@@ -36,6 +36,11 @@ jobs:
       - image: circleci/python:3.8
         <<: *with-requests
     <<: *job-defaults
+  python-3_9:
+    docker:
+      - image: circleci/python:3.9
+        <<: *with-requests
+    <<: *job-defaults
 
 workflows:
   main:
@@ -45,3 +50,4 @@ workflows:
       - python-3_6
       - python-3_7
       - python-3_8
+      - python-3_9

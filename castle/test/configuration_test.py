@@ -9,7 +9,6 @@ class ConfigurationTestCase(unittest.TestCase):
         uri = urlparse('https://api.castle.io/v1')
         self.assertEqual(config.api_secret, None)
         self.assertEqual(config.base_url, uri)
-        # self.assertEqual(config.base_url.port, 443)
         self.assertEqual(config.base_url.path, '/v1')
         self.assertEqual(config.allowlisted, [])
         self.assertEqual(config.denylisted, [])

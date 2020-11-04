@@ -32,6 +32,9 @@ import and configure the library with your Castle API secret.
     # Castle::RequestError is raised when timing out in milliseconds (default: 500 milliseconds)
     configuration.request_timeout = 1000
 
+    # Base Castle API url
+    # configuration.base_url = "https://api.castle.io/v1"
+
     # Allowlisted and Denylisted headers are case insensitive
     # and allow to use _ and - as a separator, http prefixes are removed
     # By default all headers are passed, but some are automatically scrubbed.

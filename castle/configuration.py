@@ -1,3 +1,4 @@
+from urllib.parse import urlparse, ParseResult
 from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
@@ -26,13 +27,13 @@ DEFAULT_ALLOWLIST = [
     "X-Castle-Client-Id",
 ]
 
+# API endpoint
+BASE_URL = 'https://api.castle.io/v1'
+FAILOVER_STRATEGY = 'allow'
 # 500 milliseconds
 REQUEST_TIMEOUT = 500
+# regexp of trusted proxies which is always appended to the trusted proxy list
 FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
-HOST = 'api.castle.io'
-PORT = 443
-URL_PREFIX = '/v1'
-FAILOVER_STRATEGY = 'allow'
 TRUSTED_PROXIES = [r"""
         \A127\.0\.0\.1\Z|
         \A(10|172\.(1[6-9]|2[0-9]|30|31)|192\.168)\.|
@@ -41,24 +42,21 @@ TRUSTED_PROXIES = [r"""
         \Aunix\Z|
         \Aunix:"""]
 
-
 class Configuration(object):
     def __init__(self):
-        self.api_secret = None
-        self.host = HOST
-        self.port = PORT
-        self.url_prefix = URL_PREFIX
-        self.allowlisted = []
-        self.denylisted = []
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = FAILOVER_STRATEGY
+        self.base_url = urlparse(BASE_URL)
+        self.allowlisted = []
+        self.denylisted = []
+        self.api_secret = None
         self.ip_headers = []
         self.trusted_proxies = []
         self.trust_proxy_chain = False
         self.trusted_proxy_depth = None
 
     def isValid(self):
-        return self.host and self.port and self.api_secret
+        return self.api_secret and self.base_url.hostname
 
     @property
     def api_secret(self):
@@ -69,28 +67,15 @@ class Configuration(object):
         self.__api_secret = value
 
     @property
-    def host(self):
-        return self.__host
+    def base_url(self):
+        return self.__base_url
 
-    @host.setter
-    def host(self, value):
-        self.__host = value
-
-    @property
-    def port(self):
-        return self.__port
-
-    @port.setter
-    def port(self, value):
-        self.__port = value
-
-    @property
-    def url_prefix(self):
-        return self.__url_prefix
-
-    @url_prefix.setter
-    def url_prefix(self, value):
-        self.__url_prefix = value
+    @base_url.setter
+    def base_url(self, value):
+        if isinstance(value, ParseResult):
+            self.__base_url = value
+        else:
+            self.__base_url = urlparse(value)
 
     @property
     def allowlisted(self):

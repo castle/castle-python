@@ -71,6 +71,13 @@ class ApisRequestTestCase(unittest.TestCase):
             'https://api.castle.io/v1/authenticate'
         )
 
+    def test_build_url_with_port(self):
+        configuration.base_url = 'http://api.castle.local:3001'
+        self.assertEqual(
+            ApisRequest().build_url('test'),
+            'http://api.castle.local:3001/test'
+        )
+
     def test_verify_true(self):
         self.assertEqual(ApisRequest().verify(), True)
 

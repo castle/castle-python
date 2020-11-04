@@ -46,7 +46,7 @@ class Configuration(object):
     def __init__(self):
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = FAILOVER_STRATEGY
-        self.base_url = urlparse(BASE_URL)
+        self.base_url = BASE_URL
         self.allowlisted = []
         self.denylisted = []
         self.api_secret = None
@@ -56,7 +56,7 @@ class Configuration(object):
         self.trusted_proxy_depth = None
 
     def isValid(self):
-        return self.api_secret and self.base_url.hostname
+        return self.api_secret and self.__base_url.hostname
 
     @property
     def api_secret(self):
@@ -72,10 +72,7 @@ class Configuration(object):
 
     @base_url.setter
     def base_url(self, value):
-        if isinstance(value, ParseResult):
-            self.__base_url = value
-        else:
-            self.__base_url = urlparse(value)
+        self.__base_url = urlparse(value)
 
     @property
     def allowlisted(self):

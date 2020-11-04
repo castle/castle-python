@@ -4,14 +4,22 @@ aliases:
   - &with-requests
     environment:
       REQUESTS: requests
+  - &lint
+    steps:
+      - checkout
+      - run: make ci-lint
   - &job-defaults
     steps:
       - checkout
       - run: pip install $REQUESTS
-      - run: make ci-lint
       - run: make test
 
 jobs:
+  lint-sdk:
+    docker:
+      - image: circleci/python:3.9
+        <<: *with-requests
+    <<: *lint
   python-3_4:
     docker:
       - image: circleci/python:3.4
@@ -46,6 +54,7 @@ jobs:
 workflows:
   main:
     jobs:
+      - lint-sdk
       - python-3_4
       - python-3_5
       - python-3_6

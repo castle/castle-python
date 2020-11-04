@@ -3,7 +3,7 @@ Releasing
 
 #. Create release branch ``X.Y.Z`` from ``develop``.
 #. Update ``VERSION`` in ``castle/version.py`` to the new version
-#. Update the ``HISTORY.rst`` for the impending release
+#. Update the ``CHANGELOG.rst`` for the impending release
 #. ``git commit -am "release X.Y.Z"`` (where X.Y.Z is the new version)
 #. Push to Github, make PR to the develop branch, and when approved, merge.
 #. Pull latest ``develop``, merge it to ``master``, and push it.

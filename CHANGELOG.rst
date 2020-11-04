@@ -1,6 +1,11 @@
 master
 ------
 
+Breaking Changes:
+~~~~~~~~~~~~~~~~~
+
+-  `#79 <https://github.com/castle/castle-python/pull/79/files>`__ drop the configuration ``host``, ``port``, ``url_prefix`` options in favor of ``base_url``
+
 4.0.0 (2020-07-06)
 ------------------
 

@@ -27,11 +27,13 @@ DEFAULT_ALLOWLIST = [
     "X-Castle-Client-Id",
 ]
 
+# API endpoint
+BASE_URL = 'https://api.castle.io/v1'
+FAILOVER_STRATEGY = 'allow'
 # 500 milliseconds
 REQUEST_TIMEOUT = 500
+# regexp of trusted proxies which is always appended to the trusted proxy list
 FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
-BASE_URL = urlparse('https://api.castle.io/v1')
-FAILOVER_STRATEGY = 'allow'
 TRUSTED_PROXIES = [r"""
         \A127\.0\.0\.1\Z|
         \A(10|172\.(1[6-9]|2[0-9]|30|31)|192\.168)\.|
@@ -40,22 +42,21 @@ TRUSTED_PROXIES = [r"""
         \Aunix\Z|
         \Aunix:"""]
 
-
 class Configuration(object):
     def __init__(self):
-        self.api_secret = None
+        self.request_timeout = REQUEST_TIMEOUT
+        self.failover_strategy = FAILOVER_STRATEGY
         self.base_url = BASE_URL
         self.allowlisted = []
         self.denylisted = []
-        self.request_timeout = REQUEST_TIMEOUT
-        self.failover_strategy = FAILOVER_STRATEGY
+        self.api_secret = None
         self.ip_headers = []
         self.trusted_proxies = []
         self.trust_proxy_chain = False
         self.trusted_proxy_depth = None
 
     def isValid(self):
-        return self.api_secret and self.base_url.hostname and self.base_url.port
+        return self.api_secret and self.base_url.hostname
 
     @property
     def api_secret(self):

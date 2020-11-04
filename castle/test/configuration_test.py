@@ -1,15 +1,16 @@
+from urllib.parse import urlparse
 from castle.test import unittest
 from castle.exceptions import ConfigurationError
 from castle.configuration import Configuration
 
-
 class ConfigurationTestCase(unittest.TestCase):
     def test_default_values(self):
         config = Configuration()
+        uri = urlparse('https://api.castle.io/v1')
         self.assertEqual(config.api_secret, None)
-        self.assertEqual(config.host, 'api.castle.io')
-        self.assertEqual(config.port, 443)
-        self.assertEqual(config.url_prefix, '/v1')
+        self.assertEqual(config.base_url, uri)
+        # self.assertEqual(config.base_url.port, 443)
+        self.assertEqual(config.base_url.path, '/v1')
         self.assertEqual(config.allowlisted, [])
         self.assertEqual(config.denylisted, [])
         self.assertEqual(config.request_timeout, 500)
@@ -22,20 +23,10 @@ class ConfigurationTestCase(unittest.TestCase):
         config.api_secret = 'test'
         self.assertEqual(config.api_secret, 'test')
 
-    def test_host_setter(self):
+    def test_base_url_setter(self):
         config = Configuration()
-        config.host = 'test'
-        self.assertEqual(config.host, 'test')
-
-    def test_port_setter(self):
-        config = Configuration()
-        config.port = 80
-        self.assertEqual(config.port, 80)
-
-    def test_url_prefix_setter(self):
-        config = Configuration()
-        config.url_prefix = '/v2'
-        self.assertEqual(config.url_prefix, '/v2')
+        config.base_url = 'test'
+        self.assertEqual(config.base_url, urlparse('test'))
 
     def test_allowlisted_setter_list(self):
         config = Configuration()

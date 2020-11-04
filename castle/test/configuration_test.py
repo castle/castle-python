@@ -27,6 +27,15 @@ class ConfigurationTestCase(unittest.TestCase):
         config.base_url = 'test'
         self.assertEqual(config.base_url, urlparse('test'))
 
+    def test_base_url_setter_with_port(self):
+        config = Configuration()
+        local_api_url = 'http://api.castle.local:3001/v1'
+        config.base_url = local_api_url
+        parsed_url = urlparse(local_api_url)
+        self.assertEqual(config.base_url, parsed_url)
+        self.assertEqual(config.base_url.path, '/v1')
+        self.assertEqual(config.base_url.port, 3001)
+
     def test_allowlisted_setter_list(self):
         config = Configuration()
         config.allowlisted = ['test']

@@ -1,4 +1,4 @@
-from urllib.parse import urlparse
+from urllib.parse import urlparse, ParseResult
 from castle.exceptions import ConfigurationError
 from castle.headers_formatter import HeadersFormatter
 
@@ -46,7 +46,7 @@ class Configuration(object):
     def __init__(self):
         self.request_timeout = REQUEST_TIMEOUT
         self.failover_strategy = FAILOVER_STRATEGY
-        self.base_url = BASE_URL
+        self.base_url = urlparse(BASE_URL)
         self.allowlisted = []
         self.denylisted = []
         self.api_secret = None
@@ -72,7 +72,10 @@ class Configuration(object):
 
     @base_url.setter
     def base_url(self, value):
-        self.__base_url = urlparse(value)
+        if isinstance(value, ParseResult):
+            self.__base_url = value
+        else:
+            self.__base_url = urlparse(value)
 
     @property
     def allowlisted(self):

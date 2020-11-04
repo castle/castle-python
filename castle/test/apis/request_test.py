@@ -56,15 +56,13 @@ class ApisRequestTestCase(unittest.TestCase):
         configuration.api_secret = None
 
     def test_connection_pooled(self):
-        configuration.host = 'localhost'
-        configuration.port = 65521
+        configuration.base_url = 'http://localhost:65521'
         run_server()
         request = ApisRequest()
         data = {'event': '$login.authenticate', 'user_id': '12345'}
         response = request.build_query('post', 'authenticate', data)
         num_pools = len(response.connection.poolmanager.pools.keys())
-        configuration.host = 'api.castle.io'
-        configuration.port = 443
+        configuration.base_url = 'https://api.castle.io/v1'
         self.assertEqual(num_pools, 1)
 
     def test_build_url(self):

@@ -8,7 +8,8 @@ aliases:
     steps:
       - checkout
       - run: pip install $REQUESTS
-      - run: python setup.py test
+      - run: make ci-lint
+      - run: make test
 
 jobs:
   python-3_4:

@@ -4,6 +4,7 @@ from castle.apis.session import ApisSession
 
 HTTPS_SCHEME = 'https'
 
+
 class ApisRequest(object):
     def __init__(self, headers=None):
         self.headers = headers or dict()

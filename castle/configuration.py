@@ -1,6 +1,6 @@
 from urllib.parse import urlparse, ParseResult
 from castle.exceptions import ConfigurationError
-from castle.headers_formatter import HeadersFormatter
+from castle.headers.format import HeadersFormat
 
 DEFAULT_ALLOWLIST = [
     "Accept",
@@ -85,7 +85,7 @@ class Configuration(object):
     @allowlisted.setter
     def allowlisted(self, value):
         if value:
-            self.__allowlisted = [HeadersFormatter.call(v) for v in value]
+            self.__allowlisted = [HeadersFormat.call(v) for v in value]
         else:
             self.__allowlisted = []
 
@@ -96,7 +96,7 @@ class Configuration(object):
     @denylisted.setter
     def denylisted(self, value):
         if value:
-            self.__denylisted = [HeadersFormatter.call(v) for v in value]
+            self.__denylisted = [HeadersFormat.call(v) for v in value]
         else:
             self.__denylisted = []
 
@@ -126,7 +126,7 @@ class Configuration(object):
     @ip_headers.setter
     def ip_headers(self, value):
         if isinstance(value, list):
-            self.__ip_headers = [HeadersFormatter.call(v) for v in value]
+            self.__ip_headers = [HeadersFormat.call(v) for v in value]
         else:
             raise ConfigurationError
 

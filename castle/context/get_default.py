@@ -1,5 +1,5 @@
 from castle.version import VERSION
-from castle.headers_filter import HeadersFilter
+from castle.headers.filter import HeadersFilter
 from castle.extractors.client_id import ExtractorsClientId
 from castle.extractors.headers import ExtractorsHeaders
 from castle.extractors.ip import ExtractorsIp

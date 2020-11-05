@@ -1,5 +1,5 @@
 import re
-from castle.headers_formatter import HeadersFormatter
+from castle.headers.format import HeadersFormat
 
 VALUABLE_HEADERS = r"""^
       HTTP(?:_|-).*|
@@ -11,7 +11,7 @@ $"""
 class HeadersFilter(object):
     def __init__(self, request):
         self.environ = request.environ
-        self.formatter = HeadersFormatter
+        self.formatter = HeadersFormat
 
     def call(self):
         result = dict()
@@ -20,7 +20,7 @@ class HeadersFilter(object):
             if not re.match(VALUABLE_HEADERS, header_name, flags=re.X | re.I):
                 continue
 
-            formatted_name = HeadersFormatter.call(header_name)
+            formatted_name = HeadersFormat.call(header_name)
             result[formatted_name] = value
 
         return result

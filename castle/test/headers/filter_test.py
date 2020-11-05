@@ -29,7 +29,6 @@ def request():
 
 class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_filter_headers(self):
-        print(HeadersFilter(request()).call())
         self.assertEqual(HeadersFilter(request()).call(),
                          {
             'Accept': 'application/json',

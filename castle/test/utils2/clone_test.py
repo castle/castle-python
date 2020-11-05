@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from castle.test import mock, unittest
+from castle.test import unittest
 from castle.utils2.clone import UtilsClone
 
 

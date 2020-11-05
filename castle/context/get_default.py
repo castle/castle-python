@@ -1,6 +1,6 @@
 from castle.version import VERSION
 from castle.headers.filter import HeadersFilter
-from castle.extractors.client_id import ExtractorsClientId
+from castle.client_id.extract import ClientIdExtract
 from castle.headers.extract import HeadersExtract
 from castle.extractors.ip import ExtractorsIp
 
@@ -32,7 +32,7 @@ class ContextGetDefault(object):
         return ExtractorsIp(self.pre_headers).call()
 
     def _client_id(self):
-        return ExtractorsClientId(self.pre_headers, self.cookies).call()
+        return ClientIdExtract(self.pre_headers, self.cookies).call()
 
     def _headers(self):
         return HeadersExtract(self.pre_headers).call()

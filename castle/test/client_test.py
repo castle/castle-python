@@ -5,7 +5,7 @@ from castle.test import mock, unittest
 from castle.client import Client
 from castle.configuration import configuration
 from castle.errors import ImpersonationFailed
-from castle.api import Api
+from castle.api_request import APIRequest
 from castle.version import VERSION
 
 
@@ -48,7 +48,7 @@ class ClientTestCase(unittest.TestCase):
         client = Client.from_request(request(), {})
         self.assertEqual(client.do_not_track, False)
         self.assertEqual(client.context, context)
-        self.assertIsInstance(client.api, Api)
+        self.assertIsInstance(client.api, APIRequest)
 
     @responses.activate
     def test_impersonate(self):

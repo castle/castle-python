@@ -15,37 +15,37 @@ class ConfigurationError(CastleError):
     pass
 
 
-class ApiError(CastleError):
+class APIError(CastleError):
     pass
 
 
-class InvalidParametersError(ApiError):
+class InvalidParametersError(APIError):
     pass
 
 
-class BadRequestError(ApiError):
+class BadRequestError(APIError):
     pass
 
 
-class UnauthorizedError(ApiError):
+class UnauthorizedError(APIError):
     pass
 
 
-class UserUnauthorizedError(ApiError):
+class UserUnauthorizedError(APIError):
     pass
 
 
-class ForbiddenError(ApiError):
+class ForbiddenError(APIError):
     pass
 
 
-class NotFoundError(ApiError):
+class NotFoundError(APIError):
     pass
 
 
-class InternalServerError(ApiError):
+class InternalServerError(APIError):
     pass
 
 
-class ImpersonationFailed(ApiError):
+class ImpersonationFailed(APIError):
     pass

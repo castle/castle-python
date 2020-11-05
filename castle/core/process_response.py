@@ -1,5 +1,5 @@
 from castle.errors import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
-    UserUnauthorizedError, InvalidParametersError, ApiError, InternalServerError
+    UserUnauthorizedError, InvalidParametersError, APIError, InternalServerError
 
 
 RESPONSE_ERRORS = {
@@ -31,5 +31,5 @@ class CoreProcessResponse(object):
         if self.response.status_code >= 500 and self.response.status_code <= 599:
             raise InternalServerError
 
-        error = RESPONSE_ERRORS.get(self.response.status_code, ApiError)
+        error = RESPONSE_ERRORS.get(self.response.status_code, APIError)
         raise error(self.response.text)

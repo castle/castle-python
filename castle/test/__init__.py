@@ -6,7 +6,7 @@ from unittest import mock
 
 TEST_MODULES = [
     'castle.test.api.review_test',
-    'castle.test.api_test',
+    'castle.test.api_request_test',
     'castle.test.client_id.extract_test',
     'castle.test.client_test',
     'castle.test.command_test',

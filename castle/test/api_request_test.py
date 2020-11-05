@@ -2,7 +2,7 @@ from requests import Response
 import responses
 
 from castle.test import unittest
-from castle.api import Api
+from castle.api_request import APIRequest
 from castle.command import Command
 from castle.core.send_request import CoreSendRequest
 from castle.configuration import configuration
@@ -17,7 +17,7 @@ def response_text():
     return 'authenticate'
 
 
-class ApiTestCase(unittest.TestCase):
+class APIRequestTestCase(unittest.TestCase):
     def setUp(self):
         configuration.api_secret = 'test'
 
@@ -25,7 +25,7 @@ class ApiTestCase(unittest.TestCase):
         configuration.api_secret = None
 
     def test_init(self):
-        self.assertIsInstance(Api().req, CoreSendRequest)
+        self.assertIsInstance(APIRequest().req, CoreSendRequest)
 
     @responses.activate
     def test_request(self):
@@ -35,7 +35,7 @@ class ApiTestCase(unittest.TestCase):
             json=response_text(),
             status=200
         )
-        self.assertIsInstance(Api().request(command()), Response)
+        self.assertIsInstance(APIRequest().request(command()), Response)
 
     @responses.activate
     def test_call(self):
@@ -45,10 +45,10 @@ class ApiTestCase(unittest.TestCase):
             json=response_text(),
             status=200
         )
-        self.assertEqual(Api().call(command()), response_text())
+        self.assertEqual(APIRequest().call(command()), response_text())
 
     @responses.activate
     def test_no_api_secret(self):
         configuration.api_secret = ''
         with self.assertRaises(ConfigurationError):
-            Api().call(command())
+            APIRequest().call(command())

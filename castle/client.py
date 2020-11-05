@@ -1,6 +1,6 @@
 import warnings
 from castle.configuration import configuration
-from castle.api import Api
+from castle.api_request import APIRequest
 from castle.context.get_default import ContextGetDefault
 from castle.context.merge import ContextMerge
 from castle.commands.authenticate import CommandsAuthenticate
@@ -55,7 +55,7 @@ class Client(object):
         self.do_not_track = options.get('do_not_track', False)
         self.timestamp = options.get('timestamp')
         self.context = context
-        self.api = Api()
+        self.api = APIRequest()
 
     def _add_timestamp_if_necessary(self, options):
         if self.timestamp:

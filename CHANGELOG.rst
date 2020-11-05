@@ -99,7 +99,7 @@ Breaking Changes:
 -  `#35 <https://github.com/castle/castle-python/pull/35>`__ usage of
    ``traits`` key is deprecated, use ``user_traits`` instead
 -  `#38 <https://github.com/castle/castle-python/pull/38>`__ make api
-   related errors inherit from ``APIError``
+   related errors inherit from ``ApiError``
 -  `#38 <https://github.com/castle/castle-python/pull/38>`__ rename
    ``FailoverStrategyValueError`` to ``ConfigurationError``
 

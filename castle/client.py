@@ -1,15 +1,15 @@
 import warnings
 from castle.configuration import configuration
 from castle.api import Api
-from castle.context.default import ContextDefault
-from castle.context.merger import ContextMerger
+from castle.context.get_default import ContextGetDefault
+from castle.context.merge import ContextMerge
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover_response import FailoverResponse
-from castle.utils import timestamp as generate_timestamp
+from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
 
 
 class Client(object):
@@ -27,15 +27,15 @@ class Client(object):
     def to_context(request, options=None):
         if options is None:
             options = {}
-        default_context = ContextDefault(
+        default_context = ContextGetDefault(
             request, options.get('cookies')).call()
-        return ContextMerger.call(default_context, options.get('context', {}))
+        return ContextMerge.call(default_context, options.get('context', {}))
 
     @staticmethod
     def to_options(options=None):
         if options is None:
             options = {}
-        options.setdefault('timestamp', generate_timestamp())
+        options.setdefault('timestamp', generate_timestamp.call())
         if 'traits' in options:
             warnings.warn('use user_traits instead of traits key', DeprecationWarning)
 

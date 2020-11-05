@@ -1,4 +1,4 @@
-class ContextSanitizer(object):
+class ContextSanitize(object):
 
     @classmethod
     def call(cls, context):

@@ -3,6 +3,7 @@ from castle.test import unittest
 from castle.exceptions import ConfigurationError
 from castle.configuration import Configuration
 
+
 class ConfigurationTestCase(unittest.TestCase):
     def test_default_values(self):
         config = Configuration()

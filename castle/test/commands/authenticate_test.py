@@ -2,7 +2,7 @@ from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.exceptions import InvalidParametersError
-from castle.utils import clone
+from castle.utils.clone import UtilsClone
 
 
 def default_options():
@@ -31,7 +31,7 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
     def setUp(self):
         # patch timestamp to return a known value
         timestamp_patcher = mock.patch(
-            'castle.commands.authenticate.timestamp')
+            'castle.commands.authenticate.generate_timestamp.call')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = mock.sentinel.timestamp
         self.addCleanup(timestamp_patcher.stop)
@@ -46,7 +46,7 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         options = default_options_plus(context={'spam': True})
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(context={'test': '1', 'spam': True})
         expected = default_command_with_data(**expected_data)
 

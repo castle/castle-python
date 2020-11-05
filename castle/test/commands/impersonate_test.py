@@ -2,7 +2,7 @@ from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.impersonate import CommandsImpersonate
 from castle.exceptions import InvalidParametersError
-from castle.utils import clone
+from castle.utils.clone import UtilsClone
 
 
 def default_options():
@@ -39,7 +39,7 @@ def default_reset_command_with_data(**data):
 class CommandsImpersonateTestCase(unittest.TestCase):
     def setUp(self):
         # patch timestamp to return a known value
-        timestamp_patcher = mock.patch('castle.commands.impersonate.timestamp')
+        timestamp_patcher = mock.patch('castle.commands.impersonate.generate_timestamp.call')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = mock.sentinel.timestamp
         self.addCleanup(timestamp_patcher.stop)
@@ -56,7 +56,7 @@ class CommandsImpersonateTestCase(unittest.TestCase):
         )
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(
             context={'lang': 'es', 'local time': '8:53pm',
                      'ip': '127.0.0.1', 'user_agent': 'Chrome'}
@@ -74,7 +74,7 @@ class CommandsImpersonateTestCase(unittest.TestCase):
         )
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(
             context={'lang': 'es', 'local time': '8:53pm',
                      'ip': '127.0.0.1', 'user_agent': 'Chrome'}

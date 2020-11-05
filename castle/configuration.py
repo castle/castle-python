@@ -42,6 +42,7 @@ TRUSTED_PROXIES = [r"""
         \Aunix\Z|
         \Aunix:"""]
 
+
 class Configuration(object):
     def __init__(self):
         self.request_timeout = REQUEST_TIMEOUT

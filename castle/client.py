@@ -9,7 +9,7 @@ from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover_response import FailoverResponse
-from castle.utils2.timestamp import UtilsTimestamp as generate_timestamp
+from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
 
 
 class Client(object):

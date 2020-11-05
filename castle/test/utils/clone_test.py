@@ -1,5 +1,5 @@
 from castle.test import unittest
-from castle.utils2.clone import UtilsClone
+from castle.utils.clone import UtilsClone
 
 
 class UtilsCloneTestCase(unittest.TestCase):

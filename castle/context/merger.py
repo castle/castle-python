@@ -1,5 +1,5 @@
-from castle.utils2.merge import UtilsMerge
-from castle.utils2.clone import UtilsClone
+from castle.utils.merge import UtilsMerge
+from castle.utils.clone import UtilsClone
 
 
 class ContextMerger(object):

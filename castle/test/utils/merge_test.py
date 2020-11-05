@@ -1,5 +1,5 @@
 from castle.test import unittest
-from castle.utils2.merge import UtilsMerge
+from castle.utils.merge import UtilsMerge
 
 
 class DeepMergeTestCase(unittest.TestCase):

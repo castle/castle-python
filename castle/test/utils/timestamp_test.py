@@ -1,12 +1,12 @@
 from datetime import datetime
 
 from castle.test import mock, unittest
-from castle.utils2.timestamp import UtilsTimestamp
+from castle.utils.timestamp import UtilsTimestamp
 
 
 class UtilsTimestampTestCase(unittest.TestCase):
 
-    @mock.patch('castle.utils2.timestamp.datetime')
+    @mock.patch('castle.utils.timestamp.datetime')
     def test_it_should_use_iso_format(self, mock_datetime):
         mock_datetime.utcnow.return_value = datetime(
             2018, 1, 2, 3, 4, 5, 678901)

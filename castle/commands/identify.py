@@ -1,5 +1,5 @@
 from castle.command import Command
-from castle.utils2.timestamp import UtilsTimestamp as generate_timestamp
+from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
 from castle.context.merger import ContextMerger
 from castle.context.sanitizer import ContextSanitizer
 from castle.validators.not_supported import ValidatorsNotSupported

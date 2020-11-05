@@ -2,7 +2,7 @@ from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.impersonate import CommandsImpersonate
 from castle.exceptions import InvalidParametersError
-from castle.utils2.clone import UtilsClone
+from castle.utils.clone import UtilsClone
 
 
 def default_options():

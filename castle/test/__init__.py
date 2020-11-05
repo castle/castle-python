@@ -29,9 +29,9 @@ TEST_MODULES = [
     'castle.test.secure_mode_test',
     'castle.test.validators.not_supported_test',
     'castle.test.validators.present_test',
-    'castle.test.utils2.clone_test',
-    'castle.test.utils2.merge_test',
-    'castle.test.utils2.timestamp_test',
+    'castle.test.utils.clone_test',
+    'castle.test.utils.merge_test',
+    'castle.test.utils.timestamp_test',
 ]
 
 # pylint: disable=redefined-builtin

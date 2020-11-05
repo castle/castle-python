@@ -2,7 +2,7 @@ from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InvalidParametersError
-from castle.utils import clone
+from castle.utils2.clone import UtilsClone
 
 
 def default_options():
@@ -44,7 +44,7 @@ class CommandsTrackTestCase(unittest.TestCase):
         options = default_options_plus(context={'local time': '8:53pm'})
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(context={'lang': 'es', 'local time': '8:53pm'})
         expected = default_command_with_data(**expected_data)
 

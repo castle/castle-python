@@ -2,7 +2,7 @@ from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.identify import CommandsIdentify
 from castle.exceptions import InvalidParametersError
-from castle.utils import clone
+from castle.utils2.clone import UtilsClone
 
 
 def default_options():
@@ -44,7 +44,7 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         options = default_options_plus(context={'color': 'blue'})
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(context={'test': '1', 'color': 'blue'})
         expected = default_command_with_data(**expected_data)
 

@@ -1,9 +1,4 @@
-import copy
 from datetime import datetime
-
-
-def clone(dict_object):
-    return copy.deepcopy(dict_object)
 
 
 def deep_merge(base, extra):

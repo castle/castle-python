@@ -1,15 +1,7 @@
 from datetime import datetime
 
 from castle.test import mock, unittest
-from castle.utils import clone, deep_merge, timestamp
-
-
-class UtilsTestCase(unittest.TestCase):
-    def test_clone(self):
-        params = {'foo': 'bar'}
-        new_params = clone(params)
-        self.assertEqual(params, new_params)
-        self.assertIsNot(new_params, params)
+from castle.utils import deep_merge, timestamp
 
 
 class DeepMergeTestCase(unittest.TestCase):

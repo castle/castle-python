@@ -2,7 +2,7 @@ from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.impersonate import CommandsImpersonate
 from castle.exceptions import InvalidParametersError
-from castle.utils import clone
+from castle.utils2.clone import UtilsClone
 
 
 def default_options():
@@ -56,7 +56,7 @@ class CommandsImpersonateTestCase(unittest.TestCase):
         )
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(
             context={'lang': 'es', 'local time': '8:53pm',
                      'ip': '127.0.0.1', 'user_agent': 'Chrome'}
@@ -74,7 +74,7 @@ class CommandsImpersonateTestCase(unittest.TestCase):
         )
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(
             context={'lang': 'es', 'local time': '8:53pm',
                      'ip': '127.0.0.1', 'user_agent': 'Chrome'}

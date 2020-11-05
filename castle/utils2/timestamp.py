@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class UtilsTimestamp(object):
 
     @staticmethod

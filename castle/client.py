@@ -9,7 +9,7 @@ from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover_response import FailoverResponse
-from castle.utils import timestamp as generate_timestamp
+from castle.utils2.timestamp import UtilsTimestamp as generate_timestamp
 
 
 class Client(object):
@@ -35,7 +35,7 @@ class Client(object):
     def to_options(options=None):
         if options is None:
             options = {}
-        options.setdefault('timestamp', generate_timestamp())
+        options.setdefault('timestamp', generate_timestamp.call())
         if 'traits' in options:
             warnings.warn('use user_traits instead of traits key', DeprecationWarning)
 

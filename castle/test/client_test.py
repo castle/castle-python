@@ -22,7 +22,7 @@ def request():
 class ClientTestCase(unittest.TestCase):
     def setUp(self):
         # patch timestamp to return a known value
-        timestamp_patcher = mock.patch('castle.client.generate_timestamp')
+        timestamp_patcher = mock.patch('castle.client.generate_timestamp.call')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = '2018-01-02T03:04:05.678'
         self.addCleanup(timestamp_patcher.stop)

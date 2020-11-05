@@ -1,8 +1,8 @@
 import requests
 
 
-class ApisSession(object):
-    class __ApisSession:
+class Session(object):
+    class __Session:
         def __init__(self):
             self.session = requests.Session()
 
@@ -11,9 +11,9 @@ class ApisSession(object):
     instance = None
 
     def __new__(cls):
-        if not ApisSession.instance:
-            ApisSession.instance = ApisSession.__ApisSession()
-        return ApisSession.instance
+        if not Session.instance:
+            Session.instance = Session.__Session()
+        return Session.instance
 
     def get(self):
         return self.instance.get()

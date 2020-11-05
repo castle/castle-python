@@ -1,6 +1,6 @@
 import json
 from castle.configuration import configuration
-from castle.apis.session import ApisSession
+from castle.session import Session
 
 HTTPS_SCHEME = 'https'
 
@@ -9,7 +9,7 @@ class ApisRequest(object):
     def __init__(self, headers=None):
         self.headers = headers or dict()
         self.base_url = ApisRequest.build_base_url()
-        self.session = ApisSession()
+        self.session = Session()
 
     def build_query(self, method, path, params):
         return self.session.get().request(

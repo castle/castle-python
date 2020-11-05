@@ -1,7 +1,7 @@
 from castle.test import unittest, mock
 
 from castle.version import VERSION as __version__
-from castle.context.default import ContextDefault
+from castle.context.get_default import ContextGetDefault
 
 
 def client_id():
@@ -32,10 +32,10 @@ def request(env):
     return req
 
 
-class ContextDefaultTestCase(unittest.TestCase):
+class ContextGetDefaultTestCase(unittest.TestCase):
 
     def test_default_context(self):
-        context = ContextDefault(
+        context = ContextGetDefault(
             request(environ()), cookies()).call()
         self.assertEqual(context['client_id'], client_id())
         self.assertEqual(context['active'], True)

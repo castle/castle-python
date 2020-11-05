@@ -1,7 +1,7 @@
 from castle.command import Command
 from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
-from castle.context.merger import ContextMerger
-from castle.context.sanitizer import ContextSanitizer
+from castle.context.merge import ContextMerge
+from castle.context.sanitize import ContextSanitize
 from castle.validators.present import ValidatorsPresent
 
 
@@ -11,8 +11,8 @@ class CommandsAuthenticate(object):
 
     def build(self, options):
         ValidatorsPresent.call(options, 'event')
-        context = ContextMerger.call(self.context, options.get('context'))
-        context = ContextSanitizer.call(context)
+        context = ContextMerge.call(self.context, options.get('context'))
+        context = ContextSanitize.call(context)
         if context:
             options.update({'context': context})
         options.update({'sent_at': generate_timestamp.call()})

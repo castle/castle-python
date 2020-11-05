@@ -2,7 +2,7 @@ from castle.utils.merge import UtilsMerge
 from castle.utils.clone import UtilsClone
 
 
-class ContextMerger(object):
+class ContextMerge(object):
 
     @staticmethod
     def call(initial_context, request_context):

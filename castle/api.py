@@ -1,12 +1,12 @@
-from castle.apis.request import ApisRequest
-from castle.apis.response import ApisResponse
+from castle.core.send_request import CoreSendRequest
+from castle.core.process_response import CoreProcessResponse
 from castle.configuration import configuration
 from castle.exceptions import ConfigurationError
 
 
 class Api(object):
     def __init__(self):
-        self.req = ApisRequest({'Content-Type': 'application/json'})
+        self.req = CoreSendRequest({'Content-Type': 'application/json'})
 
     def request(self, command):
         if not configuration.isValid():
@@ -14,4 +14,4 @@ class Api(object):
         return self.req.build_query(command.method, command.path, command.data)
 
     def call(self, command):
-        return ApisResponse(self.request(command)).call()
+        return CoreProcessResponse(self.request(command)).call()

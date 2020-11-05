@@ -6,8 +6,6 @@ from unittest import mock
 
 TEST_MODULES = [
     'castle.test.api_test',
-    'castle.test.apis.request_test',
-    'castle.test.apis.response_test',
     'castle.test.client_test',
     'castle.test.client_id.extract_test',
     'castle.test.command_test',
@@ -16,6 +14,8 @@ TEST_MODULES = [
     'castle.test.commands.impersonate_test',
     'castle.test.commands.review_test',
     'castle.test.commands.track_test',
+    'castle.test.core.process_response_test',
+    'castle.test.core.send_request_test',
     'castle.test.configuration_test',
     'castle.test.context.get_default_test',
     'castle.test.context.merge_test',

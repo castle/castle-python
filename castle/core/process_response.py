@@ -12,7 +12,7 @@ RESPONSE_ERRORS = {
 }
 
 
-class ApisResponse(object):
+class CoreProcessResponse(object):
     def __init__(self, response):
         self.response = response
 

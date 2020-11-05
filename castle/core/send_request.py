@@ -5,10 +5,10 @@ from castle.session import Session
 HTTPS_SCHEME = 'https'
 
 
-class ApisRequest(object):
+class CoreSendRequest(object):
     def __init__(self, headers=None):
         self.headers = headers or dict()
-        self.base_url = ApisRequest.build_base_url()
+        self.base_url = CoreSendRequest.build_base_url()
         self.session = Session()
 
     def build_query(self, method, path, params):
@@ -18,7 +18,7 @@ class ApisRequest(object):
             auth=('', configuration.api_secret),
             timeout=configuration.request_timeout / 1000.0,
             headers=self.headers,
-            verify=ApisRequest.verify(),
+            verify=CoreSendRequest.verify(),
             data=None if params is None else json.dumps(params)
         )
 

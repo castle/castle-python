@@ -4,7 +4,7 @@ import responses
 from castle.test import unittest
 from castle.api import Api
 from castle.command import Command
-from castle.apis.request import ApisRequest
+from castle.core.send_request import CoreSendRequest
 from castle.configuration import configuration
 from castle.exceptions import ConfigurationError
 
@@ -25,7 +25,7 @@ class ApiTestCase(unittest.TestCase):
         configuration.api_secret = None
 
     def test_init(self):
-        self.assertIsInstance(Api().req, ApisRequest)
+        self.assertIsInstance(Api().req, CoreSendRequest)
 
     @responses.activate
     def test_request(self):

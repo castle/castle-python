@@ -2,7 +2,7 @@ import threading
 from requests import Response
 import responses
 from castle.test import unittest
-from castle.apis.request import ApisRequest
+from castle.core.send_request import CoreSendRequest
 from castle.configuration import configuration
 
 try:
@@ -28,13 +28,13 @@ def run_server():
     return httpd_thread
 
 
-class ApisRequestTestCase(unittest.TestCase):
+class CoreSendRequestTestCase(unittest.TestCase):
     def test_init_headers(self):
         headers = {'X-Castle-Client-Id': '1234'}
-        self.assertEqual(ApisRequest(headers).headers, headers)
+        self.assertEqual(CoreSendRequest(headers).headers, headers)
 
     def test_init_base_url(self):
-        self.assertEqual(ApisRequest().base_url, 'https://api.castle.io/v1')
+        self.assertEqual(CoreSendRequest().base_url, 'https://api.castle.io/v1')
 
     @responses.activate
     def test_build_query(self):
@@ -48,7 +48,7 @@ class ApisRequestTestCase(unittest.TestCase):
             json=response_text,
             status=200
         )
-        res = ApisRequest().build_query('post', 'authenticate', data)
+        res = CoreSendRequest().build_query('post', 'authenticate', data)
         self.assertIsInstance(res, Response)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json(), response_text)
@@ -58,7 +58,7 @@ class ApisRequestTestCase(unittest.TestCase):
     def test_connection_pooled(self):
         configuration.base_url = 'http://localhost:65521'
         run_server()
-        request = ApisRequest()
+        request = CoreSendRequest()
         data = {'event': '$login.authenticate', 'user_id': '12345'}
         response = request.build_query('post', 'authenticate', data)
         num_pools = len(response.connection.poolmanager.pools.keys())
@@ -67,21 +67,21 @@ class ApisRequestTestCase(unittest.TestCase):
 
     def test_build_url(self):
         self.assertEqual(
-            ApisRequest().build_url('authenticate'),
+            CoreSendRequest().build_url('authenticate'),
             'https://api.castle.io/v1/authenticate'
         )
 
     def test_build_url_with_port(self):
         configuration.base_url = 'http://api.castle.local:3001'
         self.assertEqual(
-            ApisRequest().build_url('test'),
+            CoreSendRequest().build_url('test'),
             'http://api.castle.local:3001/test'
         )
 
     def test_verify_true(self):
-        self.assertEqual(ApisRequest().verify(), True)
+        self.assertEqual(CoreSendRequest().verify(), True)
 
     def test_verify_false(self):
         configuration.base_url = 'http://api.castle.io'
-        self.assertEqual(ApisRequest().verify(), False)
+        self.assertEqual(CoreSendRequest().verify(), False)
         configuration.base_url = 'https://api.castle.io/v1'

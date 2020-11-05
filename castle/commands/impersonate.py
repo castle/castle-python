@@ -1,5 +1,5 @@
 from castle.command import Command
-from castle.utils import timestamp
+from castle.utils2.timestamp import UtilsTimestamp as generate_timestamp
 from castle.context.merger import ContextMerger
 from castle.context.sanitizer import ContextSanitizer
 from castle.validators.present import ValidatorsPresent
@@ -18,7 +18,7 @@ class CommandsImpersonate(object):
 
         if context:
             options.update({'context': context})
-        options.update({'sent_at': timestamp()})
+        options.update({'sent_at': generate_timestamp.call()})
 
         method = ('delete' if options.get('reset', False) else 'post')
 

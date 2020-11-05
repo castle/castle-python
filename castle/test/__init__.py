@@ -29,7 +29,6 @@ TEST_MODULES = [
     'castle.test.secure_mode_test',
     'castle.test.validators.not_supported_test',
     'castle.test.validators.present_test',
-    'castle.test.utils_test',
     'castle.test.utils2.clone_test',
     'castle.test.utils2.merge_test',
     'castle.test.utils2.timestamp_test',

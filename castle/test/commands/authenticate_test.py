@@ -31,7 +31,7 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
     def setUp(self):
         # patch timestamp to return a known value
         timestamp_patcher = mock.patch(
-            'castle.commands.authenticate.timestamp')
+            'castle.commands.authenticate.generate_timestamp.call')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = mock.sentinel.timestamp
         self.addCleanup(timestamp_patcher.stop)

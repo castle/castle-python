@@ -2,11 +2,11 @@ import json
 import responses
 
 from castle.test import unittest
-from castle.review import Review
+from castle.api.review import APIReview
 from castle.configuration import configuration
 
 
-class ReviewTestCase(unittest.TestCase):
+class APIReviewTestCase(unittest.TestCase):
     def setUp(self):
         configuration.api_secret = 'test'
 
@@ -24,4 +24,4 @@ class ReviewTestCase(unittest.TestCase):
             status=200
         )
         review_id = '1234'
-        self.assertEqual(Review.retrieve(review_id), json.loads(response_text))
+        self.assertEqual(APIReview.retrieve(review_id), json.loads(response_text))

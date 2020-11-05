@@ -1,4 +1,4 @@
-# All exceptions should subclass from CastleError in this module.
+# All errors should subclass from CastleError in this module.
 class CastleError(Exception):
     """Base class for all Castle errors."""
 

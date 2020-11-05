@@ -3,7 +3,7 @@ import requests
 
 from castle.test import unittest
 from castle.core.process_response import CoreProcessResponse
-from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
+from castle.errors import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
     UserUnauthorizedError, InvalidParametersError, InternalServerError
 
 

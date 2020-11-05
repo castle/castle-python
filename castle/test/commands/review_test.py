@@ -1,7 +1,7 @@
 from castle.test import unittest
 from castle.command import Command
 from castle.commands.review import CommandsReview
-from castle.exceptions import InvalidParametersError
+from castle.errors import InvalidParametersError
 
 
 def review_id():

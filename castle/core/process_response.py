@@ -1,4 +1,4 @@
-from castle.exceptions import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
+from castle.errors import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
     UserUnauthorizedError, InvalidParametersError, ApiError, InternalServerError
 
 

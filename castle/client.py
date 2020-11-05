@@ -7,7 +7,7 @@ from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
-from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
+from castle.errors import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover.prepare_response import FailoverPrepareResponse
 from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
 

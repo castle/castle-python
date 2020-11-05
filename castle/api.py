@@ -1,7 +1,7 @@
 from castle.core.send_request import CoreSendRequest
 from castle.core.process_response import CoreProcessResponse
 from castle.configuration import configuration
-from castle.exceptions import ConfigurationError
+from castle.errors import ConfigurationError
 
 
 class Api(object):

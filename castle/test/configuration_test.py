@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 from castle.test import unittest
-from castle.exceptions import ConfigurationError
+from castle.errors import ConfigurationError
 from castle.configuration import Configuration
 
 

@@ -1,5 +1,5 @@
 from urllib.parse import urlparse, ParseResult
-from castle.exceptions import ConfigurationError
+from castle.errors import ConfigurationError
 from castle.headers.format import HeadersFormat
 
 DEFAULT_ALLOWLIST = [

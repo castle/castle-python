@@ -4,7 +4,7 @@ import responses
 from castle.test import mock, unittest
 from castle.client import Client
 from castle.configuration import configuration
-from castle.exceptions import ImpersonationFailed
+from castle.errors import ImpersonationFailed
 from castle.api import Api
 from castle.version import VERSION
 

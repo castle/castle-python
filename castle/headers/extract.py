@@ -4,7 +4,7 @@ ALWAYS_DENYLISTED = ['Cookie', 'Authorization']
 ALWAYS_ALLOWLISTED = ['User-Agent']
 
 
-class ExtractorsHeaders(object):
+class HeadersExtract(object):
     def __init__(self, headers):
         self.headers = headers
         self.no_whitelist = len(configuration.allowlisted) == 0

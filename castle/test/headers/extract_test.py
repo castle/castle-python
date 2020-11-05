@@ -1,6 +1,6 @@
 from castle.test import unittest
 from castle.configuration import configuration, DEFAULT_ALLOWLIST
-from castle.extractors.headers import ExtractorsHeaders
+from castle.headers.extract import HeadersExtract
 
 
 def formatted_headers():
@@ -15,14 +15,14 @@ def formatted_headers():
     })
 
 
-class ExtractorsHeadersTestCase(unittest.TestCase):
+class HeadersExtractTestCase(unittest.TestCase):
 
     def tearDown(self):
         configuration.allowlisted = []
         configuration.denylisted = []
 
     def test_extract_headers(self):
-        self.assertEqual(ExtractorsHeaders(formatted_headers()).call(),
+        self.assertEqual(HeadersExtract(formatted_headers()).call(),
                          {'Accept': 'application/json',
                           'Authorization': True,
                           'Cookie': True,
@@ -35,7 +35,7 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_allowlisted_headers(self):
         configuration.allowlisted = ['Accept', 'OK']
         self.assertEqual(
-            ExtractorsHeaders(formatted_headers()).call(),
+            HeadersExtract(formatted_headers()).call(),
             {'Accept': 'application/json',
              'Authorization': True,
              'Cookie': True,
@@ -49,7 +49,7 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_only_default_allowlisted_headers(self):
         configuration.allowlisted = DEFAULT_ALLOWLIST
         self.assertEqual(
-            ExtractorsHeaders(formatted_headers()).call(),
+            HeadersExtract(formatted_headers()).call(),
             {'Accept': 'application/json',
              'Authorization': True,
              'Cookie': True,
@@ -63,7 +63,7 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_restricted_denylisted_headers(self):
         configuration.denylisted = ['User-Agent']
         self.assertEqual(
-            ExtractorsHeaders(formatted_headers()).call(),
+            HeadersExtract(formatted_headers()).call(),
             {'Accept': 'application/json',
              'Authorization': True,
              'Cookie': True,
@@ -77,7 +77,7 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_denylisted_headers(self):
         configuration.denylisted = ['Accept']
         self.assertEqual(
-            ExtractorsHeaders(formatted_headers()).call(),
+            HeadersExtract(formatted_headers()).call(),
             {'Accept': True,
              'Authorization': True,
              'Cookie': True,
@@ -92,5 +92,5 @@ class ExtractorsHeadersTestCase(unittest.TestCase):
         configuration.denylisted = ['Accept']
         configuration.allowlisted = ['Accept']
         self.assertEqual(
-            ExtractorsHeaders(formatted_headers()).call()['Accept'], True
+            HeadersExtract(formatted_headers()).call()['Accept'], True
         )

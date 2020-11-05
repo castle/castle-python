@@ -162,7 +162,7 @@ Exceptions
 
 ``CastleError`` will be thrown if the Castle API returns a 400 or a 500
 level HTTP response. You can also choose to catch a more `finegrained
-error <https://github.com/castle/castle-python/blob/master/castle/exceptions.py>`__.
+error <https://github.com/castle/castle-python/blob/master/castle/errors.py>`__.
 
 Documentation
 -------------

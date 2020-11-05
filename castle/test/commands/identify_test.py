@@ -1,7 +1,7 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.identify import CommandsIdentify
-from castle.exceptions import InvalidParametersError
+from castle.errors import InvalidParametersError
 from castle.utils.clone import UtilsClone
 
 

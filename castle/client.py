@@ -8,7 +8,7 @@ from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
-from castle.failover_response import FailoverResponse
+from castle.failover.prepare_response import FailoverPrepareResponse
 from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
 
 
@@ -45,7 +45,9 @@ class Client(object):
     def failover_response_or_raise(options, exception):
         if configuration.failover_strategy == 'throw':
             raise exception
-        return FailoverResponse(options.get('user_id'), None, exception.__class__.__name__).call()
+        return FailoverPrepareResponse(
+            options.get('user_id'), None, exception.__class__.__name__
+        ).call()
 
     def __init__(self, context, options=None):
         if options is None:
@@ -70,7 +72,7 @@ class Client(object):
             except (RequestError, InternalServerError) as exception:
                 return Client.failover_response_or_raise(options, exception)
         else:
-            return FailoverResponse(
+            return FailoverPrepareResponse(
                 options.get('user_id'),
                 'allow',
                 'Castle set to do not track.'

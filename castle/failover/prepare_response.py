@@ -1,7 +1,7 @@
 from castle.configuration import configuration
 
 
-class FailoverResponse(object):
+class FailoverPrepareResponse(object):
     def __init__(self, user_id, strategy=None, reason=None):
         self.strategy = strategy or configuration.failover_strategy
         self.reason = reason

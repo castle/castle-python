@@ -16,7 +16,6 @@ class ContextGetDefault(object):
         context = dict({
             'client_id': self._client_id(),
             'active': True,
-            'origin': 'web',
             'headers': self._headers(),
             'ip': self._ip(),
             'library': {

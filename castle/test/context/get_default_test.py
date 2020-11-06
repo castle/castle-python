@@ -39,7 +39,6 @@ class ContextGetDefaultTestCase(unittest.TestCase):
             request(environ()), cookies()).call()
         self.assertEqual(context['client_id'], client_id())
         self.assertEqual(context['active'], True)
-        self.assertEqual(context['origin'], 'web')
         self.assertEqual(
             context['headers'],
             {

@@ -42,7 +42,6 @@ class ClientTestCase(unittest.TestCase):
             },
             'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION},
-            'origin': 'web',
             'user_agent': 'test'
         }
         client = Client.from_request(request(), {})
@@ -204,7 +203,6 @@ class ClientTestCase(unittest.TestCase):
             },
             'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION},
-            'origin': 'web',
             'user_agent': 'test'
         }
         result_context = Client.to_context(request(), {})

@@ -35,6 +35,9 @@ import and configure the library with your Castle API secret.
     # Base Castle API url
     # configuration.base_url = "https://api.castle.io/v1"
 
+    # Logger (need to respond to info method) - logs Castle API requests and responses
+    # configuration.logger = logging.getLogger()
+
     # Allowlisted and Denylisted headers are case insensitive
     # and allow to use _ and - as a separator, http prefixes are removed
     # By default all headers are passed, but some are automatically scrubbed.

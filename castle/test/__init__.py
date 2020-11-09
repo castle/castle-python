@@ -26,6 +26,7 @@ TEST_MODULES = [
     'castle.test.headers.filter_test',
     'castle.test.headers.format_test',
     'castle.test.ip.extract_test',
+    'castle.test.logger_test',
     'castle.test.secure_mode_test',
     'castle.test.session_test',
     'castle.test.utils.clone_test',

@@ -1,5 +1,6 @@
 import json
 from castle.configuration import configuration
+from castle.logger import Logger
 from castle.session import Session
 
 HTTPS_SCHEME = 'https'
@@ -12,14 +13,21 @@ class CoreSendRequest(object):
         self.session = Session()
 
     def build_query(self, method, path, params):
+        url = self.build_url(path)
+        request_data = {
+            "auth": ('', configuration.api_secret),
+            "timeout": configuration.request_timeout / 1000.0,
+            "headers": self.headers,
+            "verify": CoreSendRequest.verify(),
+            "data": None if params is None else json.dumps(params)
+        }
+
+        Logger.call("{}:".format(url), request_data.get("data"))
+
         return self.session.get().request(
             method,
-            self.build_url(path),
-            auth=('', configuration.api_secret),
-            timeout=configuration.request_timeout / 1000.0,
-            headers=self.headers,
-            verify=CoreSendRequest.verify(),
-            data=None if params is None else json.dumps(params)
+            url,
+            **request_data
         )
 
     def build_url(self, path):

@@ -55,17 +55,29 @@ class Configuration(object):
         self.trusted_proxies = []
         self.trust_proxy_chain = False
         self.trusted_proxy_depth = None
+        self.logger = None
 
     def isValid(self):
         return self.api_secret and self.base_url.hostname
 
     @property
-    def api_secret(self):
-        return self.__api_secret
+    def request_timeout(self):
+        return self.__request_timeout
 
-    @api_secret.setter
-    def api_secret(self, value):
-        self.__api_secret = value
+    @request_timeout.setter
+    def request_timeout(self, value):
+        self.__request_timeout = value
+
+    @property
+    def failover_strategy(self):
+        return self.__failover_strategy
+
+    @failover_strategy.setter
+    def failover_strategy(self, value):
+        if value in FAILOVER_STRATEGIES:
+            self.__failover_strategy = value
+        else:
+            raise ConfigurationError
 
     @property
     def base_url(self):
@@ -101,23 +113,12 @@ class Configuration(object):
             self.__denylisted = []
 
     @property
-    def request_timeout(self):
-        return self.__request_timeout
+    def api_secret(self):
+        return self.__api_secret
 
-    @request_timeout.setter
-    def request_timeout(self, value):
-        self.__request_timeout = value
-
-    @property
-    def failover_strategy(self):
-        return self.__failover_strategy
-
-    @failover_strategy.setter
-    def failover_strategy(self, value):
-        if value in FAILOVER_STRATEGIES:
-            self.__failover_strategy = value
-        else:
-            raise ConfigurationError
+    @api_secret.setter
+    def api_secret(self, value):
+        self.__api_secret = value
 
     @property
     def ip_headers(self):
@@ -162,6 +163,14 @@ class Configuration(object):
             self.__trusted_proxy_depth = int(0 if value is None else value)
         else:
             raise ConfigurationError
+
+    @property
+    def logger(self):
+        return self.__logger
+
+    @logger.setter
+    def logger(self, value):
+        self.__logger = value
 
 
 # pylint: disable=invalid-name

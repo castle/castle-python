@@ -1,7 +1,7 @@
 class UtilsMerge(object):
 
-    @staticmethod
-    def call(base, extra):
+    @classmethod
+    def call(cls, base, extra):
         """
         Deeply merge two dictionaries, overriding existing keys in the base.
 
@@ -18,7 +18,7 @@ class UtilsMerge(object):
                     del base[key]
             # If the key represents a dict on both given dicts, merge the sub-dicts
             elif isinstance(base.get(key), dict) and isinstance(value, dict):
-                __class__.call(base[key], value)
+                cls.call(base[key], value)
             else:
                 # Otherwise, set the key on the base to be the value of the extra.
                 base[key] = value

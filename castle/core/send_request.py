@@ -22,7 +22,7 @@ class CoreSendRequest(object):
             "data": None if params is None else json.dumps(params)
         }
 
-        Logger.call("#{}:".format(url), request_data.get("data"))
+        Logger.call("{}:".format(url), request_data.get("data"))
 
         return self.session.get().request(
             method,

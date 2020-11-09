@@ -29,8 +29,8 @@ import and configure the library with your Castle API secret.
     # For authenticate method you can set failover strategies: allow(default), deny, challenge, throw
     configuration.failover_strategy = 'deny'
 
-    # Castle::RequestError is raised when timing out in milliseconds (default: 500 milliseconds)
-    configuration.request_timeout = 1000
+    # Castle::RequestError is raised when timing out in milliseconds (default: 1000 milliseconds)
+    configuration.request_timeout = 1500
 
     # Base Castle API url
     # configuration.base_url = "https://api.castle.io/v1"

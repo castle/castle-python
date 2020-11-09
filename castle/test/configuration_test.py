@@ -13,7 +13,7 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.base_url.path, '/v1')
         self.assertEqual(config.allowlisted, [])
         self.assertEqual(config.denylisted, [])
-        self.assertEqual(config.request_timeout, 500)
+        self.assertEqual(config.request_timeout, 1000)
         self.assertEqual(config.failover_strategy, 'allow')
         self.assertEqual(config.ip_headers, [])
         self.assertEqual(config.trusted_proxies, [])

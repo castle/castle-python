@@ -2,6 +2,7 @@ from urllib.parse import urlparse
 from castle.test import unittest
 from castle.errors import ConfigurationError
 from castle.configuration import Configuration
+from castle.failover.strategy import FailoverStrategy
 
 
 class ConfigurationTestCase(unittest.TestCase):
@@ -14,7 +15,7 @@ class ConfigurationTestCase(unittest.TestCase):
         self.assertEqual(config.allowlisted, [])
         self.assertEqual(config.denylisted, [])
         self.assertEqual(config.request_timeout, 1000)
-        self.assertEqual(config.failover_strategy, 'allow')
+        self.assertEqual(config.failover_strategy, FailoverStrategy.ALLOW.value)
         self.assertEqual(config.ip_headers, [])
         self.assertEqual(config.trusted_proxies, [])
 
@@ -74,8 +75,8 @@ class ConfigurationTestCase(unittest.TestCase):
 
     def test_failover_strategy_setter_valid(self):
         config = Configuration()
-        config.failover_strategy = 'throw'
-        self.assertEqual(config.failover_strategy, 'throw')
+        config.failover_strategy = FailoverStrategy.THROW.value
+        self.assertEqual(config.failover_strategy, FailoverStrategy.THROW.value)
 
     def test_failover_strategy_setter_invalid(self):
         config = Configuration()

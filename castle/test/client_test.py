@@ -1,11 +1,13 @@
 import json
 from collections import namedtuple
 import responses
-from castle.test import mock, unittest
+from castle.api_request import APIRequest
 from castle.client import Client
 from castle.configuration import configuration
 from castle.errors import ImpersonationFailed
-from castle.api_request import APIRequest
+from castle.failover.strategy import FailoverStrategy
+from castle.test import mock, unittest
+from castle.verdict import Verdict
 from castle.version import VERSION
 
 
@@ -96,7 +98,7 @@ class ClientTestCase(unittest.TestCase):
 
     @responses.activate
     def test_authenticate_tracked_true(self):
-        response_text = {'action': 'allow', 'user_id': '1234'}
+        response_text = {'action': Verdict.ALLOW.value, 'user_id': '1234'}
         responses.add(
             responses.POST,
             'https://api.castle.io/v1/authenticate',
@@ -111,7 +113,7 @@ class ClientTestCase(unittest.TestCase):
     @responses.activate
     def test_authenticate_tracked_true_status_500(self):
         response_text = {
-            'action': 'allow',
+            'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
             'failover_reason': 'InternalServerError'
@@ -128,7 +130,7 @@ class ClientTestCase(unittest.TestCase):
 
     def test_authenticate_tracked_false(self):
         response_text = {
-            'action': 'allow',
+            'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
             'failover_reason': 'Castle set to do not track.'
@@ -213,7 +215,7 @@ class ClientTestCase(unittest.TestCase):
         self.assertEqual(
             Client.failover_response_or_raise(options, Exception()),
             {
-                'action': 'allow',
+                'action': Verdict.ALLOW.value,
                 'user_id': '1234',
                 'failover': True,
                 'failover_reason': 'Exception'
@@ -222,14 +224,14 @@ class ClientTestCase(unittest.TestCase):
 
     def test_failover_strategy_throw(self):
         options = {'user_id': '1234'}
-        configuration.failover_strategy = 'throw'
+        configuration.failover_strategy = FailoverStrategy.THROW.value
         with self.assertRaises(Exception):
             Client.failover_response_or_raise(options, Exception())
-        configuration.failover_strategy = 'allow'
+        configuration.failover_strategy = FailoverStrategy.ALLOW.value
 
     @responses.activate
     def test_timestamps_are_not_global(self):
-        response_text = {'action': 'allow', 'user_id': '1234'}
+        response_text = {'action': Verdict.ALLOW.value, 'user_id': '1234'}
         responses.add(
             responses.POST,
             'https://api.castle.io/v1/authenticate',

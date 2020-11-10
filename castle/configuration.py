@@ -1,6 +1,7 @@
 from urllib.parse import urlparse, ParseResult
 from castle.errors import ConfigurationError
 from castle.headers.format import HeadersFormat
+from castle.failover.strategy import FailoverStrategy
 
 DEFAULT_ALLOWLIST = [
     "Accept",
@@ -29,11 +30,11 @@ DEFAULT_ALLOWLIST = [
 
 # API endpoint
 BASE_URL = 'https://api.castle.io/v1'
-FAILOVER_STRATEGY = 'allow'
+FAILOVER_STRATEGY = FailoverStrategy.ALLOW.value
 # 1000 milliseconds
 REQUEST_TIMEOUT = 1000
+FAILOVER_STRATEGIES = FailoverStrategy.list()
 # regexp of trusted proxies which is always appended to the trusted proxy list
-FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
 TRUSTED_PROXIES = [r"""
         \A127\.0\.0\.1\Z|
         \A(10|172\.(1[6-9]|2[0-9]|30|31)|192\.168)\.|

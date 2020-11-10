@@ -22,6 +22,7 @@ TEST_MODULES = [
     'castle.test.core.process_response_test',
     'castle.test.core.send_request_test',
     'castle.test.failover.prepare_response_test',
+    'castle.test.failover.strategy_test',
     'castle.test.headers.extract_test',
     'castle.test.headers.filter_test',
     'castle.test.headers.format_test',

@@ -9,6 +9,7 @@ from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
 from castle.errors import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover.prepare_response import FailoverPrepareResponse
+from castle.failover.strategy import FailoverStrategy
 from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
 
 
@@ -43,7 +44,7 @@ class Client(object):
 
     @staticmethod
     def failover_response_or_raise(options, exception):
-        if configuration.failover_strategy == 'throw':
+        if configuration.failover_strategy == FailoverStrategy.THROW.value:
             raise exception
         return FailoverPrepareResponse(
             options.get('user_id'), None, exception.__class__.__name__

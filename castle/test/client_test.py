@@ -5,6 +5,7 @@ from castle.api_request import APIRequest
 from castle.client import Client
 from castle.configuration import configuration
 from castle.errors import ImpersonationFailed
+from castle.failover.strategy import FailoverStrategy
 from castle.test import mock, unittest
 from castle.verdict import Verdict
 from castle.version import VERSION
@@ -223,10 +224,10 @@ class ClientTestCase(unittest.TestCase):
 
     def test_failover_strategy_throw(self):
         options = {'user_id': '1234'}
-        configuration.failover_strategy = 'throw'
+        configuration.failover_strategy = FailoverStrategy.THROW.value
         with self.assertRaises(Exception):
             Client.failover_response_or_raise(options, Exception())
-        configuration.failover_strategy = 'allow'
+        configuration.failover_strategy = FailoverStrategy.ALLOW.value
 
     @responses.activate
     def test_timestamps_are_not_global(self):

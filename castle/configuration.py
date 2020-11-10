@@ -30,8 +30,8 @@ DEFAULT_ALLOWLIST = [
 # API endpoint
 BASE_URL = 'https://api.castle.io/v1'
 FAILOVER_STRATEGY = 'allow'
-# 500 milliseconds
-REQUEST_TIMEOUT = 500
+# 1000 milliseconds
+REQUEST_TIMEOUT = 1000
 # regexp of trusted proxies which is always appended to the trusted proxy list
 FAILOVER_STRATEGIES = ['allow', 'deny', 'challenge', 'throw']
 TRUSTED_PROXIES = [r"""

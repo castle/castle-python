@@ -21,11 +21,33 @@ class CoreProcessResponseTestCase(unittest.TestCase):
     def test_response_empty(self):
         self.assertEqual(CoreProcessResponse(response(body=b'')).call(), {})
 
-    def test_response_authenticate(self):
+    def test_response_authenticate_allow(self):
         self.assertEqual(
             CoreProcessResponse(
                 response(body=b'{"action":"allow","user_id":"12345"}')).call(),
             {"action": "allow", "user_id": "12345"}
+        )
+
+    def test_response_authenticate_allow_with_props(self):
+        self.assertEqual(
+            CoreProcessResponse(
+                response(body=b'{"action":"allow","user_id":"12345","internal":{}}')).call(),
+            {"action": "allow", "user_id": "12345", "internal": {}}
+        )
+
+    def test_response_authenticate_deny_without_rp(self):
+        self.assertEqual(
+            CoreProcessResponse(
+                response(body=b'{"action":"deny","user_id":"1","device_token":"abc"}')).call(),
+            {"action": "deny", "user_id": "1", "device_token": "abc"}
+        )
+
+    def test_response_authenticate_deny_with_rp(self):
+        self.assertEqual(
+            CoreProcessResponse(
+                response(body=b'{"action":"deny","user_id":"1","device_token":"abc","risk_policy":{"id":"123","revision_id":"abc","name":"def","type":"bot"}}')).call(),
+            {"action": "deny", "user_id": "1", "device_token": "abc", "risk_policy": {
+                "id": "123", "revision_id": "abc", "name": "def", "type": "bot"}}
         )
 
     def test_verify_200_299(self):

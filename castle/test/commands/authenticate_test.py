@@ -89,3 +89,17 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
 
         self.assertEqual(CommandsAuthenticate(
             context).build(options), expected)
+
+    def test_build_risk_policy_allowed(self):
+        context = {}
+        risk_policy = {
+            'id': 'q-rbeMzBTdW2Fd09sbz55A',
+            'revision_id': 'pke4zqO2TnqVr-NHJOAHEg',
+            'name': 'Block Users from X',
+            'type': 'bot'
+        }
+
+        options = default_options_plus(risk_policy=risk_policy)
+        expected = default_command_with_data(**options)
+        self.assertEqual(CommandsAuthenticate(
+            context).build(options), expected)

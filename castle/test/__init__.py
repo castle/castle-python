@@ -14,7 +14,7 @@ TEST_MODULES = [
     'castle.test.commands.authenticate_test',
     'castle.test.commands.identify_test',
     'castle.test.commands.impersonate_test',
-    # 'castle.test.commands.get_devices_test',
+    'castle.test.commands.get_devices_test',
     'castle.test.commands.review_test',
     'castle.test.commands.track_test',
     'castle.test.configuration_test',

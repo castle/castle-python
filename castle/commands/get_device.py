@@ -2,7 +2,7 @@ from castle.command import Command
 from castle.validators.present import ValidatorsPresent
 
 
-class CommandsGetDevices(object):
+class CommandsGetDevice(object):
 
     @staticmethod
     def build(device_token):

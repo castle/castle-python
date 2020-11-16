@@ -10,6 +10,6 @@ class CommandsGetDevices(object):
 
         return Command(
             method='get',
-            path="{user_id}/devices".format(user_id=user_id),
+            path="users/{user_id}/devices".format(user_id=user_id),
             data=None
         )

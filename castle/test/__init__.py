@@ -5,6 +5,7 @@ from unittest import mock
 
 
 TEST_MODULES = [
+    'castle.test.api.get_devices_test',
     'castle.test.api.review_test',
     'castle.test.api_request_test',
     'castle.test.client_id.extract_test',
@@ -13,6 +14,7 @@ TEST_MODULES = [
     'castle.test.commands.authenticate_test',
     'castle.test.commands.identify_test',
     'castle.test.commands.impersonate_test',
+    # 'castle.test.commands.get_devices_test',
     'castle.test.commands.review_test',
     'castle.test.commands.track_test',
     'castle.test.configuration_test',

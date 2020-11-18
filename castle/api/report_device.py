@@ -1,5 +1,5 @@
 from castle.api_request import APIRequest
-from castle.commands.get_device import CommandsReportDevice
+from castle.commands.report_device import CommandsReportDevice
 
 
 class APIReportDevice(object):

@@ -1,5 +1,5 @@
 from castle.api_request import APIRequest
-from castle.commands.get_device import CommandsApproveDevice
+from castle.commands.approve_device import CommandsApproveDevice
 
 
 class APIApproveDevice(object):

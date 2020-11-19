@@ -2,11 +2,11 @@ import json
 import responses
 
 from castle.test import unittest
-from castle.api.get_devices import APIGetDevices
+from castle.api.get_devices_for_user import APIGetDevicesForUser
 from castle.configuration import configuration
 
 
-class APIGetDevicesTestCase(unittest.TestCase):
+class APIGetDevicesForUserTestCase(unittest.TestCase):
     def setUp(self):
         configuration.api_secret = 'test'
 
@@ -24,4 +24,4 @@ class APIGetDevicesTestCase(unittest.TestCase):
             status=200
         )
         user_id = '1234'
-        self.assertEqual(APIGetDevices.retrieve(user_id), json.loads(response_text))
+        self.assertEqual(APIGetDevicesForUser.retrieve(user_id), json.loads(response_text))

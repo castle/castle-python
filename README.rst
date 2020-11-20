@@ -170,21 +170,21 @@ valid ``device_token``.
     from castle.api.get_device import APIGetDevice
 
     # Get device data
-    APIGetDevice.call(device_token, request)
+    APIGetDevice.call(device_token)
 
 .. code:: python
 
     from castle.api.approve_device import APIApproveDevice
 
     # Approve a device
-    APIApproveDevice.call(device_token, request)
+    APIApproveDevice.call(device_token)
 
 .. code:: python
 
     from castle.api.report_device import APIReportDevice
 
     # Report a device
-    APIReportDevice.call(device_token, request)
+    APIReportDevice.call(device_token)
 
 
 Fetching available devices that belong to a given user requires a valid
@@ -195,7 +195,7 @@ Fetching available devices that belong to a given user requires a valid
     from castle.api.get_devices_for_user import APIGetDevicesForUser
 
     # Get user's devices data
-    APIGetDevicesForUser.call(user_id, request)
+    APIGetDevicesForUser.call(user_id)
 
 
 Impersonation mode

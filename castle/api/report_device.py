@@ -4,5 +4,5 @@ from castle.commands.report_device import CommandsReportDevice
 
 class APIReportDevice(object):
     @staticmethod
-    def retrieve(device_token):
+    def call(device_token):
         return APIRequest().call(CommandsReportDevice.build(device_token))

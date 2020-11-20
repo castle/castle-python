@@ -154,6 +154,50 @@ Events
 
 List of Recognized Events can be found `here <https://github.com/castle/castle-python/tree/master/castle/events.py>`_ or in the `docs <https://docs.castle.io/api_reference/#list-of-recognized-events>`_.
 
+Device management
+-----------------
+
+This SDK allows issuing requests to `Castle's Device Management
+Endpoints <https://docs.castle.io/device_management_tool/>`__. Use these
+endpoints for admin-level management of end-user devices (i.e., for an
+internal dashboard).
+
+Fetching device data, approving a device, reporting a device requires a
+valid ``device_token``.
+
+.. code:: python
+
+    from castle.api.get_device import APIGetDevice
+
+    # Get device data
+    APIGetDevice.call(device_token)
+
+.. code:: python
+
+    from castle.api.approve_device import APIApproveDevice
+
+    # Approve a device
+    APIApproveDevice.call(device_token)
+
+.. code:: python
+
+    from castle.api.report_device import APIReportDevice
+
+    # Report a device
+    APIReportDevice.call(device_token)
+
+
+Fetching available devices that belong to a given user requires a valid
+``user_id``.
+
+.. code:: python
+
+    from castle.api.get_devices_for_user import APIGetDevicesForUser
+
+    # Get user's devices data
+    APIGetDevicesForUser.call(user_id)
+
+
 Impersonation mode
 ------------------
 

@@ -4,5 +4,5 @@ from castle.commands.get_device import CommandsGetDevice
 
 class APIGetDevice(object):
     @staticmethod
-    def retrieve(device_token):
+    def call(device_token):
         return APIRequest().call(CommandsGetDevice.build(device_token))

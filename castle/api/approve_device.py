@@ -4,5 +4,5 @@ from castle.commands.approve_device import CommandsApproveDevice
 
 class APIApproveDevice(object):
     @staticmethod
-    def retrieve(device_token):
+    def call(device_token):
         return APIRequest().call(CommandsApproveDevice.build(device_token))

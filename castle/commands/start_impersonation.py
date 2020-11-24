@@ -9,7 +9,7 @@ class CommandsStartImpersonation(object):
     def __init__(self, context):
         self.context = context
 
-    def build(self, options):
+    def call(self, options):
         ValidatorsPresent.call(options, 'user_id')
 
         context = ContextMerge.call(self.context, options.get('context'))

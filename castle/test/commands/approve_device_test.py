@@ -9,12 +9,12 @@ def device_token():
 
 
 class CommandsApproveDeviceTestCase(unittest.TestCase):
-    def test_build_no_device_token(self):
+    def test_call_no_device_token(self):
         with self.assertRaises(InvalidParametersError):
-            CommandsApproveDevice.build('')
+            CommandsApproveDevice.call('')
 
-    def test_build(self):
-        command = CommandsApproveDevice.build(device_token())
+    def test_call(self):
+        command = CommandsApproveDevice.call(device_token())
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'put')
         self.assertEqual(command.path, 'devices/1234/approve')

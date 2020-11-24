@@ -41,7 +41,7 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         obj = CommandsAuthenticate(context)
         self.assertEqual(obj.context, context)
 
-    def test_build(self):
+    def test_call(self):
         context = {'test': '1'}
         options = default_options_plus(context={'spam': True})
 
@@ -51,26 +51,26 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         expected = default_command_with_data(**expected_data)
 
         self.assertEqual(CommandsAuthenticate(
-            context).build(options), expected)
+            context).call(options), expected)
 
-    def test_build_no_event(self):
+    def test_call_no_event(self):
         context = {}
         options = default_options()
         options.pop('event')
 
         with self.assertRaises(InvalidParametersError):
-            CommandsAuthenticate(context).build(options)
+            CommandsAuthenticate(context).call(options)
 
-    def test_build_no_user_id(self):
+    def test_call_no_user_id(self):
         context = {}
         options = default_options()
         options.pop('user_id')
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsAuthenticate(context).build(options), expected)
+        self.assertEqual(CommandsAuthenticate(context).call(options), expected)
 
-    def test_build_properties_allowed(self):
+    def test_call_properties_allowed(self):
         context = {}
         options = default_options_plus(properties={'test': '1'})
         options.update({'context': context})
@@ -78,9 +78,9 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         expected = default_command_with_data(**options)
 
         self.assertEqual(CommandsAuthenticate(
-            context).build(options), expected)
+            context).call(options), expected)
 
-    def test_build_user_traits_allowed(self):
+    def test_call_user_traits_allowed(self):
         context = {}
         options = default_options_plus(user_traits={'email': 'a@b.com'})
         options.update({'context': context})
@@ -88,9 +88,9 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         expected = default_command_with_data(**options)
 
         self.assertEqual(CommandsAuthenticate(
-            context).build(options), expected)
+            context).call(options), expected)
 
-    def test_build_risk_policy_allowed(self):
+    def test_call_risk_policy_allowed(self):
         context = {}
         risk_policy = {
             'id': 'q-rbeMzBTdW2Fd09sbz55A',
@@ -102,4 +102,4 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
         options = default_options_plus(risk_policy=risk_policy)
         expected = default_command_with_data(**options)
         self.assertEqual(CommandsAuthenticate(
-            context).build(options), expected)
+            context).call(options), expected)

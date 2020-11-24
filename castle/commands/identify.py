@@ -9,7 +9,7 @@ class CommandsIdentify(object):
     def __init__(self, context):
         self.context = context
 
-    def build(self, options):
+    def call(self, options):
         ValidatorsNotSupported.call(options, 'properties')
         context = ContextMerge.call(self.context, options.get('context'))
         context = ContextSanitize.call(context)

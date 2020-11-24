@@ -41,7 +41,7 @@ class CommandsStartImpersonationTestCase(unittest.TestCase):
         obj = CommandsStartImpersonation(context)
         self.assertEqual(obj.context, context)
 
-    def test_build(self):
+    def test_call(self):
         context = {'lang': 'es'}
         options = default_options_plus(
             context={'local time': '8:53pm', 'ip': '127.0.0.1', 'user_agent': 'Chrome'}
@@ -55,28 +55,28 @@ class CommandsStartImpersonationTestCase(unittest.TestCase):
         )
         expected = default_command_with_data(**expected_data)
 
-        self.assertEqual(CommandsStartImpersonation(context).build(options), expected)
+        self.assertEqual(CommandsStartImpersonation(context).call(options), expected)
 
-    def test_build_no_event(self):
+    def test_call_no_event(self):
         context = {}
         options = default_options()
         options.pop('user_id')
 
         with self.assertRaises(InvalidParametersError):
-            CommandsStartImpersonation(context).build(options)
+            CommandsStartImpersonation(context).call(options)
 
-    def test_build_no_context_ip(self):
+    def test_call_no_context_ip(self):
         context = {}
         options = default_options()
         options['context'].pop('ip')
 
         with self.assertRaises(InvalidParametersError):
-            CommandsStartImpersonation(context).build(options)
+            CommandsStartImpersonation(context).call(options)
 
-    def test_build_no_context_user_agent(self):
+    def test_call_no_context_user_agent(self):
         context = {}
         options = default_options()
         options['context'].pop('user_agent')
 
         with self.assertRaises(InvalidParametersError):
-            CommandsStartImpersonation(context).build(options)
+            CommandsStartImpersonation(context).call(options)

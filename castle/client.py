@@ -66,7 +66,7 @@ class Client(object):
     def authenticate(self, options):
         if self.tracked():
             self._add_timestamp_if_necessary(options)
-            command = CommandsAuthenticate(self.context).build(options)
+            command = CommandsAuthenticate(self.context).call(options)
             try:
                 response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)
@@ -84,18 +84,18 @@ class Client(object):
         if not self.tracked():
             return None
         self._add_timestamp_if_necessary(options)
-        return self.api.call(CommandsIdentify(self.context).build(options))
+        return self.api.call(CommandsIdentify(self.context).call(options))
 
     def start_impersonation(self, options):
         self._add_timestamp_if_necessary(options)
-        response = self.api.call(CommandsStartImpersonation(self.context).build(options))
+        response = self.api.call(CommandsStartImpersonation(self.context).call(options))
         if not response.get('success'):
             raise ImpersonationFailed
         return response
 
     def end_impersonation(self, options):
         self._add_timestamp_if_necessary(options)
-        response = self.api.call(CommandsEndImpersonation(self.context).build(options))
+        response = self.api.call(CommandsEndImpersonation(self.context).call(options))
         if not response.get('success'):
             raise ImpersonationFailed
         return response
@@ -104,7 +104,7 @@ class Client(object):
         if not self.tracked():
             return None
         self._add_timestamp_if_necessary(options)
-        return self.api.call(CommandsTrack(self.context).build(options))
+        return self.api.call(CommandsTrack(self.context).call(options))
 
     def disable_tracking(self):
         self.do_not_track = True

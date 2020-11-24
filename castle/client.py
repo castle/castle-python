@@ -5,7 +5,8 @@ from castle.context.get_default import ContextGetDefault
 from castle.context.merge import ContextMerge
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
-from castle.commands.impersonate import CommandsImpersonate
+from castle.commands.start_impersonation import CommandsStartImpersonation
+from castle.commands.end_impersonation import CommandsEndImpersonation
 from castle.commands.track import CommandsTrack
 from castle.errors import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover.prepare_response import FailoverPrepareResponse
@@ -85,9 +86,16 @@ class Client(object):
         self._add_timestamp_if_necessary(options)
         return self.api.call(CommandsIdentify(self.context).build(options))
 
-    def impersonate(self, options):
+    def start_impersonation(self, options):
         self._add_timestamp_if_necessary(options)
-        response = self.api.call(CommandsImpersonate(self.context).build(options))
+        response = self.api.call(CommandsStartImpersonation(self.context).build(options))
+        if not response.get('success'):
+            raise ImpersonationFailed
+        return response
+
+    def end_impersonation(self, options):
+        self._add_timestamp_if_necessary(options)
+        response = self.api.call(CommandsEndImpersonation(self.context).build(options))
         if not response.get('success'):
             raise ImpersonationFailed
         return response

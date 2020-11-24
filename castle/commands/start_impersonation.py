@@ -5,7 +5,7 @@ from castle.context.sanitize import ContextSanitize
 from castle.validators.present import ValidatorsPresent
 
 
-class CommandsImpersonate(object):
+class CommandsStartImpersonation(object):
     def __init__(self, context):
         self.context = context
 
@@ -20,6 +20,4 @@ class CommandsImpersonate(object):
             options.update({'context': context})
         options.update({'sent_at': generate_timestamp.call()})
 
-        method = ('delete' if options.get('reset', False) else 'post')
-
-        return Command(method=method, path='impersonate', data=options)
+        return Command(method='post', path='impersonate', data=options)

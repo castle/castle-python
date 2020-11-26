@@ -126,9 +126,10 @@ background worker you can generate data for a worker:
 .. code:: python
 
     from castle.client import Client
+    from castle.context.prepare import ContextPrepare
     from castle import events
 
-    context = Client.to_context(request)
+    context = ContextPrepare.call(request)
     options = Client.to_options({
       'event': events.LOGIN_SUCCEEDED,
       'user_id': user.id,

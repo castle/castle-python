@@ -1,8 +1,7 @@
 import warnings
 from castle.configuration import configuration
 from castle.api_request import APIRequest
-from castle.context.get_default import ContextGetDefault
-from castle.context.merge import ContextMerge
+from castle.context.prepare import ContextPrepare
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
@@ -20,17 +19,9 @@ class Client(object):
         if options is None:
             options = {}
         return cls(
-            cls.to_context(request, options),
+            ContextPrepare.call(request, options),
             cls.to_options(options)
         )
-
-    @staticmethod
-    def to_context(request, options=None):
-        if options is None:
-            options = {}
-        default_context = ContextGetDefault(
-            request, options.get('cookies')).call()
-        return ContextMerge.call(default_context, options.get('context', {}))
 
     @staticmethod
     def to_options(options=None):

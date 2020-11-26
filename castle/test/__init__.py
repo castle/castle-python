@@ -26,6 +26,7 @@ TEST_MODULES = [
     'castle.test.configuration_test',
     'castle.test.context.get_default_test',
     'castle.test.context.merge_test',
+    'castle.test.context.prepare_test',
     'castle.test.context.sanitize_test',
     'castle.test.core.process_response_test',
     'castle.test.core.send_request_test',

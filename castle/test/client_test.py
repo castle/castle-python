@@ -178,12 +178,6 @@ class ClientTestCase(unittest.TestCase):
         client = Client.from_request(request(), {'do_not_track': True})
         self.assertEqual(client.tracked(), False)
 
-    def test_setup_client_id_from_cookies(self):
-        cookies = {'__cid': '1234'}
-        options = {'cookies': cookies}
-        result_context = Client.to_context(request(), options)
-        self.assertEqual(result_context['client_id'], '1234')
-
     def test_to_options(self):
         options = Client.to_options({'foo': 'bar'})
         self.assertEqual(
@@ -193,22 +187,6 @@ class ClientTestCase(unittest.TestCase):
         options = Client.to_options({'foo': 'bar', 'traits': {}})
         self.assertEqual(
             options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678', 'traits': {}})
-
-    def test_to_context(self):
-        context = {
-            'active': True,
-            'client_id': '1234',
-            'headers': {
-                'User-Agent': 'test',
-                'X-Forwarded-For': '217.144.192.112',
-                'X-Castle-Client-Id': '1234'
-            },
-            'ip': '217.144.192.112',
-            'library': {'name': 'castle-python', 'version': VERSION},
-            'user_agent': 'test'
-        }
-        result_context = Client.to_context(request(), {})
-        self.assertEqual(result_context, context)
 
     def test_failover_strategy_not_throw(self):
         options = {'user_id': '1234'}

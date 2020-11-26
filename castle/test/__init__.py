@@ -45,6 +45,7 @@ TEST_MODULES = [
     'castle.test.validators.not_supported_test',
     'castle.test.validators.present_test',
     'castle.test.verdict_test',
+    'castle.test.payload.prepare_test',
 ]
 
 # pylint: disable=redefined-builtin

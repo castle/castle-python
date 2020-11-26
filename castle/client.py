@@ -1,15 +1,13 @@
-import warnings
-from castle.configuration import configuration
 from castle.api_request import APIRequest
-from castle.context.prepare import ContextPrepare
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.track import CommandsTrack
+from castle.configuration import configuration
+from castle.context.prepare import ContextPrepare
 from castle.errors import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover.prepare_response import FailoverPrepareResponse
 from castle.failover.strategy import FailoverStrategy
-from castle.utils.timestamp import UtilsTimestamp as generate_timestamp
 
 
 class Client(object):
@@ -18,20 +16,9 @@ class Client(object):
     def from_request(cls, request, options=None):
         if options is None:
             options = {}
-        return cls(
-            ContextPrepare.call(request, options),
-            cls.to_options(options)
-        )
 
-    @staticmethod
-    def to_options(options=None):
-        if options is None:
-            options = {}
-        options.setdefault('timestamp', generate_timestamp.call())
-        if 'traits' in options:
-            warnings.warn('use user_traits instead of traits key', DeprecationWarning)
-
-        return options
+        options.setdefault('context', ContextPrepare.call(request, options))
+        return cls(options)
 
     @staticmethod
     def failover_response_or_raise(options, exception):
@@ -41,12 +28,12 @@ class Client(object):
             options.get('user_id'), None, exception.__class__.__name__
         ).call()
 
-    def __init__(self, context, options=None):
+    def __init__(self, options=None):
         if options is None:
             options = {}
         self.do_not_track = options.get('do_not_track', False)
         self.timestamp = options.get('timestamp')
-        self.context = context
+        self.context = options.get('context')
         self.api = APIRequest()
 
     def _add_timestamp_if_necessary(self, options):

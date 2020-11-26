@@ -26,6 +26,7 @@ TEST_MODULES = [
     'castle.test.configuration_test',
     'castle.test.context.get_default_test',
     'castle.test.context.merge_test',
+    'castle.test.context.prepare_test',
     'castle.test.context.sanitize_test',
     'castle.test.core.process_response_test',
     'castle.test.core.send_request_test',
@@ -44,6 +45,7 @@ TEST_MODULES = [
     'castle.test.validators.not_supported_test',
     'castle.test.validators.present_test',
     'castle.test.verdict_test',
+    'castle.test.payload.prepare_test',
 ]
 
 # pylint: disable=redefined-builtin

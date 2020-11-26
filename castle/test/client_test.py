@@ -1,4 +1,3 @@
-import json
 from collections import namedtuple
 import responses
 from castle.api_request import APIRequest
@@ -6,7 +5,7 @@ from castle.client import Client
 from castle.configuration import configuration
 from castle.errors import ImpersonationFailed
 from castle.failover.strategy import FailoverStrategy
-from castle.test import mock, unittest
+from castle.test import unittest
 from castle.verdict import Verdict
 from castle.version import VERSION
 
@@ -23,11 +22,6 @@ def request():
 
 class ClientTestCase(unittest.TestCase):
     def setUp(self):
-        # patch timestamp to return a known value
-        timestamp_patcher = mock.patch('castle.client.generate_timestamp.call')
-        self.mock_timestamp = timestamp_patcher.start()
-        self.mock_timestamp.return_value = '2018-01-02T03:04:05.678'
-        self.addCleanup(timestamp_patcher.stop)
         configuration.api_secret = 'test'
 
     def tearDown(self):
@@ -178,38 +172,6 @@ class ClientTestCase(unittest.TestCase):
         client = Client.from_request(request(), {'do_not_track': True})
         self.assertEqual(client.tracked(), False)
 
-    def test_setup_client_id_from_cookies(self):
-        cookies = {'__cid': '1234'}
-        options = {'cookies': cookies}
-        result_context = Client.to_context(request(), options)
-        self.assertEqual(result_context['client_id'], '1234')
-
-    def test_to_options(self):
-        options = Client.to_options({'foo': 'bar'})
-        self.assertEqual(
-            options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678'})
-
-    def test_to_options_with_deprecation(self):
-        options = Client.to_options({'foo': 'bar', 'traits': {}})
-        self.assertEqual(
-            options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678', 'traits': {}})
-
-    def test_to_context(self):
-        context = {
-            'active': True,
-            'client_id': '1234',
-            'headers': {
-                'User-Agent': 'test',
-                'X-Forwarded-For': '217.144.192.112',
-                'X-Castle-Client-Id': '1234'
-            },
-            'ip': '217.144.192.112',
-            'library': {'name': 'castle-python', 'version': VERSION},
-            'user_agent': 'test'
-        }
-        result_context = Client.to_context(request(), {})
-        self.assertEqual(result_context, context)
-
     def test_failover_strategy_not_throw(self):
         options = {'user_id': '1234'}
         self.assertEqual(
@@ -228,25 +190,3 @@ class ClientTestCase(unittest.TestCase):
         with self.assertRaises(Exception):
             Client.failover_response_or_raise(options, Exception())
         configuration.failover_strategy = FailoverStrategy.ALLOW.value
-
-    @responses.activate
-    def test_timestamps_are_not_global(self):
-        response_text = {'action': Verdict.ALLOW.value, 'user_id': '1234'}
-        responses.add(
-            responses.POST,
-            'https://api.castle.io/v1/authenticate',
-            json=response_text,
-            status=200
-        )
-        options1 = {'event': '$login.authenticate', 'user_id': '1234'}
-        options2 = {'event': '$login.authenticate', 'user_id': '1234'}
-        client1 = Client.from_request(request())
-        client1.authenticate(options1)
-        self.mock_timestamp.return_value = '2018-01-02T04:04:05.678'
-        client2 = Client.from_request(request())
-        client2.authenticate(options2)
-
-        response_body1 = json.loads(responses.calls[0].request.body)
-        response_body2 = json.loads(responses.calls[1].request.body)
-
-        self.assertNotEqual(response_body1['timestamp'], response_body2['timestamp'])

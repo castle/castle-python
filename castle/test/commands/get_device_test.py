@@ -9,12 +9,12 @@ def device_token():
 
 
 class CommandsGetDeviceTestCase(unittest.TestCase):
-    def test_build_no_device_token(self):
+    def test_call_no_device_token(self):
         with self.assertRaises(InvalidParametersError):
-            CommandsGetDevice.build('')
+            CommandsGetDevice.call('')
 
-    def test_build(self):
-        command = CommandsGetDevice.build(device_token())
+    def test_call(self):
+        command = CommandsGetDevice.call(device_token())
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'get')
         self.assertEqual(command.path, 'devices/1234')

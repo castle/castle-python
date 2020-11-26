@@ -9,7 +9,7 @@ class CommandsAuthenticate(object):
     def __init__(self, context):
         self.context = context
 
-    def build(self, options):
+    def call(self, options):
         ValidatorsPresent.call(options, 'event')
         context = ContextMerge.call(self.context, options.get('context'))
         context = ContextSanitize.call(context)

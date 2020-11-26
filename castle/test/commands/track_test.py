@@ -39,7 +39,7 @@ class CommandsTrackTestCase(unittest.TestCase):
         obj = CommandsTrack(context)
         self.assertEqual(obj.context, context)
 
-    def test_build(self):
+    def test_call(self):
         context = {'lang': 'es'}
         options = default_options_plus(context={'local time': '8:53pm'})
 
@@ -48,26 +48,26 @@ class CommandsTrackTestCase(unittest.TestCase):
         expected_data.update(context={'lang': 'es', 'local time': '8:53pm'})
         expected = default_command_with_data(**expected_data)
 
-        self.assertEqual(CommandsTrack(context).build(options), expected)
+        self.assertEqual(CommandsTrack(context).call(options), expected)
 
-    def test_build_no_event(self):
+    def test_call_no_event(self):
         context = {}
         options = default_options()
         options.pop('event')
 
         with self.assertRaises(InvalidParametersError):
-            CommandsTrack(context).build(options)
+            CommandsTrack(context).call(options)
 
-    def test_build_properties_allowed(self):
+    def test_call_properties_allowed(self):
         context = {}
         options = default_options_plus(properties={'face': 'handsome'})
         options.update({'context': context})
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsTrack(context).build(options), expected)
+        self.assertEqual(CommandsTrack(context).call(options), expected)
 
-    def test_build_user_traits_allowed(self):
+    def test_call_user_traits_allowed(self):
         context = {}
         options = default_options_plus(
             user_traits={'email': 'track@all.the.things.com'})
@@ -75,4 +75,4 @@ class CommandsTrackTestCase(unittest.TestCase):
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsTrack(context).build(options), expected)
+        self.assertEqual(CommandsTrack(context).call(options), expected)

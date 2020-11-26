@@ -9,12 +9,12 @@ def user_id():
 
 
 class CommandsGetDevicesForUserTestCase(unittest.TestCase):
-    def test_build_no_user_id(self):
+    def test_call_no_user_id(self):
         with self.assertRaises(InvalidParametersError):
-            CommandsGetDevicesForUser.build('')
+            CommandsGetDevicesForUser.call('')
 
-    def test_build(self):
-        command = CommandsGetDevicesForUser.build(user_id())
+    def test_call(self):
+        command = CommandsGetDevicesForUser.call(user_id())
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'get')
         self.assertEqual(command.path, 'users/1234/devices')

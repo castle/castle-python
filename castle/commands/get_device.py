@@ -5,7 +5,7 @@ from castle.validators.present import ValidatorsPresent
 class CommandsGetDevice(object):
 
     @staticmethod
-    def build(device_token):
+    def call(device_token):
         ValidatorsPresent.call({'device_token': device_token}, 'device_token')
 
         return Command(

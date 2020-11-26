@@ -46,7 +46,7 @@ class ClientTestCase(unittest.TestCase):
         self.assertIsInstance(client.api, APIRequest)
 
     @responses.activate
-    def test_impersonate(self):
+    def test_start_impersonation(self):
         response_text = {'success': True}
         responses.add(
             responses.POST,
@@ -56,10 +56,23 @@ class ClientTestCase(unittest.TestCase):
         )
         client = Client.from_request(request(), {})
         options = {'properties': {'impersonator': 'admin'}, 'user_id': '1234'}
-        self.assertEqual(client.impersonate(options), response_text)
+        self.assertEqual(client.start_impersonation(options), response_text)
 
     @responses.activate
-    def test_impersonate_failed(self):
+    def test_end_impersonation(self):
+        response_text = {'success': True}
+        responses.add(
+            responses.DELETE,
+            'https://api.castle.io/v1/impersonate',
+            json=response_text,
+            status=200
+        )
+        client = Client.from_request(request(), {})
+        options = {'properties': {'impersonator': 'admin'}, 'user_id': '1234'}
+        self.assertEqual(client.end_impersonation(options), response_text)
+
+    @responses.activate
+    def test_start_impersonation_failed(self):
         response_text = {}
         responses.add(
             responses.POST,
@@ -70,7 +83,21 @@ class ClientTestCase(unittest.TestCase):
         client = Client.from_request(request(), {})
         options = {'properties': {'impersonator': 'admin'}, 'user_id': '1234'}
         with self.assertRaises(ImpersonationFailed):
-            client.impersonate(options)
+            client.start_impersonation(options)
+
+    @responses.activate
+    def test_end_impersonation_failed(self):
+        response_text = {}
+        responses.add(
+            responses.DELETE,
+            'https://api.castle.io/v1/impersonate',
+            json=response_text,
+            status=200
+        )
+        client = Client.from_request(request(), {})
+        options = {'properties': {'impersonator': 'admin'}, 'user_id': '1234'}
+        with self.assertRaises(ImpersonationFailed):
+            client.end_impersonation(options)
 
     @responses.activate
     def test_identify_tracked_true(self):

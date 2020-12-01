@@ -1,10 +1,25 @@
 master
 ------
 
+5.0.0 (2020-12-01)
+------------------
+
 Breaking Changes:
 ~~~~~~~~~~~~~~~~~
 
--  `#79 <https://github.com/castle/castle-python/pull/79/files>`__ drop the configuration ``host``, ``port``, ``url_prefix`` options in favor of ``base_url``
+-  `#92 <https://github.com/castle/castle-python/pull/92>`__ change the impersonation-related DSL
+-  `#80 <https://github.com/castle/castle-python/pull/80>`__, `#81 <https://github.com/castle/castle-python/pull/81>`__  reorganize structure of the SDK
+-  `#79 <https://github.com/castle/castle-python/pull/79>`__ rename ``config.url`` to ``config.base_url``
+
+Features:
+~~~~~~~~~
+
+-  `#88 <https://github.com/castle/castle-python/pull/88>`__, `#89 <https://github.com/castle/castle-python/pull/89>`__, `#90 <https://github.com/castle/castle-python/pull/90>`__, `#91 <https://github.com/castle/castle-python/pull/91>`__ allow to manage the devices
+-  `#86 <https://github.com/castle/castle-python/pull/86>`__, `#87 <https://github.com/castle/castle-python/pull/87>`__ add more tests
+-  `#85 <https://github.com/castle/castle-python/pull/85>`__ add ``Verdict`` and ``Failover`` strategy constants
+-  `#84 <https://github.com/castle/castle-python/pull/84>`__ update the default timeout
+-  `#83 <https://github.com/castle/castle-python/pull/83>`__ add logger config option
+-  `#82 <https://github.com/castle/castle-python/pull/82>`__ drop origin from the default context
 
 4.0.0 (2020-07-06)
 ------------------
@@ -12,7 +27,7 @@ Breaking Changes:
 Features:
 ~~~~~~~~~
 
--  `#69 <https://github.com/castle/castle-python/pull/69/files>`__ added
+-  `#69 <https://github.com/castle/castle-python/pull/69>`__ added
    impersonator to properties
 
 Breaking Changes:

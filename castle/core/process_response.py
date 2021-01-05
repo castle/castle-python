@@ -1,6 +1,6 @@
 from castle.errors import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
     UserUnauthorizedError, InvalidParametersError, APIError, InternalServerError
-
+from castle.logger import Logger
 
 RESPONSE_ERRORS = {
     400: BadRequestError,
@@ -22,6 +22,7 @@ class CoreProcessResponse(object):
 
         self.verify()
 
+        Logger.call("response:", self.response.text)
         return self.response.json()
 
     def verify(self):

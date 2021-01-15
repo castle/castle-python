@@ -19,6 +19,10 @@ class APIError(CastleError):
     pass
 
 
+class WebhookVerificationError(CastleError):
+    pass
+
+
 class InvalidParametersError(APIError):
     pass
 

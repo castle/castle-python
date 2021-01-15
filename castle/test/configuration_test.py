@@ -1,7 +1,5 @@
-from urllib.parse import urlparse
 from castle.test import unittest
 from castle.singleton_configuration import Configuration
-from castle.failover.strategy import FailoverStrategy
 from castle.test.helpers.configuration_helper import default_values, api_secret_setter, \
     base_url_setter, base_url_setter_with_port, allowlisted_setter_list, allowlisted_setter_none, \
     allowlisted_setter_empty, denylisted_setter_list, denylisted_setter_none, \

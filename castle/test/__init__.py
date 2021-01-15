@@ -39,15 +39,16 @@ TEST_MODULES = [
     'castle.test.headers.format_test',
     'castle.test.ip.extract_test',
     'castle.test.logger_test',
+    'castle.test.payload.prepare_test',
     'castle.test.secure_mode_test',
     'castle.test.session_test',
+    'castle.test.singleton_configuration_test',
     'castle.test.utils.clone_test',
     'castle.test.utils.merge_test',
     'castle.test.utils.timestamp_test',
     'castle.test.validators.not_supported_test',
     'castle.test.validators.present_test',
     'castle.test.verdict_test',
-    'castle.test.payload.prepare_test',
     'castle.test.webhooks.verify_test',
 ]
 

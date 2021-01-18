@@ -4,14 +4,15 @@ from castle.configuration import configuration
 class Logger(object):
 
     @staticmethod
-    def call(message, data=""):
+    def call(message, data="", config=configuration):
         """
         Log the message with optionally data using preconfigured logger
 
         :param message: The base logger message.
         :param data: Additional data passed optionally.
+        :param config: Castle configuration.
         """
-        logger = configuration.logger
+        logger = config.logger
 
         if not logger:
             return None

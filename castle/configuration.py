@@ -174,5 +174,14 @@ class Configuration(object):
         self.__logger = value
 
 
-# pylint: disable=invalid-name
-configuration = Configuration()
+class SingletonConfiguration(Configuration):
+
+    instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not SingletonConfiguration.instance:
+            SingletonConfiguration.instance = super().__new__(cls, *args, **kwargs)
+        return SingletonConfiguration.instance
+
+
+configuration = SingletonConfiguration()

@@ -1,104 +1,114 @@
-from urllib.parse import urlparse
 from castle.test import unittest
-from castle.errors import ConfigurationError
-from castle.configuration import Configuration
-from castle.failover.strategy import FailoverStrategy
+from castle.configuration import Configuration, SingletonConfiguration
+from castle.test.helpers.configuration_helper import default_values, api_secret_setter, \
+    base_url_setter, base_url_setter_with_port, allowlisted_setter_list, allowlisted_setter_none, \
+    allowlisted_setter_empty, denylisted_setter_list, denylisted_setter_none, \
+    denylisted_setter_empty, request_timeout_setter, failover_strategy_setter_valid, \
+    failover_strategy_setter_invalid, ip_headers_setter_valid, ip_headers_setter_invalid, \
+    trusted_proxies_setter_valid, trusted_proxies_setter_invalid
 
 
 class ConfigurationTestCase(unittest.TestCase):
     def test_default_values(self):
-        config = Configuration()
-        uri = urlparse('https://api.castle.io/v1')
-        self.assertEqual(config.api_secret, None)
-        self.assertEqual(config.base_url, uri)
-        self.assertEqual(config.base_url.path, '/v1')
-        self.assertEqual(config.allowlisted, [])
-        self.assertEqual(config.denylisted, [])
-        self.assertEqual(config.request_timeout, 1000)
-        self.assertEqual(config.failover_strategy, FailoverStrategy.ALLOW.value)
-        self.assertEqual(config.ip_headers, [])
-        self.assertEqual(config.trusted_proxies, [])
+        default_values(self, Configuration)
 
     def test_api_secret_setter(self):
-        config = Configuration()
-        config.api_secret = 'test'
-        self.assertEqual(config.api_secret, 'test')
+        api_secret_setter(self, Configuration)
 
     def test_base_url_setter(self):
-        config = Configuration()
-        config.base_url = 'test'
-        self.assertEqual(config.base_url, urlparse('test'))
+        base_url_setter(self, Configuration)
 
     def test_base_url_setter_with_port(self):
-        config = Configuration()
-        local_api_url = 'http://api.castle.local:3001/v1'
-        config.base_url = local_api_url
-        parsed_url = urlparse(local_api_url)
-        self.assertEqual(config.base_url, parsed_url)
-        self.assertEqual(config.base_url.path, '/v1')
-        self.assertEqual(config.base_url.port, 3001)
+        base_url_setter_with_port(self, Configuration)
 
     def test_allowlisted_setter_list(self):
-        config = Configuration()
-        config.allowlisted = ['test']
-        self.assertEqual(config.allowlisted, ['Test'])
+        allowlisted_setter_list(self, Configuration)
 
     def test_allowlisted_setter_none(self):
-        config = Configuration()
-        config.allowlisted = None
-        self.assertEqual(config.allowlisted, [])
+        allowlisted_setter_none(self, Configuration)
 
     def test_allowlisted_setter_empty(self):
-        config = Configuration()
-        config.allowlisted = ''
-        self.assertEqual(config.allowlisted, [])
+        allowlisted_setter_empty(self, Configuration)
 
     def test_denylisted_setter_list(self):
-        config = Configuration()
-        config.denylisted = ['test']
-        self.assertEqual(config.denylisted, ['Test'])
+        denylisted_setter_list(self, Configuration)
 
     def test_denylisted_setter_none(self):
-        config = Configuration()
-        config.denylisted = None
-        self.assertEqual(config.denylisted, [])
+        denylisted_setter_none(self, Configuration)
 
     def test_denylisted_setter_empty(self):
-        config = Configuration()
-        config.denylisted = ''
-        self.assertEqual(config.denylisted, [])
+        denylisted_setter_empty(self, Configuration)
 
     def test_request_timeout_setter(self):
-        config = Configuration()
-        config.request_timeout = 5000
-        self.assertEqual(config.request_timeout, 5000)
+        request_timeout_setter(self, Configuration)
 
     def test_failover_strategy_setter_valid(self):
-        config = Configuration()
-        config.failover_strategy = FailoverStrategy.THROW.value
-        self.assertEqual(config.failover_strategy, FailoverStrategy.THROW.value)
+        failover_strategy_setter_valid(self, Configuration)
 
     def test_failover_strategy_setter_invalid(self):
-        config = Configuration()
-        with self.assertRaises(ConfigurationError):
-            config.failover_strategy = 'invalid'
+        failover_strategy_setter_invalid(self, Configuration)
 
     def test_ip_headers_setter_valid(self):
-        config = Configuration()
-        config.ip_headers = ['HTTP_X_FORWARDED_FOR']
-        self.assertEqual(config.ip_headers, ['X-Forwarded-For'])
+        ip_headers_setter_valid(self, Configuration)
 
     def test_ip_headers_setter_invalid(self):
-        config = Configuration()
-        with self.assertRaises(ConfigurationError):
-            config.ip_headers = 'invalid'
+        ip_headers_setter_invalid(self, Configuration)
 
     def test_trusted_proxies_setter_valid(self):
-        config = Configuration()
-        config.trusted_proxies = ['2.2.2.2']
-        self.assertEqual(config.trusted_proxies, ['2.2.2.2'])
+        trusted_proxies_setter_valid(self, Configuration)
 
     def test_trusted_proxies_setter_invalid(self):
-        config = Configuration()
-        with self.assertRaises(ConfigurationError):
-            config.trusted_proxies = 'invalid'
+        trusted_proxies_setter_invalid(self, Configuration)
+
+
+class SingletonConfigurationTestCase(unittest.TestCase):
+    def test_default_values(self):
+        default_values(self, SingletonConfiguration)
+
+    def test_api_secret_setter(self):
+        api_secret_setter(self, SingletonConfiguration)
+
+    def test_base_url_setter(self):
+        base_url_setter(self, SingletonConfiguration)
+
+    def test_base_url_setter_with_port(self):
+        base_url_setter_with_port(self, SingletonConfiguration)
+
+    def test_allowlisted_setter_list(self):
+        allowlisted_setter_list(self, SingletonConfiguration)
+
+    def test_allowlisted_setter_none(self):
+        allowlisted_setter_none(self, SingletonConfiguration)
+
+    def test_allowlisted_setter_empty(self):
+        allowlisted_setter_empty(self, SingletonConfiguration)
+
+    def test_denylisted_setter_list(self):
+        denylisted_setter_list(self, SingletonConfiguration)
+
+    def test_denylisted_setter_none(self):
+        denylisted_setter_none(self, SingletonConfiguration)
+
+    def test_denylisted_setter_empty(self):
+        denylisted_setter_empty(self, SingletonConfiguration)
+
+    def test_request_timeout_setter(self):
+        request_timeout_setter(self, SingletonConfiguration)
+
+    def test_failover_strategy_setter_valid(self):
+        failover_strategy_setter_valid(self, SingletonConfiguration)
+
+    def test_failover_strategy_setter_invalid(self):
+        failover_strategy_setter_invalid(self, SingletonConfiguration)
+
+    def test_ip_headers_setter_valid(self):
+        ip_headers_setter_valid(self, SingletonConfiguration)
+
+    def test_ip_headers_setter_invalid(self):
+        ip_headers_setter_invalid(self, SingletonConfiguration)
+
+    def test_trusted_proxies_setter_valid(self):
+        trusted_proxies_setter_valid(self, SingletonConfiguration)
+
+    def test_trusted_proxies_setter_invalid(self):
+        trusted_proxies_setter_invalid(self, SingletonConfiguration)

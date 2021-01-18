@@ -9,15 +9,15 @@ DEPTH_RELATED = ['X-Forwarded-For']
 
 
 class IPExtract(object):
-    def __init__(self, headers):
+    def __init__(self, headers, config=configuration):
         self.headers = headers
-        if len(configuration.ip_headers) > 0:
-            self.ip_headers = configuration.ip_headers
+        if len(config.ip_headers) > 0:
+            self.ip_headers = config.ip_headers
         else:
             self.ip_headers = DEFAULT
-        self.proxies = configuration.trusted_proxies + TRUSTED_PROXIES
-        self.trust_proxy_chain = configuration.trust_proxy_chain
-        self.trusted_proxy_depth = configuration.trusted_proxy_depth
+        self.proxies = config.trusted_proxies + TRUSTED_PROXIES
+        self.trust_proxy_chain = config.trust_proxy_chain
+        self.trusted_proxy_depth = config.trusted_proxy_depth
 
     def call(self):
         all_ips = []

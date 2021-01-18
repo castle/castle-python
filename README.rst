@@ -88,6 +88,28 @@ import and configure the library with your Castle API secret.
 
     # *Note: the default list of proxies that are always marked as "trusted" can be found in: Castle::Configuration::TRUSTED_PROXIES
 
+Multi-environment configuration
+-------------------------------
+
+It is also possible to define multiple configs within one application.
+
+.. code:: python
+
+    from castle.configuration import Configuration
+
+    # Initialize new instance of Castle::Configuration
+    config = Configuration()
+    config.api_secret = ':YOUR-API-SECRET'
+
+After a successful setup, you can pass the config to any API command as follows:
+
+.. code:: python
+
+    from castle.api.get_device import APIGetDevice
+
+    # Get device data
+    APIGetDevice.call(device_token, config)
+
 Tracking
 --------
 

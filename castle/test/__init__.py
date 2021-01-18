@@ -42,7 +42,6 @@ TEST_MODULES = [
     'castle.test.payload.prepare_test',
     'castle.test.secure_mode_test',
     'castle.test.session_test',
-    'castle.test.singleton_configuration_test',
     'castle.test.utils.clone_test',
     'castle.test.utils.merge_test',
     'castle.test.utils.timestamp_test',

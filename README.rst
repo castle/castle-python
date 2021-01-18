@@ -17,7 +17,7 @@ Installation
 Configuration
 -------------
 
-import and configure the library with your Castle API secret.
+Import and configure the library with your Castle API secret.
 
 .. code:: python
 

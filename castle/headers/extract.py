@@ -7,6 +7,7 @@ ALWAYS_ALLOWLISTED = ['User-Agent']
 class HeadersExtract(object):
     def __init__(self, headers, config = configuration):
         self.headers = headers
+        self.config = config
         self.no_whitelist = len(config.allowlisted) == 0
 
     def call(self):
@@ -17,14 +18,14 @@ class HeadersExtract(object):
 
         return result
 
-    def _header_value(self, name, value, config = configuration):
+    def _header_value(self, name, value):
         if name in ALWAYS_DENYLISTED:
             return True
         if name in ALWAYS_ALLOWLISTED:
             return value
-        if name in config.denylisted:
+        if name in self.config.denylisted:
             return True
-        if self.no_whitelist or (name in config.allowlisted):
+        if self.no_whitelist or (name in self.config.allowlisted):
             return value
 
         return True

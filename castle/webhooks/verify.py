@@ -11,15 +11,15 @@ from castle.utils.secure_compare import UtilsSecureCompare
 
 class WebhooksVerify(object):
     @classmethod
-    def call(cls, webhook):
-        expected_signature = cls._compute_signature(webhook)
+    def call(cls, webhook, config = configuration):
+        expected_signature = cls._compute_signature(webhook, config.api_secret)
         signature = webhook.headers.get('X-Castle-Signature')
         return cls._verify_signature(signature, expected_signature)
 
     @staticmethod
-    def _compute_signature(webhook):
+    def _compute_signature(webhook, api_secret):
         encoded_str = hmac.new(
-            bytes(configuration.api_secret.encode('utf-8')),
+            bytes(api_secret.encode('utf-8')),
             CoreProcessWebhook(webhook).call(),
             hashlib.sha256
         ).hexdigest()

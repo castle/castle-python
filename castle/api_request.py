@@ -5,13 +5,14 @@ from castle.errors import ConfigurationError
 
 
 class APIRequest(object):
-    def __init__(self):
+    def __init__(self, config = configuration):
         self.req = CoreSendRequest({'Content-Type': 'application/json'})
+        self.config = config
 
     def request(self, command):
-        if not configuration.isValid():
+        if not self.config.isValid():
             raise ConfigurationError
-        return self.req.build_query(command.method, command.path, command.data)
+        return self.req.build_query(command.method, command.path, command.data, self.config)
 
     def call(self, command):
         return CoreProcessResponse(self.request(command)).call()

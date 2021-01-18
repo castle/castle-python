@@ -209,6 +209,20 @@ Exceptions
 level HTTP response. You can also choose to catch a more `finegrained
 error <https://github.com/castle/castle-python/blob/master/castle/errors.py>`__.
 
+Webhooks
+--------
+
+Castle uses webhooks to notify about ``$inident.confirmed`` or `$review.opened` events.
+Each webhook has ``X-Castle-Signature`` header that allows verifying webhook's source.
+
+.. code:: python
+
+    from castle.webhooks.verify import WebhooksVerify
+
+    # WebhookVerificationError is raised when the signature is not matching
+    WebhooksVerify.call(webhook)
+
+
 Documentation
 -------------
 

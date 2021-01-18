@@ -5,7 +5,7 @@ from castle.errors import ConfigurationError
 
 
 class APIRequest(object):
-    def __init__(self, config = configuration):
+    def __init__(self, config=configuration):
         self.req = CoreSendRequest({'Content-Type': 'application/json'})
         self.config = config
 

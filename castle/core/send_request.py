@@ -12,7 +12,7 @@ class CoreSendRequest(object):
         self.base_url = CoreSendRequest.build_base_url()
         self.session = Session()
 
-    def build_query(self, method, path, params, config = configuration):
+    def build_query(self, method, path, params, config=configuration):
         url = self.build_url(path)
         request_data = {
             "auth": ('', config.api_secret),

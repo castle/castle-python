@@ -5,7 +5,7 @@ ALWAYS_ALLOWLISTED = ['User-Agent']
 
 
 class HeadersExtract(object):
-    def __init__(self, headers, config = configuration):
+    def __init__(self, headers, config=configuration):
         self.headers = headers
         self.config = config
         self.no_whitelist = len(config.allowlisted) == 0

@@ -5,5 +5,5 @@ from castle.configuration import configuration
 
 class APIApproveDevice(object):
     @staticmethod
-    def call(device_token, config = configuration):
+    def call(device_token, config=configuration):
         return APIRequest(config).call(CommandsApproveDevice.call(device_token))

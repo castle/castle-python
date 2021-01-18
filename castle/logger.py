@@ -4,7 +4,7 @@ from castle.configuration import configuration
 class Logger(object):
 
     @staticmethod
-    def call(message, data="", config = configuration):
+    def call(message, data="", config=configuration):
         """
         Log the message with optionally data using preconfigured logger
 

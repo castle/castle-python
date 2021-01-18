@@ -11,7 +11,7 @@ from castle.utils.secure_compare import UtilsSecureCompare
 
 class WebhooksVerify(object):
     @classmethod
-    def call(cls, webhook, config = configuration):
+    def call(cls, webhook, config=configuration):
         expected_signature = cls._compute_signature(webhook, config.api_secret)
         signature = webhook.headers.get('X-Castle-Signature')
         return cls._verify_signature(signature, expected_signature)

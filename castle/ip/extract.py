@@ -9,7 +9,7 @@ DEPTH_RELATED = ['X-Forwarded-For']
 
 
 class IPExtract(object):
-    def __init__(self, headers, config = configuration):
+    def __init__(self, headers, config=configuration):
         self.headers = headers
         if len(config.ip_headers) > 0:
             self.ip_headers = config.ip_headers

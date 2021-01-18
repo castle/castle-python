@@ -5,7 +5,7 @@ from castle.test import unittest
 from castle.api_request import APIRequest
 from castle.command import Command
 from castle.core.send_request import CoreSendRequest
-from castle.configuration import configuration
+from castle.configuration import configuration, Configuration
 from castle.errors import ConfigurationError
 
 
@@ -26,6 +26,10 @@ class APIRequestTestCase(unittest.TestCase):
 
     def test_init(self):
         self.assertIsInstance(APIRequest().req, CoreSendRequest)
+
+    def test_init_custom_config(self):
+        cfg = Configuration()
+        self.assertIsInstance(APIRequest(cfg).req, CoreSendRequest)
 
     @responses.activate
     def test_request(self):

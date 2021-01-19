@@ -1,10 +1,10 @@
 
 from castle.test import unittest
-from castle.ip.extract import IPExtract
+from castle.ips.extract import IPsExtract
 from castle.configuration import configuration
 
 
-class IPExtractTestCase(unittest.TestCase):
+class IPsExtractTestCase(unittest.TestCase):
     def tearDown(self):
         configuration.ip_headers = []
         configuration.trusted_proxies = []
@@ -13,13 +13,13 @@ class IPExtractTestCase(unittest.TestCase):
 
     def test_extract_ip(self):
         headers = {'X-Forwarded-For': '1.2.3.5'}
-        self.assertEqual(IPExtract(headers).call(), '1.2.3.5')
+        self.assertEqual(IPsExtract(headers).call(), '1.2.3.5')
 
     def test_extract_ip_when_second_header(self):
         headers = {'Cf-Connecting-Ip': '1.2.3.4', 'X-Forwarded-For': '1.1.1.1, 1.2.2.2, 1.2.3.5'}
         configuration.ip_headers = ["HTTP_CF_CONNECTING_IP", "X-Forwarded-For"]
         self.assertEqual(
-            IPExtract(headers).call(),
+            IPsExtract(headers).call(),
             '1.2.3.4'
         )
 
@@ -27,7 +27,7 @@ class IPExtractTestCase(unittest.TestCase):
         headers = {'Cf-Connecting-Ip': '1.2.3.4', 'X-Forwarded-For': '1.1.1.1, 1.2.2.2, 1.2.3.5'}
         configuration.ip_headers = ["CF-CONNECTING-IP", "X-Forwarded-For"]
         self.assertEqual(
-            IPExtract(headers).call(),
+            IPsExtract(headers).call(),
             '1.2.3.4'
         )
 
@@ -37,7 +37,7 @@ class IPExtractTestCase(unittest.TestCase):
         """
         headers = {'Remote-Addr': '127.0.0.1', 'X-Forwarded-For': xf_header}
         self.assertEqual(
-            IPExtract(headers).call(),
+            IPsExtract(headers).call(),
             '127.0.0.1'
         )
 
@@ -48,7 +48,7 @@ class IPExtractTestCase(unittest.TestCase):
         headers = {'Remote-Addr': '6.6.6.4', 'X-Forwarded-For': xf_header}
         configuration.trust_proxy_chain = True
         self.assertEqual(
-            IPExtract(headers).call(),
+            IPsExtract(headers).call(),
             '6.6.6.6'
         )
 
@@ -59,14 +59,14 @@ class IPExtractTestCase(unittest.TestCase):
         headers = {'Remote-Addr': '6.6.6.4', 'X-Forwarded-For': xf_header}
         configuration.trusted_proxy_depth = 1
         self.assertEqual(
-            IPExtract(headers).call(),
+            IPsExtract(headers).call(),
             '2.2.2.3'
         )
 
     def test_extract_ip_for_spoof_ip_attempt(self):
         headers = {'Client-Ip': '6.6.6.6', 'X-Forwarded-For': '6.6.6.6, 2.2.2.3, 192.168.0.7'}
         self.assertEqual(
-            IPExtract(headers).call(),
+            IPsExtract(headers).call(),
             '2.2.2.3'
         )
 
@@ -74,6 +74,6 @@ class IPExtractTestCase(unittest.TestCase):
         headers = {'Client-Ip': '6.6.6.6', 'X-Forwarded-For': '6.6.6.6, 2.2.2.3, 192.168.0.7'}
         configuration.trusted_proxies = [r'^2.2.2.\d$']
         self.assertEqual(
-            IPExtract(headers).call(),
+            IPsExtract(headers).call(),
             '6.6.6.6'
         )

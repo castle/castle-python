@@ -220,7 +220,7 @@ Each webhook has ``X-Castle-Signature`` header that allows verifying webhook's s
     from castle.webhooks.verify import WebhooksVerify
 
     # Verify the webhook, passed as a Request object
-    WebhooksVerify.call(webhook)
+    WebhooksVerify.call(webhook_request)
     # WebhookVerificationError is raised when the signature is not matching
 
 Documentation

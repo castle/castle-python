@@ -223,7 +223,6 @@ Each webhook has ``X-Castle-Signature`` header that allows verifying webhook's s
     WebhooksVerify.call(webhook)
     # WebhookVerificationError is raised when the signature is not matching
 
-
 Documentation
 -------------
 

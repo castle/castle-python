@@ -17,7 +17,7 @@ Installation
 Configuration
 -------------
 
-import and configure the library with your Castle API secret.
+Import and configure the library with your Castle API secret.
 
 .. code:: python
 
@@ -230,6 +230,20 @@ Exceptions
 ``CastleError`` will be thrown if the Castle API returns a 400 or a 500
 level HTTP response. You can also choose to catch a more `finegrained
 error <https://github.com/castle/castle-python/blob/master/castle/errors.py>`__.
+
+Webhooks
+--------
+
+Castle uses webhooks to notify about ``$incident.confirmed`` or `$review.opened` events.
+Each webhook has ``X-Castle-Signature`` header that allows verifying webhook's source.
+
+.. code:: python
+
+    from castle.webhooks.verify import WebhooksVerify
+
+    # Verify the webhook, passed as a Request object
+    WebhooksVerify.call(webhook_request)
+    # WebhookVerificationError is raised when the signature is not matching
 
 Documentation
 -------------

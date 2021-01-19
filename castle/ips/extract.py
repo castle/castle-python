@@ -8,7 +8,7 @@ DEFAULT = ['X-Forwarded-For', 'Remote-Addr']
 DEPTH_RELATED = ['X-Forwarded-For']
 
 
-class IPExtract(object):
+class IPsExtract(object):
     def __init__(self, headers, config=configuration):
         self.headers = headers
         if len(config.ip_headers) > 0:

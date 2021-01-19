@@ -24,7 +24,7 @@ def ctx():
             'X-Forwarded-For': '217.144.192.112'
         },
         'ip': '217.144.192.112',
-        'library': {'name': 'castle-python', 'version': '4.0.0'},
+        'library': {'name': 'castle-python', 'version': VERSION},
         'user_agent': 'test'
     }
 

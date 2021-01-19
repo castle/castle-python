@@ -6,7 +6,8 @@ master
 
 Breaking Changes:
 ~~~~~~~~~~~~~~~~~
-
+-  `#97 <https://github.com/castle/castle-python/pull/97>`__ allow to instantiate the configuration
+-  `#95 <https://github.com/castle/castle-python/pull/95>`__ add webhooks verification
 -  `#92 <https://github.com/castle/castle-python/pull/92>`__ change the impersonation-related DSL
 -  `#80 <https://github.com/castle/castle-python/pull/80>`__, `#81 <https://github.com/castle/castle-python/pull/81>`__  reorganize structure of the SDK
 -  `#79 <https://github.com/castle/castle-python/pull/79>`__ rename ``config.url`` to ``config.base_url``

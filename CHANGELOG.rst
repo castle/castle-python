@@ -1,7 +1,14 @@
 master
 ------
 
-5.0.0 (2020-12-01)
+5.0.1 (2021-01-19)
+------------------
+
+Enhancements:
+~~~~~~~~~~~~~
+-  `#98 <https://github.com/castle/castle-python/pull/98>`__ rename the namespace from ``IP`` to ``IPs``
+
+5.0.0 (2021-01-19)
 ------------------
 
 Breaking Changes:

@@ -1,6 +1,5 @@
 from castle.api_request import APIRequest
 from castle.commands.authenticate import CommandsAuthenticate
-from castle.commands.identify import CommandsIdentify
 from castle.commands.start_impersonation import CommandsStartImpersonation
 from castle.commands.end_impersonation import CommandsEndImpersonation
 from castle.commands.track import CommandsTrack
@@ -58,11 +57,6 @@ class Client(object):
                 'Castle set to do not track.'
             ).call()
 
-    def identify(self, options):
-        if not self.tracked():
-            return None
-        self._add_timestamp_if_necessary(options)
-        return self.api.call(CommandsIdentify(self.context).call(options))
 
     def start_impersonation(self, options):
         self._add_timestamp_if_necessary(options)

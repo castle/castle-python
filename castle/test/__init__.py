@@ -36,7 +36,7 @@ TEST_MODULES = [
     'castle.test.headers.format_test',
     'castle.test.ips.extract_test',
     'castle.test.logger_test',
-    'castle.test.get_default_test',
+    'castle.test.options.get_default_test',
     'castle.test.options.merge_test',
     'castle.test.payload.prepare_test',
     'castle.test.secure_mode_test',

@@ -1,4 +1,4 @@
-class ClientIdExtract(object):
+class FingerprintExtract(object):
     def __init__(self, headers, cookies=None):
         self.headers = headers
         self.cookies = cookies or dict()

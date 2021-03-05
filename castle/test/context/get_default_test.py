@@ -4,12 +4,12 @@ from castle.version import VERSION as __version__
 from castle.context.get_default import ContextGetDefault
 
 
-def client_id():
+def fingerprint():
     return 'abcd'
 
 
 def cookies():
-    return {'__cid': client_id()}
+    return {'__cid': fingerprint()}
 
 
 def request_ip():
@@ -19,7 +19,7 @@ def request_ip():
 def environ():
     return {
         'HTTP_X_FORWARDED_FOR': request_ip(),
-        'HTTP_COOKIE': "__cid={client_id()};other=efgh",
+        'HTTP_COOKIE': "__cid={fingerprint()};other=efgh",
         'HTTP-Accept-Language': 'en',
         'HTTP-User-Agent': 'test'
     }
@@ -37,7 +37,7 @@ class ContextGetDefaultTestCase(unittest.TestCase):
     def test_default_context(self):
         context = ContextGetDefault(
             request(environ()), cookies()).call()
-        self.assertEqual(context['client_id'], client_id())
+        self.assertEqual(context['fingerprint'], fingerprint())
         self.assertEqual(context['active'], True)
         self.assertEqual(
             context['headers'],

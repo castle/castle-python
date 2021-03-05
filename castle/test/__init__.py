@@ -10,7 +10,7 @@ TEST_MODULES = [
     'castle.test.api.get_devices_for_user_test',
     'castle.test.api.report_device_test',
     'castle.test.api_request_test',
-    'castle.test.client_id.extract_test',
+    'castle.test.fingerprint.extract_test',
     'castle.test.client_test',
     'castle.test.command_test',
     'castle.test.commands.approve_device_test',

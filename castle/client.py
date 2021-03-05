@@ -57,7 +57,6 @@ class Client(object):
                 'Castle set to do not track.'
             ).call()
 
-
     def start_impersonation(self, options):
         self._add_timestamp_if_necessary(options)
         response = self.api.call(CommandsStartImpersonation(self.context).call(options))

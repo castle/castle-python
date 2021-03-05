@@ -19,7 +19,7 @@ class ContextPrepareTestCase(unittest.TestCase):
     def test_call(self):
         context = {
             'active': True,
-            'client_id': '1234',
+            'fingerprint': '1234',
             'headers': {
                 'User-Agent': 'test',
                 'X-Forwarded-For': '217.144.192.112',
@@ -32,8 +32,8 @@ class ContextPrepareTestCase(unittest.TestCase):
         result_context = ContextPrepare.call(request(), {})
         self.assertEqual(result_context, context)
 
-    def test_setup_client_id_from_cookies(self):
+    def test_setup_fingerprint_from_cookies(self):
         cookies = {'__cid': '1234'}
         options = {'cookies': cookies}
         result_context = ContextPrepare.call(request(), options)
-        self.assertEqual(result_context['client_id'], '1234')
+        self.assertEqual(result_context['fingerprint'], '1234')

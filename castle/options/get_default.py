@@ -7,7 +7,7 @@ from castle.ips.extract import IPsExtract
 __version__ = VERSION
 
 
-class ContextGetDefault(object):
+class OptionsGetDefault(object):
     def __init__(self, request, cookies):
         self.cookies = self._fetch_cookies(request, cookies)
         self.pre_headers = HeadersFilter(request).call()

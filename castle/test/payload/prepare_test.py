@@ -17,7 +17,7 @@ def request():
 def ctx():
     return {
         'active': True,
-        'client_id': '1234',
+        'fingerprint': '1234',
         'headers': {
             'User-Agent': 'test',
             'X-Castle-Client-Id': '1234',

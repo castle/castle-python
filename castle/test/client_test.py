@@ -30,13 +30,6 @@ class ClientTestCase(unittest.TestCase):
     def test_init(self):
         context = {
             'active': True,
-            'fingerprint': '1234',
-            'headers': {
-                'User-Agent': 'test',
-                'X-Forwarded-For': '217.144.192.112',
-                'X-Castle-Client-Id': '1234'
-            },
-            'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION}
         }
         client = Client.from_request(request(), {})

@@ -19,20 +19,7 @@ class ContextPrepareTestCase(unittest.TestCase):
     def test_call(self):
         context = {
             'active': True,
-            'fingerprint': '1234',
-            'headers': {
-                'User-Agent': 'test',
-                'X-Forwarded-For': '217.144.192.112',
-                'X-Castle-Client-Id': '1234'
-            },
-            'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION}
         }
-        result_context = ContextPrepare.call(request(), {})
+        result_context = ContextPrepare.call({})
         self.assertEqual(result_context, context)
-
-    def test_setup_fingerprint_from_cookies(self):
-        cookies = {'__cid': '1234'}
-        options = {'cookies': cookies}
-        result_context = ContextPrepare.call(request(), options)
-        self.assertEqual(result_context['fingerprint'], '1234')

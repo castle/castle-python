@@ -13,11 +13,11 @@ from castle.failover.strategy import FailoverStrategy
 class Client(object):
 
     @classmethod
-    def from_request(cls, request, options=None):
+    def from_request(cls, _request, options=None):
         if options is None:
             options = {}
 
-        options.setdefault('context', ContextPrepare.call(request, options))
+        options.setdefault('context', ContextPrepare.call(options))
         return cls(options)
 
     @staticmethod

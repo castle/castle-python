@@ -8,11 +8,11 @@ from castle.utils.merge import UtilsMerge
 class PayloadPrepare(object):
 
     @staticmethod
-    def call(payload_options, request, options=None):
+    def call(payload_options, _request, options=None):
         if options is None:
             options = {}
 
-        context = ContextPrepare.call(request, UtilsMerge.call(payload_options, options))
+        context = ContextPrepare.call(UtilsMerge.call(payload_options, options))
 
         payload_options.setdefault('context', context)
         payload_options.setdefault('timestamp', generate_timestamp.call())

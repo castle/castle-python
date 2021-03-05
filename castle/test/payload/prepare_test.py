@@ -17,13 +17,6 @@ def request():
 def ctx():
     return {
         'active': True,
-        'fingerprint': '1234',
-        'headers': {
-            'User-Agent': 'test',
-            'X-Castle-Client-Id': '1234',
-            'X-Forwarded-For': '217.144.192.112'
-        },
-        'ip': '217.144.192.112',
         'library': {'name': 'castle-python', 'version': VERSION}
     }
 

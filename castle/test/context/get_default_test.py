@@ -53,4 +53,3 @@ class ContextGetDefaultTestCase(unittest.TestCase):
             context['library'],
             {'name': 'castle-python', 'version': __version__}
         )
-        self.assertEqual(context['user_agent'], 'test')

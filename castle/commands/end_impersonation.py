@@ -14,7 +14,7 @@ class CommandsEndImpersonation(object):
 
         context = ContextMerge.call(self.context, options.get('context'))
         context = ContextSanitize.call(context)
-        ValidatorsPresent.call(context, 'user_agent', 'ip')
+        ValidatorsPresent.call(context, 'ip')
 
         if context:
             options.update({'context': context})

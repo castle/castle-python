@@ -26,8 +26,7 @@ class ContextPrepareTestCase(unittest.TestCase):
                 'X-Castle-Client-Id': '1234'
             },
             'ip': '217.144.192.112',
-            'library': {'name': 'castle-python', 'version': VERSION},
-            'user_agent': 'test'
+            'library': {'name': 'castle-python', 'version': VERSION}
         }
         result_context = ContextPrepare.call(request(), {})
         self.assertEqual(result_context, context)

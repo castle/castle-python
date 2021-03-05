@@ -8,7 +8,7 @@ from castle.utils.clone import UtilsClone
 def default_options():
     """Default options include all required fields."""
     return {'properties': {'impersonator': 'admin'}, 'user_id': '1234',
-            'context': {'ip': '127.0.0.1', 'user_agent': 'Chrome'}}
+            'context': {'ip': '127.0.0.1'}}
 
 
 def default_options_plus(**extra):
@@ -44,14 +44,14 @@ class CommandsEndImpersonationTestCase(unittest.TestCase):
     def test_call(self):
         context = {'lang': 'es'}
         options = default_options_plus(
-            context={'local time': '8:53pm', 'ip': '127.0.0.1', 'user_agent': 'Chrome'}
+            context={'local time': '8:53pm', 'ip': '127.0.0.1'}
         )
 
         # expect the original context to have been merged with the context specified in the options
         expected_data = UtilsClone.call(options)
         expected_data.update(
             context={'lang': 'es', 'local time': '8:53pm',
-                     'ip': '127.0.0.1', 'user_agent': 'Chrome'}
+                     'ip': '127.0.0.1'}
         )
         expected = default_command_with_data(**expected_data)
 
@@ -69,14 +69,6 @@ class CommandsEndImpersonationTestCase(unittest.TestCase):
         context = {}
         options = default_options()
         options['context'].pop('ip')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsEndImpersonation(context).call(options)
-
-    def test_call_no_context_user_agent(self):
-        context = {}
-        options = default_options()
-        options['context'].pop('user_agent')
 
         with self.assertRaises(InvalidParametersError):
             CommandsEndImpersonation(context).call(options)

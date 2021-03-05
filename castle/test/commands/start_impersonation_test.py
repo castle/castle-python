@@ -72,11 +72,3 @@ class CommandsStartImpersonationTestCase(unittest.TestCase):
 
         with self.assertRaises(InvalidParametersError):
             CommandsStartImpersonation(context).call(options)
-
-    def test_call_no_context_user_agent(self):
-        context = {}
-        options = default_options()
-        options['context'].pop('user_agent')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsStartImpersonation(context).call(options)

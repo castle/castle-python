@@ -37,8 +37,7 @@ class ClientTestCase(unittest.TestCase):
                 'X-Castle-Client-Id': '1234'
             },
             'ip': '217.144.192.112',
-            'library': {'name': 'castle-python', 'version': VERSION},
-            'user_agent': 'test'
+            'library': {'name': 'castle-python', 'version': VERSION}
         }
         client = Client.from_request(request(), {})
         self.assertEqual(client.do_not_track, False)

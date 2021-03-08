@@ -31,6 +31,7 @@ class Client(object):
         ).call()
 
     def __init__(self, options={}):
+        self.default_options = options
         self.do_not_track = options.get('do_not_track', False)
         self.timestamp = options.get('timestamp')
         self.context = options.get('context')
@@ -41,41 +42,51 @@ class Client(object):
             options.setdefault('timestamp', self.timestamp)
 
     def authenticate(self, options):
+        options_with_default_opts = OptionsMerge.call(options, self.default_options)
+
         if self.tracked():
-            self._add_timestamp_if_necessary(options)
-            command = CommandsAuthenticate(self.context).call(options)
+            self._add_timestamp_if_necessary(options_with_default_opts)
+            command = CommandsAuthenticate(self.context).call(options_with_default_opts)
             try:
                 response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)
                 return response
             except (RequestError, InternalServerError) as exception:
-                return Client.failover_response_or_raise(options, exception)
+                return Client.failover_response_or_raise(options_with_default_opts, exception)
         else:
             return FailoverPrepareResponse(
-                options.get('user_id'),
+                options_with_default_opts.get('user_id'),
                 'allow',
                 'Castle set to do not track.'
             ).call()
 
     def start_impersonation(self, options):
-        self._add_timestamp_if_necessary(options)
-        response = self.api.call(CommandsStartImpersonation(self.context).call(options))
+        options_with_default_opts = OptionsMerge.call(options, self.default_options)
+
+        self._add_timestamp_if_necessary(options_with_default_opts)
+        response = self.api.call(CommandsStartImpersonation(
+            self.context).call(options_with_default_opts))
         if not response.get('success'):
             raise ImpersonationFailed
         return response
 
     def end_impersonation(self, options):
-        self._add_timestamp_if_necessary(options)
-        response = self.api.call(CommandsEndImpersonation(self.context).call(options))
+        options_with_default_opts = OptionsMerge.call(options, self.default_options)
+
+        self._add_timestamp_if_necessary(options_with_default_opts)
+        response = self.api.call(CommandsEndImpersonation(
+            self.context).call(options_with_default_opts))
         if not response.get('success'):
             raise ImpersonationFailed
         return response
 
     def track(self, options):
+        options_with_default_opts = OptionsMerge.call(options, self.default_options)
+
         if not self.tracked():
             return None
-        self._add_timestamp_if_necessary(options)
-        return self.api.call(CommandsTrack(self.context).call(options))
+        self._add_timestamp_if_necessary(options_with_default_opts)
+        return self.api.call(CommandsTrack(self.context).call(options_with_default_opts))
 
     def disable_tracking(self):
         self.do_not_track = True

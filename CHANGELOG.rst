@@ -6,16 +6,14 @@ master
 
 Breaking Changes:
 ~~~~~~~~~~~~~~~~~
--  `#101 <https://github.com/castle/castle-python/pull/101>`__
-    - remove ``identify`` and ``review`` commands - they are no longer supported
-    - remove ``Castle::Events`` - please use `recognized events <https://docs.castle.io/api_reference/#list-of-recognized-events>__` instead
-    - remove ``locale``, ``user_agent``, ``ip``, ``headers``, ``client_id`` fields from context - no action required
+-  `#101 <https://github.com/castle/castle-python/pull/101>`__ remove ``identify`` and ``review`` commands - they are no longer supported
+-  `#101 <https://github.com/castle/castle-python/pull/101>`__ remove ``Castle::Events`` - please use `recognized events <https://docs.castle.io/api_reference/#list-of-recognized-events>__` instead
+-  `#101 <https://github.com/castle/castle-python/pull/101>`__ remove ``locale``, ``user_agent``, ``ip``, ``headers``, ``client_id`` fields from context - no action required
 
 Enhancements:
 ~~~~~~~~~~~~~
--  `#101 <https://github.com/castle/castle-python/pull/101>`__
-    - add new supported top-level fields to the commands (``fingerprint``, ``status``, ``headers``, ``ip``)
-    - update Readme to reflect the changes
+-  `#101 <https://github.com/castle/castle-python/pull/101>`__ add new supported top-level fields to the commands (``fingerprint``, ``status``, ``headers``, ``ip``)
+-  `#101 <https://github.com/castle/castle-python/pull/101>`__ update Readme to reflect the changes
 -  `#100 <https://github.com/castle/castle-python/pull/100>`__ add ``X-Requested-With`` header support
 
 5.0.1 (2021-01-19)

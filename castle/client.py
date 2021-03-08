@@ -15,7 +15,10 @@ from castle.failover.strategy import FailoverStrategy
 class Client(object):
 
     @classmethod
-    def from_request(cls, request, options={}):
+    def from_request(cls, request, options=None):
+        if options is None:
+            options = {}
+
         default_options = OptionsGetDefault(request, options.get('cookies')).call()
         options_with_default_opts = OptionsMerge.call(options, default_options)
 
@@ -30,7 +33,10 @@ class Client(object):
             options.get('user_id'), None, exception.__class__.__name__
         ).call()
 
-    def __init__(self, options={}):
+    def __init__(self, options=None):
+        if options is None:
+            options = {}
+
         self.default_options = options
         self.do_not_track = options.get('do_not_track', False)
         self.timestamp = options.get('timestamp')

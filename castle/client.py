@@ -5,6 +5,8 @@ from castle.commands.end_impersonation import CommandsEndImpersonation
 from castle.commands.track import CommandsTrack
 from castle.configuration import configuration
 from castle.context.prepare import ContextPrepare
+from castle.options.merge import OptionsMerge
+from castle.options.get_default import OptionsGetDefault
 from castle.errors import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover.prepare_response import FailoverPrepareResponse
 from castle.failover.strategy import FailoverStrategy
@@ -13,12 +15,12 @@ from castle.failover.strategy import FailoverStrategy
 class Client(object):
 
     @classmethod
-    def from_request(cls, _request, options=None):
-        if options is None:
-            options = {}
+    def from_request(cls, request, options={}):
+        default_options = OptionsGetDefault(request, options.get('cookies')).call()
+        options_with_default_opts = OptionsMerge.call(options, default_options)
 
-        options.setdefault('context', ContextPrepare.call(options))
-        return cls(options)
+        options_with_default_opts.setdefault('context', ContextPrepare.call(options))
+        return cls(options_with_default_opts)
 
     @staticmethod
     def failover_response_or_raise(options, exception):
@@ -28,9 +30,7 @@ class Client(object):
             options.get('user_id'), None, exception.__class__.__name__
         ).call()
 
-    def __init__(self, options=None):
-        if options is None:
-            options = {}
+    def __init__(self, options={}):
         self.do_not_track = options.get('do_not_track', False)
         self.timestamp = options.get('timestamp')
         self.context = options.get('context')

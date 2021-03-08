@@ -31,7 +31,7 @@ def res():
             'X-Castle-Client-Id': '1234'
         },
         'ip': '217.144.192.112',
-        'context': {'active': True, 'library': {'name': 'castle-python', 'version': '5.0.1'}},
+        'context': {'active': True, 'library': {'name': 'castle-python', 'version': VERSION}},
         'timestamp': '2018-01-02T03:04:05.678'
     }
 
@@ -47,7 +47,7 @@ def resWithDeprecation():
             'X-Castle-Client-Id': '1234'
         },
         'ip': '217.144.192.112',
-        'context': {'active': True, 'library': {'name': 'castle-python', 'version': '5.0.1'}},
+        'context': {'active': True, 'library': {'name': 'castle-python', 'version': VERSION}},
         'timestamp': '2018-01-02T03:04:05.678'
     }
 

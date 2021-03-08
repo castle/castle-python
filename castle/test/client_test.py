@@ -30,17 +30,20 @@ class ClientTestCase(unittest.TestCase):
     def test_init(self):
         context = {
             'active': True,
-            'client_id': '1234',
+            'library': {'name': 'castle-python', 'version': VERSION}
+        }
+        client = Client.from_request(request(), {})
+        default_options = {
+            'fingerprint': '1234',
             'headers': {
-                'User-Agent': 'test',
                 'X-Forwarded-For': '217.144.192.112',
+                'User-Agent': 'test',
                 'X-Castle-Client-Id': '1234'
             },
             'ip': '217.144.192.112',
-            'library': {'name': 'castle-python', 'version': VERSION},
-            'user_agent': 'test'
+            'context': {'active': True, 'library': {'name': 'castle-python', 'version': '5.0.1'}}
         }
-        client = Client.from_request(request(), {})
+        self.assertEqual(client.default_options, default_options)
         self.assertEqual(client.do_not_track, False)
         self.assertEqual(client.context, context)
         self.assertIsInstance(client.api, APIRequest)
@@ -98,24 +101,6 @@ class ClientTestCase(unittest.TestCase):
         options = {'properties': {'impersonator': 'admin'}, 'user_id': '1234'}
         with self.assertRaises(ImpersonationFailed):
             client.end_impersonation(options)
-
-    @responses.activate
-    def test_identify_tracked_true(self):
-        response_text = 'identify'
-        responses.add(
-            responses.POST,
-            'https://api.castle.io/v1/identify',
-            json=response_text,
-            status=200
-        )
-        client = Client.from_request(request(), {})
-        options = {'event': '$login.authenticate', 'user_id': '1234'}
-        self.assertEqual(client.identify(options), response_text)
-
-    def test_identify_tracked_false(self):
-        client = Client.from_request(request(), {})
-        client.disable_tracking()
-        self.assertEqual(client.identify({}), None)
 
     @responses.activate
     def test_authenticate_tracked_true(self):

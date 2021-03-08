@@ -17,15 +17,38 @@ def request():
 def ctx():
     return {
         'active': True,
-        'client_id': '1234',
+        'library': {'name': 'castle-python', 'version': VERSION}
+    }
+
+
+def res():
+    return {
+        'foo': 'bar',
+        'fingerprint': '1234',
         'headers': {
+            'X-Forwarded-For': '217.144.192.112',
             'User-Agent': 'test',
-            'X-Castle-Client-Id': '1234',
-            'X-Forwarded-For': '217.144.192.112'
+            'X-Castle-Client-Id': '1234'
         },
         'ip': '217.144.192.112',
-        'library': {'name': 'castle-python', 'version': VERSION},
-        'user_agent': 'test'
+        'context': {'active': True, 'library': {'name': 'castle-python', 'version': '5.0.1'}},
+        'timestamp': '2018-01-02T03:04:05.678'
+    }
+
+
+def resWithDeprecation():
+    return {
+        'foo': 'bar',
+        'traits': {},
+        'fingerprint': '1234',
+        'headers': {
+            'X-Forwarded-For': '217.144.192.112',
+            'User-Agent': 'test',
+            'X-Castle-Client-Id': '1234'
+        },
+        'ip': '217.144.192.112',
+        'context': {'active': True, 'library': {'name': 'castle-python', 'version': '5.0.1'}},
+        'timestamp': '2018-01-02T03:04:05.678'
     }
 
 
@@ -39,10 +62,10 @@ class ContextPrepareTestCase(unittest.TestCase):
 
     def test_call(self):
         options = PayloadPrepare.call({'foo': 'bar'}, request())
-        self.assertEqual(
-            options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678', 'context': ctx()})
+
+        self.assertEqual(options, res())
 
     def test_call_with_deprecation(self):
         options = PayloadPrepare.call({'foo': 'bar', 'traits': {}}, request())
-        self.assertEqual(
-            options, {'foo': 'bar', 'timestamp': '2018-01-02T03:04:05.678', 'traits': {}, 'context': ctx()})
+
+        self.assertEqual(options, resWithDeprecation())

@@ -16,7 +16,7 @@ Enhancements:
 -  `#101 <https://github.com/castle/castle-python/pull/101>`__
     - add new supported top-level fields to the commands (``fingerprint``, ``status``, ``headers``, ``ip``)
     - update Readme to reflect the changes
--  `#101 <https://github.com/castle/castle-python/pull/101>`__ add ``X-Requested-With`` header support
+-  `#100 <https://github.com/castle/castle-python/pull/100>`__ add ``X-Requested-With`` header support
 
 5.0.1 (2021-01-19)
 ------------------

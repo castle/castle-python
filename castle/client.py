@@ -3,8 +3,11 @@ from castle.api import Api
 from castle.context.default import ContextDefault
 from castle.context.merger import ContextMerger
 from castle.commands.authenticate import CommandsAuthenticate
+from castle.commands.filter import CommandsFilter
 from castle.commands.identify import CommandsIdentify
 from castle.commands.impersonate import CommandsImpersonate
+from castle.commands.log import CommandsLog
+from castle.commands.risk import CommandsRisk
 from castle.commands.track import CommandsTrack
 from castle.exceptions import InternalServerError, RequestError, ImpersonationFailed
 from castle.failover_response import FailoverResponse
@@ -62,6 +65,57 @@ class Client(object):
         if self.tracked():
             self._add_timestamp_if_necessary(options)
             command = CommandsAuthenticate(self.context).build(options)
+            try:
+                response = self.api.call(command)
+                response.update(failover=False, failover_reason=None)
+                return response
+            except (RequestError, InternalServerError) as exception:
+                return Client.failover_response_or_raise(options, exception)
+        else:
+            return FailoverResponse(
+                options.get('user_id'),
+                'allow',
+                'Castle set to do not track.'
+            ).call()
+
+    def filter(self, options):
+        if self.tracked():
+            self._add_timestamp_if_necessary(options)
+            command = CommandsFilter(self.context).build(options)
+            try:
+                response = self.api.call(command)
+                response.update(failover=False, failover_reason=None)
+                return response
+            except (RequestError, InternalServerError) as exception:
+                return Client.failover_response_or_raise(options, exception)
+        else:
+            return FailoverResponse(
+                options.get('user_id'),
+                'allow',
+                'Castle set to do not track.'
+            ).call()
+
+    def log(self, options):
+        if self.tracked():
+            self._add_timestamp_if_necessary(options)
+            command = CommandsLog(self.context).build(options)
+            try:
+                response = self.api.call(command)
+                response.update(failover=False, failover_reason=None)
+                return response
+            except (RequestError, InternalServerError) as exception:
+                return Client.failover_response_or_raise(options, exception)
+        else:
+            return FailoverResponse(
+                options.get('user_id'),
+                'allow',
+                'Castle set to do not track.'
+            ).call()
+
+    def risk(self, options):
+        if self.tracked():
+            self._add_timestamp_if_necessary(options)
+            command = CommandsRisk(self.context).build(options)
             try:
                 response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)

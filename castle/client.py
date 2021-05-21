@@ -1,7 +1,6 @@
 from castle.api_request import APIRequest
 from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.filter import CommandsFilter
-from castle.commands.impersonate import CommandsImpersonate
 from castle.commands.log import CommandsLog
 from castle.commands.risk import CommandsRisk
 from castle.commands.identify import CommandsIdentify
@@ -26,11 +25,11 @@ class Client(object):
         return cls(options)
 
     @staticmethod
-    def failover_response_or_raise(options, exception):
+    def failover_response_or_raise(user_id, exception):
         if configuration.failover_strategy == FailoverStrategy.THROW.value:
             raise exception
         return FailoverPrepareResponse(
-            options.get('user_id'), None, exception.__class__.__name__
+            user_id, None, exception.__class__.__name__
         ).call()
 
     def __init__(self, options=None):
@@ -54,7 +53,7 @@ class Client(object):
                 response.update(failover=False, failover_reason=None)
                 return response
             except (RequestError, InternalServerError) as exception:
-                return Client.failover_response_or_raise(options, exception)
+                return Client.failover_response_or_raise(options.get('user_id'), exception)
         else:
             return FailoverPrepareResponse(
                 options.get('user_id'),
@@ -65,16 +64,16 @@ class Client(object):
     def filter(self, options):
         if self.tracked():
             self._add_timestamp_if_necessary(options)
-            command = CommandsFilter(self.context).build(options)
+            command = CommandsFilter(self.context).call(options)
             try:
                 response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)
                 return response
             except (RequestError, InternalServerError) as exception:
-                return Client.failover_response_or_raise(options, exception)
+                return Client.failover_response_or_raise(options.get('user').get('id'), exception)
         else:
-            return FailoverResponse(
-                options.get('user_id'),
+            return FailoverPrepareResponse(
+                options.get('user').get('id'),
                 'allow',
                 'Castle set to do not track.'
             ).call()
@@ -82,16 +81,16 @@ class Client(object):
     def log(self, options):
         if self.tracked():
             self._add_timestamp_if_necessary(options)
-            command = CommandsLog(self.context).build(options)
+            command = CommandsLog(self.context).call(options)
             try:
                 response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)
                 return response
             except (RequestError, InternalServerError) as exception:
-                return Client.failover_response_or_raise(options, exception)
+                return Client.failover_response_or_raise(options.get('user').get('id'), exception)
         else:
-            return FailoverResponse(
-                options.get('user_id'),
+            return FailoverPrepareResponse(
+                options.get('user').get('id'),
                 'allow',
                 'Castle set to do not track.'
             ).call()
@@ -99,16 +98,16 @@ class Client(object):
     def risk(self, options):
         if self.tracked():
             self._add_timestamp_if_necessary(options)
-            command = CommandsRisk(self.context).build(options)
+            command = CommandsRisk(self.context).call(options)
             try:
                 response = self.api.call(command)
                 response.update(failover=False, failover_reason=None)
                 return response
             except (RequestError, InternalServerError) as exception:
-                return Client.failover_response_or_raise(options, exception)
+                return Client.failover_response_or_raise(options.get('user').get('id'), exception)
         else:
-            return FailoverResponse(
-                options.get('user_id'),
+            return FailoverPrepareResponse(
+                options.get('user').get('id'),
                 'allow',
                 'Castle set to do not track.'
             ).call()

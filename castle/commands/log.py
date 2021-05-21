@@ -5,7 +5,7 @@ from castle.context.sanitize import ContextSanitize
 from castle.validators.present import ValidatorsPresent
 
 
-class CommandsFilter(object):
+class CommandsLog(object):
     def __init__(self, context):
         self.context = context
 
@@ -17,4 +17,4 @@ class CommandsFilter(object):
             options.update({'context': context})
         options.update({'sent_at': generate_timestamp.call()})
 
-        return Command(method='post', path='filter', data=options)
+        return Command(method='post', path='log', data=options)

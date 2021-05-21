@@ -20,12 +20,11 @@ ci-lint: pre-lint lint
 
 pre-lint:
 	${PIP} install pylint
-	${PIP} install setuptools-lint
 	${PIP} install --upgrade pep8
 	${PIP} install --upgrade autopep8
 
 lint:
-	${PYTHON} setup.py lint
+	pylint --rcfile=./pylintrc castle
 	autopep8 --in-place -r castle
 
 setup:

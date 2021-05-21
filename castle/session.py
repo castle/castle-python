@@ -1,16 +1,19 @@
 import requests
 
 
-class SessionSharer(object):
-    class __SessionSharer:
+class Session(object):
+    class __Session:
         def __init__(self):
             self.session = requests.Session()
+
+        def get(self):
+            return self.session
     instance = None
 
     def __new__(cls):
-        if not SessionSharer.instance:
-            SessionSharer.instance = SessionSharer.__SessionSharer()
-        return SessionSharer.instance
+        if not Session.instance:
+            Session.instance = Session.__Session()
+        return Session.instance
 
-    def __getattr__(self, name):
-        return getattr(self.instance, name)
+    def get(self):
+        return self.instance.get()

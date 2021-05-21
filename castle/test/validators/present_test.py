@@ -1,6 +1,6 @@
 from castle.test import unittest
 from castle.validators.present import ValidatorsPresent
-from castle.exceptions import InvalidParametersError
+from castle.errors import InvalidParametersError
 
 
 class ValidatorsPresentTestCase(unittest.TestCase):

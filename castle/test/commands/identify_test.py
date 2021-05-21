@@ -1,8 +1,8 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.identify import CommandsIdentify
-from castle.exceptions import InvalidParametersError
-from castle.utils import clone
+from castle.errors import InvalidParametersError
+from castle.utils.clone import UtilsClone
 
 
 def default_options():
@@ -29,7 +29,7 @@ def default_command_with_data(**data):
 class CommandsIdentifyTestCase(unittest.TestCase):
     def setUp(self):
         # patch timestamp to return a known value
-        timestamp_patcher = mock.patch('castle.commands.identify.timestamp')
+        timestamp_patcher = mock.patch('castle.commands.identify.generate_timestamp.call')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = mock.sentinel.timestamp
         self.addCleanup(timestamp_patcher.stop)
@@ -39,38 +39,38 @@ class CommandsIdentifyTestCase(unittest.TestCase):
         obj = CommandsIdentify(context)
         self.assertEqual(obj.context, context)
 
-    def test_build(self):
+    def test_call(self):
         context = {'test': '1'}
         options = default_options_plus(context={'color': 'blue'})
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(context={'test': '1', 'color': 'blue'})
         expected = default_command_with_data(**expected_data)
 
-        self.assertEqual(CommandsIdentify(context).build(options), expected)
+        self.assertEqual(CommandsIdentify(context).call(options), expected)
 
-    def test_build_no_user_id(self):
+    def test_call_no_user_id(self):
         context = {}
         options = default_options()
         options.pop('user_id')
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsIdentify(context).build(options), expected)
+        self.assertEqual(CommandsIdentify(context).call(options), expected)
 
-    def test_build_properties_not_allowed(self):
+    def test_call_properties_not_allowed(self):
         context = {'test': '1'}
         options = default_options_plus(properties={'hair': 'blonde'})
 
         with self.assertRaises(InvalidParametersError):
-            CommandsIdentify(context).build(options)
+            CommandsIdentify(context).call(options)
 
-    def test_build_user_traits_allowed(self):
+    def test_call_user_traits_allowed(self):
         context = {}
         options = default_options_plus(user_traits={'email': 'identity@its.me.com'})
         options.update({'context': context})
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsIdentify(context).build(options), expected)
+        self.assertEqual(CommandsIdentify(context).call(options), expected)

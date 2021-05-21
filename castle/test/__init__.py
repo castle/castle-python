@@ -1,54 +1,54 @@
 import logging
 import sys
+import unittest
+from unittest import mock
 
-
-# The unittest module got a significant overhaul
-# in 2.7, so if we're in 2.6 we can use the backported
-# version unittest2.
-if sys.version_info[:2] == (2, 6):
-    # pylint: disable=import-error
-    import unittest2 as unittest
-else:
-    import unittest
-
-
-# Python 3 includes mocking, while 2 requires an extra module.
-if sys.version_info[0] == 2:
-    # pylint: disable=import-error
-    import mock
-else:
-    from unittest import mock
-
-if sys.version_info[:2] == (2, 6):
-    import subprocess
-    subprocess.call(["sed", "-i", "-e",  's/import _io/import io as _io/g', "/home/travis/build/castle/castle-python/.eggs/responses-0.6.2-py2.6.egg/responses.py"])
 
 TEST_MODULES = [
-    'castle.test.api_test',
+    'castle.test.api.approve_device_test',
+    'castle.test.api.get_device_test',
+    'castle.test.api.get_devices_for_user_test',
+    'castle.test.api.report_device_test',
+    'castle.test.api.review_test',
+    'castle.test.api_request_test',
+    'castle.test.client_id.extract_test',
     'castle.test.client_test',
-    'castle.test.configuration_test',
-    'castle.test.context.default_test',
-    'castle.test.context.merger_test',
-    'castle.test.context.sanitizer_test',
     'castle.test.command_test',
+    'castle.test.commands.approve_device_test',
     'castle.test.commands.authenticate_test',
+    'castle.test.commands.end_impersonation_test',
+    'castle.test.commands.get_device_test',
+    'castle.test.commands.get_devices_for_user_test',
     'castle.test.commands.identify_test',
-    'castle.test.commands.impersonate_test',
-    'castle.test.commands.track_test',
+    'castle.test.commands.report_device_test',
     'castle.test.commands.review_test',
-    'castle.test.extractors.client_id_test',
-    'castle.test.extractors.headers_test',
-    'castle.test.extractors.ip_test',
-    'castle.test.failover_response_test',
-    'castle.test.headers_formatter_test',
-    'castle.test.request_test',
-    'castle.test.response_test',
-    'castle.test.review_test',
+    'castle.test.commands.start_impersonation_test',
+    'castle.test.commands.track_test',
+    'castle.test.configuration_test',
+    'castle.test.context.get_default_test',
+    'castle.test.context.merge_test',
+    'castle.test.context.prepare_test',
+    'castle.test.context.sanitize_test',
+    'castle.test.core.process_response_test',
+    'castle.test.core.process_webhook_test',
+    'castle.test.core.send_request_test',
+    'castle.test.failover.prepare_response_test',
+    'castle.test.failover.strategy_test',
+    'castle.test.headers.extract_test',
+    'castle.test.headers.filter_test',
+    'castle.test.headers.format_test',
+    'castle.test.ips.extract_test',
+    'castle.test.logger_test',
+    'castle.test.payload.prepare_test',
     'castle.test.secure_mode_test',
     'castle.test.session_test',
+    'castle.test.utils.clone_test',
+    'castle.test.utils.merge_test',
+    'castle.test.utils.timestamp_test',
     'castle.test.validators.not_supported_test',
     'castle.test.validators.present_test',
-    'castle.test.utils_test'
+    'castle.test.verdict_test',
+    'castle.test.webhooks.verify_test',
 ]
 
 # pylint: disable=redefined-builtin

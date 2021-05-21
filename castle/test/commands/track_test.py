@@ -1,8 +1,8 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.track import CommandsTrack
-from castle.exceptions import InvalidParametersError
-from castle.utils import clone
+from castle.errors import InvalidParametersError
+from castle.utils.clone import UtilsClone
 
 
 def default_options():
@@ -29,7 +29,7 @@ def default_command_with_data(**data):
 class CommandsTrackTestCase(unittest.TestCase):
     def setUp(self):
         # patch timestamp to return a known value
-        timestamp_patcher = mock.patch('castle.commands.track.timestamp')
+        timestamp_patcher = mock.patch('castle.commands.track.generate_timestamp.call')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = mock.sentinel.timestamp
         self.addCleanup(timestamp_patcher.stop)
@@ -39,35 +39,35 @@ class CommandsTrackTestCase(unittest.TestCase):
         obj = CommandsTrack(context)
         self.assertEqual(obj.context, context)
 
-    def test_build(self):
+    def test_call(self):
         context = {'lang': 'es'}
         options = default_options_plus(context={'local time': '8:53pm'})
 
         # expect the original context to have been merged with the context specified in the options
-        expected_data = clone(options)
+        expected_data = UtilsClone.call(options)
         expected_data.update(context={'lang': 'es', 'local time': '8:53pm'})
         expected = default_command_with_data(**expected_data)
 
-        self.assertEqual(CommandsTrack(context).build(options), expected)
+        self.assertEqual(CommandsTrack(context).call(options), expected)
 
-    def test_build_no_event(self):
+    def test_call_no_event(self):
         context = {}
         options = default_options()
         options.pop('event')
 
         with self.assertRaises(InvalidParametersError):
-            CommandsTrack(context).build(options)
+            CommandsTrack(context).call(options)
 
-    def test_build_properties_allowed(self):
+    def test_call_properties_allowed(self):
         context = {}
         options = default_options_plus(properties={'face': 'handsome'})
         options.update({'context': context})
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsTrack(context).build(options), expected)
+        self.assertEqual(CommandsTrack(context).call(options), expected)
 
-    def test_build_user_traits_allowed(self):
+    def test_call_user_traits_allowed(self):
         context = {}
         options = default_options_plus(
             user_traits={'email': 'track@all.the.things.com'})
@@ -75,4 +75,4 @@ class CommandsTrackTestCase(unittest.TestCase):
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsTrack(context).build(options), expected)
+        self.assertEqual(CommandsTrack(context).call(options), expected)

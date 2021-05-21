@@ -1,7 +1,7 @@
 from castle.test import unittest
 from castle.command import Command
 from castle.commands.review import CommandsReview
-from castle.exceptions import InvalidParametersError
+from castle.errors import InvalidParametersError
 
 
 def review_id():
@@ -9,12 +9,12 @@ def review_id():
 
 
 class CommandsReviewTestCase(unittest.TestCase):
-    def test_build_no_review_id(self):
+    def test_call_no_review_id(self):
         with self.assertRaises(InvalidParametersError):
-            CommandsReview.build('')
+            CommandsReview.call('')
 
-    def test_build(self):
-        command = CommandsReview.build(review_id())
+    def test_call(self):
+        command = CommandsReview.call(review_id())
         self.assertIsInstance(command, Command)
         self.assertEqual(command.method, 'get')
         self.assertEqual(command.path, "reviews/1234")

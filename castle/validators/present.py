@@ -1,4 +1,4 @@
-from castle.exceptions import InvalidParametersError
+from castle.errors import InvalidParametersError
 
 
 class ValidatorsPresent(object):

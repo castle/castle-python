@@ -1,6 +1,6 @@
 from castle.test import unittest
 from castle.validators.not_supported import ValidatorsNotSupported
-from castle.exceptions import InvalidParametersError
+from castle.errors import InvalidParametersError
 
 
 class ValidatorsNotSupportedTestCase(unittest.TestCase):

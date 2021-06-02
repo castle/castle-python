@@ -30,20 +30,17 @@ class ClientTestCase(unittest.TestCase):
     def test_init(self):
         context = {
             'active': True,
-            'library': {'name': 'castle-python', 'version': VERSION}
-        }
-        client = Client.from_request(request(), {})
-        default_options = {
-            'fingerprint': '1234',
+            'client_id': '1234',
             'headers': {
-                'X-Forwarded-For': '217.144.192.112',
                 'User-Agent': 'test',
+                'X-Forwarded-For': '217.144.192.112',
                 'X-Castle-Client-Id': '1234'
             },
             'ip': '217.144.192.112',
-            'context': {'active': True, 'library': {'name': 'castle-python', 'version': VERSION}}
+            'library': {'name': 'castle-python', 'version': VERSION},
+            'user_agent': 'test'
         }
-        self.assertEqual(client.default_options, default_options)
+        client = Client.from_request(request(), {})
         self.assertEqual(client.do_not_track, False)
         self.assertEqual(client.context, context)
         self.assertIsInstance(client.api, APIRequest)

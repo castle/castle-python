@@ -8,8 +8,7 @@ from castle.utils.clone import UtilsClone
 def default_options():
     """Default options include all required fields."""
     return {'properties': {'impersonator': 'admin'}, 'user_id': '1234',
-            'context': {'ip': '127.0.0.1', 'user_agent': 'Chrome'},
-            'headers': {'random': 'header'}}
+            'context': {'ip': '127.0.0.1', 'user_agent': 'Chrome'}}
 
 
 def default_options_plus(**extra):
@@ -58,7 +57,7 @@ class CommandsStartImpersonationTestCase(unittest.TestCase):
 
         self.assertEqual(CommandsStartImpersonation(context).call(options), expected)
 
-    def test_call_no_user_id(self):
+    def test_call_no_event(self):
         context = {}
         options = default_options()
         options.pop('user_id')
@@ -66,10 +65,18 @@ class CommandsStartImpersonationTestCase(unittest.TestCase):
         with self.assertRaises(InvalidParametersError):
             CommandsStartImpersonation(context).call(options)
 
-    def test_call_no_headers(self):
+    def test_call_no_context_ip(self):
         context = {}
         options = default_options()
-        options.pop('headers')
+        options['context'].pop('ip')
+
+        with self.assertRaises(InvalidParametersError):
+            CommandsStartImpersonation(context).call(options)
+
+    def test_call_no_context_user_agent(self):
+        context = {}
+        options = default_options()
+        options['context'].pop('user_agent')
 
         with self.assertRaises(InvalidParametersError):
             CommandsStartImpersonation(context).call(options)

@@ -5,8 +5,9 @@ from castle.context.merge import ContextMerge
 class ContextPrepare(object):
 
     @staticmethod
-    def call(options=None):
+    def call(request, options=None):
         if options is None:
             options = {}
-        default_context = ContextGetDefault.call()
+        default_context = ContextGetDefault(
+            request, options.get('cookies')).call()
         return ContextMerge.call(default_context, options.get('context', {}))

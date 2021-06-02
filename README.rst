@@ -118,10 +118,11 @@ Here is a simple example of track event.
 .. code:: python
 
     from castle.client import Client
+    from castle import events
 
     castle = Client.from_request(request)
     castle.track({
-      'event': '$login',
+      'event': events.LOGIN_SUCCEEDED,
       'user_id': 'user_id'
     })
 
@@ -147,10 +148,11 @@ background worker you can generate data for a worker:
 .. code:: python
 
     from castle.payload.prepare import PayloadPrepare
+    from castle import events
 
     payload = PayloadPrepare.call(
         {
-          'event': '$login',
+          'event': events.LOGIN_SUCCEEDED,
           'user_id': user.id,
           'properties': { 'key': 'value' },
           'user_traits': { 'key': 'value' }
@@ -170,7 +172,7 @@ and use it later in a way
 Events
 --------------
 
-List of Recognized Events can be found in the `docs <https://docs.castle.io/api_reference/#list-of-recognized-events>`_.
+List of Recognized Events can be found `here <https://github.com/castle/castle-python/tree/master/castle/events.py>`_ or in the `docs <https://docs.castle.io/api_reference/#list-of-recognized-events>`_.
 
 Device management
 -----------------
@@ -232,7 +234,7 @@ error <https://github.com/castle/castle-python/blob/master/castle/errors.py>`__.
 Webhooks
 --------
 
-Castle uses webhooks to notify about ``$incident.confirmed`` or ``$review.opened`` events.
+Castle uses webhooks to notify about ``$incident.confirmed`` or `$review.opened` events.
 Each webhook has ``X-Castle-Signature`` header that allows verifying webhook's source.
 
 .. code:: python

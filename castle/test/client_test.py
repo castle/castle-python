@@ -109,7 +109,7 @@ class ClientTestCase(unittest.TestCase):
             status=200
         )
         client = Client.from_request(request(), {})
-        options = {'event': '$login.authenticate', 'user_id': '1234'}
+        options = {'event': '$login.succeeded', 'user_id': '1234'}
         response_text.update(failover=False, failover_reason=None)
         self.assertEqual(client.authenticate(options), response_text)
 
@@ -128,7 +128,7 @@ class ClientTestCase(unittest.TestCase):
             status=500
         )
         client = Client.from_request(request(), {})
-        options = {'event': '$login.authenticate', 'user_id': '1234'}
+        options = {'event': '$login.succeeded', 'user_id': '1234'}
         self.assertEqual(client.authenticate(options), response_text)
 
     def test_authenticate_tracked_false(self):
@@ -140,7 +140,7 @@ class ClientTestCase(unittest.TestCase):
         }
         client = Client.from_request(request(), {})
         client.disable_tracking()
-        options = {'event': '$login.authenticate', 'user_id': '1234'}
+        options = {'event': '$login.succeeded', 'user_id': '1234'}
         self.assertEqual(client.authenticate(options), response_text)
 
     @responses.activate
@@ -153,7 +153,7 @@ class ClientTestCase(unittest.TestCase):
             status=200
         )
         client = Client.from_request(request(), {})
-        options = {'event': '$login.authenticate', 'user_id': '1234'}
+        options = {'event': '$login.succeeded', 'user_id': '1234'}
         self.assertEqual(client.track(options), response_text)
 
     def test_track_tracked_false(self):
@@ -220,10 +220,9 @@ class ClientTestCase(unittest.TestCase):
         }
         self.assertEqual(client.filter(options), response_text)
 
-
     @responses.activate
     def test_log_tracked_true(self):
-        response_text = {'action': Verdict.ALLOW.value, 'user_id': '1234'}
+        response_text = 'log'
         responses.add(
             responses.POST,
             'https://api.castle.io/v1/log',
@@ -237,48 +236,12 @@ class ClientTestCase(unittest.TestCase):
             'status': '$succeeded',
             'user': {'id': '1234'}
         }
-        response_text.update(failover=False, failover_reason=None)
-        self.assertEqual(client.log(options), response_text)
-
-    @responses.activate
-    def test_log_tracked_true_status_500(self):
-        response_text = {
-            'action': Verdict.ALLOW.value,
-            'user_id': '1234',
-            'failover': True,
-            'failover_reason': 'InternalServerError'
-        }
-        responses.add(
-            responses.POST,
-            'https://api.castle.io/v1/log',
-            json='log',
-            status=500
-        )
-        client = Client.from_request(request(), {})
-        options = {
-            'request_token': '7e51335b-f4bc-4bc7-875d-b713fb61eb23-bf021a3022a1a302',
-            'event': '$login',
-            'status': '$succeeded',
-            'user': {'id': '1234'}
-        }
         self.assertEqual(client.log(options), response_text)
 
     def test_log_tracked_false(self):
-        response_text = {
-            'action': Verdict.ALLOW.value,
-            'user_id': '1234',
-            'failover': True,
-            'failover_reason': 'Castle set to do not track.'
-        }
         client = Client.from_request(request(), {})
         client.disable_tracking()
-        options = {
-            'request_token': '7e51335b-f4bc-4bc7-875d-b713fb61eb23-bf021a3022a1a302',
-            'event': '$login',
-            'status': '$succeeded',
-            'user': {'id': '1234'}
-        }
-        self.assertEqual(client.log(options), response_text)
+        self.assertEqual(client.log({}), None)
 
     @responses.activate
     def test_risk_tracked_true(self):

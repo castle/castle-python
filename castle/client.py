@@ -78,21 +78,11 @@ class Client(object):
             ).call()
 
     def log(self, options):
-        if self.tracked():
-            self._add_timestamp_if_necessary(options)
-            command = CommandsLog(self.context).call(options)
-            try:
-                response = self.api.call(command)
-                response.update(failover=False, failover_reason=None)
-                return response
-            except (RequestError, InternalServerError) as exception:
-                return Client.failover_response_or_raise(options.get('user').get('id'), exception)
-        else:
-            return FailoverPrepareResponse(
-                options.get('user').get('id'),
-                'allow',
-                'Castle set to do not track.'
-            ).call()
+        if not self.tracked():
+            return None
+        self._add_timestamp_if_necessary(options)
+
+        return self.api.call(CommandsLog(self.context).call(options))
 
     def risk(self, options):
         if self.tracked():

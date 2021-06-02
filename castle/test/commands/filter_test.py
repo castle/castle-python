@@ -16,6 +16,7 @@ def default_options():
         }
     }
 
+
 def default_options_plus(**extra):
     """Default options plus the given extra fields."""
     options = default_options()

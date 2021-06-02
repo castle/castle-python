@@ -121,7 +121,7 @@ Here is a simple example of track event.
 
     castle = Client.from_request(request)
     castle.track({
-      'event': '$login',
+      'event': '$login.succeeded',
       'user_id': 'user_id'
     })
 
@@ -150,7 +150,7 @@ background worker you can generate data for a worker:
 
     payload = PayloadPrepare.call(
         {
-          'event': '$login',
+          'event': '$login.succeeded',
           'user_id': user.id,
           'properties': { 'key': 'value' },
           'user_traits': { 'key': 'value' }

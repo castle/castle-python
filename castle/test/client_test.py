@@ -41,7 +41,7 @@ class ClientTestCase(unittest.TestCase):
                 'X-Castle-Client-Id': '1234'
             },
             'ip': '217.144.192.112',
-            'context': {'active': True, 'library': {'name': 'castle-python', 'version': VERSION}}
+            'context': {'active': True, 'library': {'name': 'castle-python', 'version': '5.0.1'}}
         }
         self.assertEqual(client.default_options, default_options)
         self.assertEqual(client.do_not_track, False)

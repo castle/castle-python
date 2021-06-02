@@ -122,7 +122,7 @@ Here is a simple example of track event.
 
     castle = Client.from_request(request)
     castle.track({
-      'event': events.LOGIN_SUCCEEDED,
+      'event': '$login',
       'user_id': 'user_id'
     })
 
@@ -152,7 +152,7 @@ background worker you can generate data for a worker:
 
     payload = PayloadPrepare.call(
         {
-          'event': events.LOGIN_SUCCEEDED,
+          'event': $login,
           'user_id': user.id,
           'properties': { 'key': 'value' },
           'user_traits': { 'key': 'value' }
@@ -172,7 +172,7 @@ and use it later in a way
 Events
 --------------
 
-List of Recognized Events can be found `here <https://github.com/castle/castle-python/tree/master/castle/events.py>`_ or in the `docs <https://docs.castle.io/api_reference/#list-of-recognized-events>`_.
+List of Recognized Events can be found in the `docs <https://docs.castle.io/v1/reference/events/>`_.
 
 Device management
 -----------------
@@ -216,12 +216,6 @@ Fetching available devices that belong to a given user requires a valid
 
     # Get user's devices data
     APIGetDevicesForUser.call(user_id)
-
-
-Impersonation mode
-------------------
-
-https://castle.io/docs/impersonation_mode
 
 
 Exceptions

@@ -100,24 +100,6 @@ class ClientTestCase(unittest.TestCase):
             client.end_impersonation(options)
 
     @responses.activate
-    def test_identify_tracked_true(self):
-        response_text = 'identify'
-        responses.add(
-            responses.POST,
-            'https://api.castle.io/v1/identify',
-            json=response_text,
-            status=200
-        )
-        client = Client.from_request(request(), {})
-        options = {'event': '$login.authenticate', 'user_id': '1234'}
-        self.assertEqual(client.identify(options), response_text)
-
-    def test_identify_tracked_false(self):
-        client = Client.from_request(request(), {})
-        client.disable_tracking()
-        self.assertEqual(client.identify({}), None)
-
-    @responses.activate
     def test_authenticate_tracked_true(self):
         response_text = {'action': Verdict.ALLOW.value, 'user_id': '1234'}
         responses.add(

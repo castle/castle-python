@@ -3,7 +3,6 @@ from castle.commands.authenticate import CommandsAuthenticate
 from castle.commands.filter import CommandsFilter
 from castle.commands.log import CommandsLog
 from castle.commands.risk import CommandsRisk
-from castle.commands.identify import CommandsIdentify
 from castle.commands.start_impersonation import CommandsStartImpersonation
 from castle.commands.end_impersonation import CommandsEndImpersonation
 from castle.commands.track import CommandsTrack

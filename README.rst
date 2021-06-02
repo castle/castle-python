@@ -218,12 +218,6 @@ Fetching available devices that belong to a given user requires a valid
     APIGetDevicesForUser.call(user_id)
 
 
-Impersonation mode
-------------------
-
-https://castle.io/docs/impersonation_mode
-
-
 Exceptions
 ----------
 

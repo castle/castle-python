@@ -25,7 +25,7 @@ pre-lint:
 	${PIP} install --upgrade autopep8
 
 lint:
-	${PYTHON} setup.py lint
+	# ${PYTHON} setup.py lint
 	autopep8 --in-place -r castle
 
 setup:

@@ -19,8 +19,8 @@ coverage:
 ci-lint: pre-lint lint
 
 pre-lint:
-	${PIP} install pylint
-	${PIP} install setuptools-lint
+	${PIP} install --upgrade pylint
+	${PIP} install --upgrade setuptools
 	${PIP} install --upgrade pep8
 	${PIP} install --upgrade autopep8
 

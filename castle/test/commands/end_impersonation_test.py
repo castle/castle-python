@@ -8,8 +8,7 @@ from castle.utils.clone import UtilsClone
 def default_options():
     """Default options include all required fields."""
     return {'properties': {'impersonator': 'admin'}, 'user_id': '1234',
-            'context': {'ip': '127.0.0.1'},
-            'headers': {'random': 'header'}}
+            'context': {'ip': '127.0.0.1', 'user_agent': 'Chrome'}}
 
 
 def default_options_plus(**extra):
@@ -45,20 +44,20 @@ class CommandsEndImpersonationTestCase(unittest.TestCase):
     def test_call(self):
         context = {'lang': 'es'}
         options = default_options_plus(
-            context={'local time': '8:53pm', 'ip': '127.0.0.1'}
+            context={'local time': '8:53pm', 'ip': '127.0.0.1', 'user_agent': 'Chrome'}
         )
 
         # expect the original context to have been merged with the context specified in the options
         expected_data = UtilsClone.call(options)
         expected_data.update(
             context={'lang': 'es', 'local time': '8:53pm',
-                     'ip': '127.0.0.1'}
+                     'ip': '127.0.0.1', 'user_agent': 'Chrome'}
         )
         expected = default_command_with_data(**expected_data)
 
         self.assertEqual(CommandsEndImpersonation(context).call(options), expected)
 
-    def test_call_no_user_id(self):
+    def test_call_no_event(self):
         context = {}
         options = default_options()
         options.pop('user_id')
@@ -66,10 +65,18 @@ class CommandsEndImpersonationTestCase(unittest.TestCase):
         with self.assertRaises(InvalidParametersError):
             CommandsEndImpersonation(context).call(options)
 
-    def test_call_no_headers(self):
+    def test_call_no_context_ip(self):
         context = {}
         options = default_options()
-        options.pop('headers')
+        options['context'].pop('ip')
+
+        with self.assertRaises(InvalidParametersError):
+            CommandsEndImpersonation(context).call(options)
+
+    def test_call_no_context_user_agent(self):
+        context = {}
+        options = default_options()
+        options['context'].pop('user_agent')
 
         with self.assertRaises(InvalidParametersError):
             CommandsEndImpersonation(context).call(options)

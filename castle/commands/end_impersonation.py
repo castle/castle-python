@@ -10,10 +10,11 @@ class CommandsEndImpersonation(object):
         self.context = context
 
     def call(self, options):
-        ValidatorsPresent.call(options, 'user_id', 'headers')
+        ValidatorsPresent.call(options, 'user_id')
 
         context = ContextMerge.call(self.context, options.get('context'))
         context = ContextSanitize.call(context)
+        ValidatorsPresent.call(context, 'user_agent', 'ip')
 
         if context:
             options.update({'context': context})

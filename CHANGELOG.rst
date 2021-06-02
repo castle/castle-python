@@ -1,6 +1,22 @@
 master
 ------
 
+6.0.0 (2021-06-02)
+------------------
+
+Breaking Changes:
+~~~~~~~~~~~~~~~~~
+-  `#101 <https://github.com/castle/castle-python/pull/101>`__ remove ``identify`` and ``review`` commands - they are no longer supported
+-  `#101 <https://github.com/castle/castle-python/pull/101>`__ remove ``Castle::Events`` - please use `recognized events <https://docs.castle.io/v1/reference/events/>__` instead
+
+Features:
+~~~~~~~~~
+-  `#104 <https://github.com/castle/castle-python/pull/104>`__ add "filter", "log" and "risk" actions
+
+Enhancements:
+~~~~~~~~~~~~~
+-  `#100 <https://github.com/castle/castle-python/pull/100>`__ add ``X-Requested-With`` header support
+
 5.0.1 (2021-01-19)
 ------------------
 

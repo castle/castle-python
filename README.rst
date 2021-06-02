@@ -118,7 +118,6 @@ Here is a simple example of track event.
 .. code:: python
 
     from castle.client import Client
-    from castle import events
 
     castle = Client.from_request(request)
     castle.track({
@@ -148,11 +147,10 @@ background worker you can generate data for a worker:
 .. code:: python
 
     from castle.payload.prepare import PayloadPrepare
-    from castle import events
 
     payload = PayloadPrepare.call(
         {
-          'event': $login,
+          'event': '$login',
           'user_id': user.id,
           'properties': { 'key': 'value' },
           'user_traits': { 'key': 'value' }

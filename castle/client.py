@@ -111,12 +111,6 @@ class Client(object):
                 'Castle set to do not track.'
             ).call()
 
-    def identify(self, options):
-        if not self.tracked():
-            return None
-        self._add_timestamp_if_necessary(options)
-        return self.api.call(CommandsIdentify(self.context).call(options))
-
     def start_impersonation(self, options):
         self._add_timestamp_if_necessary(options)
         response = self.api.call(CommandsStartImpersonation(self.context).call(options))

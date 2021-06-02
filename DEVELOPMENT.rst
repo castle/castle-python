@@ -23,6 +23,7 @@ Linting
     $ pip3 install pylint
     $ pip3 install --upgrade pep8
     $ pip3 install --upgrade autopep8
+    $ pylint --rcfile=./pylintrc castle
     $ autopep8 --in-place -r castle
 
 Coverage

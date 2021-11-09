@@ -88,6 +88,12 @@ Import and configure the library with your Castle API secret.
 
     # *Note: the default list of proxies that are always marked as "trusted" can be found in: Castle::Configuration::TRUSTED_PROXIES
 
+Usage
+-------------------------------
+
+See [documentation](https://docs.castle.io) for how to use this SDK with the Castle APIs
+
+
 Multi-environment configuration
 -------------------------------
 
@@ -110,22 +116,6 @@ After a successful setup, you can pass the config to any API command as follows:
     # Get device data
     APIGetDevice.call(device_token, config)
 
-Tracking
---------
-
-Here is a simple example of track event.
-
-.. code:: python
-
-    from castle.client import Client
-
-    castle = Client.from_request(request)
-    castle.track({
-      'event': '$login.succeeded',
-      'user_id': 'user_id'
-    })
-
-The client will automatically configure the context for each request.
 
 Signature
 ---------
@@ -138,84 +128,6 @@ Signature
 
 will create a signed user_id.
 
-Async tracking
---------------
-
-By default Castle sends requests synchronously. To send requests in a
-background worker you can generate data for a worker:
-
-.. code:: python
-
-    from castle.payload.prepare import PayloadPrepare
-
-    payload = PayloadPrepare.call(
-        {
-          'event': '$login.succeeded',
-          'user_id': user.id,
-          'properties': { 'key': 'value' },
-          'user_traits': { 'key': 'value' }
-        },
-        request
-    )
-
-and use it later in a way
-
-.. code:: python
-
-    from castle.client import Client
-
-    client = Client(context)
-    client.track(options)
-
-Events
---------------
-
-List of Recognized Events can be found in the `docs <https://docs.castle.io/v1/reference/events/>`_.
-
-Device management
------------------
-
-This SDK allows issuing requests to `Castle's Device Management
-Endpoints <https://docs.castle.io/device_management_tool/>`__. Use these
-endpoints for admin-level management of end-user devices (i.e., for an
-internal dashboard).
-
-Fetching device data, approving a device, reporting a device requires a
-valid ``device_token``.
-
-.. code:: python
-
-    from castle.api.get_device import APIGetDevice
-
-    # Get device data
-    APIGetDevice.call(device_token)
-
-.. code:: python
-
-    from castle.api.approve_device import APIApproveDevice
-
-    # Approve a device
-    APIApproveDevice.call(device_token)
-
-.. code:: python
-
-    from castle.api.report_device import APIReportDevice
-
-    # Report a device
-    APIReportDevice.call(device_token)
-
-
-Fetching available devices that belong to a given user requires a valid
-``user_id``.
-
-.. code:: python
-
-    from castle.api.get_devices_for_user import APIGetDevicesForUser
-
-    # Get user's devices data
-    APIGetDevicesForUser.call(user_id)
-
-
 Exceptions
 ----------
 
@@ -223,25 +135,6 @@ Exceptions
 level HTTP response. You can also choose to catch a more `finegrained
 error <https://github.com/castle/castle-python/blob/master/castle/errors.py>`__.
 
-Webhooks
---------
-
-Castle uses webhooks to notify about ``$incident.confirmed`` or `$review.opened` events.
-Each webhook has ``X-Castle-Signature`` header that allows verifying webhook's source.
-
-.. code:: python
-
-    from castle.webhooks.verify import WebhooksVerify
-
-    # Verify the webhook, passed as a Request object
-    WebhooksVerify.call(webhook_request)
-    # WebhookVerificationError is raised when the signature is not matching
-
-Documentation
--------------
-
-Documentation and links to additional resources are available at
-https://castle.io/docs
 
 .. |Build Status| image:: https://travis-ci.org/castle/castle-python.svg?branch=master
    :target: https://travis-ci.org/castle/castle-python

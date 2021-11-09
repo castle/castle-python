@@ -5,9 +5,7 @@ Python SDK for Castle
    :alt: Build Status
    :target: https://circleci.com/gh/castle/castle-python
 
-`Castle <https://castle.io>`_ **analyzes device, location, and
-interaction patterns in your web and mobile apps and lets you stop
-account takeover attacks in real-time.**
+`Castle <https://castle.io>`_ **analyzes user behavior in web and mobile apps to stop fraud before it happens.**
 
 Installation
 ------------

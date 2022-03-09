@@ -1,7 +1,6 @@
 from castle.test import unittest
 from castle.command import Command
 from castle.commands.get_device import CommandsGetDevice
-from castle.errors import InvalidParametersError
 
 
 def device_token():
@@ -9,10 +8,6 @@ def device_token():
 
 
 class CommandsGetDeviceTestCase(unittest.TestCase):
-    def test_call_no_device_token(self):
-        with self.assertRaises(InvalidParametersError):
-            CommandsGetDevice.call('')
-
     def test_call(self):
         command = CommandsGetDevice.call(device_token())
         self.assertIsInstance(command, Command)

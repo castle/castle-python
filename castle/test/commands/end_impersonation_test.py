@@ -56,27 +56,3 @@ class CommandsEndImpersonationTestCase(unittest.TestCase):
         expected = default_command_with_data(**expected_data)
 
         self.assertEqual(CommandsEndImpersonation(context).call(options), expected)
-
-    def test_call_no_event(self):
-        context = {}
-        options = default_options()
-        options.pop('user_id')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsEndImpersonation(context).call(options)
-
-    def test_call_no_context_ip(self):
-        context = {}
-        options = default_options()
-        options['context'].pop('ip')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsEndImpersonation(context).call(options)
-
-    def test_call_no_context_user_agent(self):
-        context = {}
-        options = default_options()
-        options['context'].pop('user_agent')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsEndImpersonation(context).call(options)

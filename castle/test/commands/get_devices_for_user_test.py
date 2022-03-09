@@ -1,7 +1,6 @@
 from castle.test import unittest
 from castle.command import Command
 from castle.commands.get_devices_for_user import CommandsGetDevicesForUser
-from castle.errors import InvalidParametersError
 
 
 def user_id():
@@ -9,10 +8,6 @@ def user_id():
 
 
 class CommandsGetDevicesForUserTestCase(unittest.TestCase):
-    def test_call_no_user_id(self):
-        with self.assertRaises(InvalidParametersError):
-            CommandsGetDevicesForUser.call('')
-
     def test_call(self):
         command = CommandsGetDevicesForUser.call(user_id())
         self.assertIsInstance(command, Command)

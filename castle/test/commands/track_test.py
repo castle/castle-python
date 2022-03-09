@@ -1,7 +1,6 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.track import CommandsTrack
-from castle.errors import InvalidParametersError
 from castle.utils.clone import UtilsClone
 
 
@@ -49,14 +48,6 @@ class CommandsTrackTestCase(unittest.TestCase):
         expected = default_command_with_data(**expected_data)
 
         self.assertEqual(CommandsTrack(context).call(options), expected)
-
-    def test_call_no_event(self):
-        context = {}
-        options = default_options()
-        options.pop('event')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsTrack(context).call(options)
 
     def test_call_properties_allowed(self):
         context = {}

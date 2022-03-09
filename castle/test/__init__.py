@@ -42,8 +42,6 @@ TEST_MODULES = [
     'castle.test.utils.clone_test',
     'castle.test.utils.merge_test',
     'castle.test.utils.timestamp_test',
-    'castle.test.validators.not_supported_test',
-    'castle.test.validators.present_test',
     'castle.test.verdict_test',
     'castle.test.webhooks.verify_test',
 ]

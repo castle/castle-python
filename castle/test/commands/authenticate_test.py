@@ -1,7 +1,6 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.authenticate import CommandsAuthenticate
-from castle.errors import InvalidParametersError
 from castle.utils.clone import UtilsClone
 
 
@@ -52,14 +51,6 @@ class CommandsAuthenticateTestCase(unittest.TestCase):
 
         self.assertEqual(CommandsAuthenticate(
             context).call(options), expected)
-
-    def test_call_no_event(self):
-        context = {}
-        options = default_options()
-        options.pop('event')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsAuthenticate(context).call(options)
 
     def test_call_no_user_id(self):
         context = {}

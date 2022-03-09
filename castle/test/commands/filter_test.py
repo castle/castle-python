@@ -1,7 +1,6 @@
 from castle.test import mock, unittest
 from castle.command import Command
 from castle.commands.filter import CommandsFilter
-from castle.exceptions import InvalidParametersError
 from castle.utils import clone
 
 
@@ -59,14 +58,6 @@ class CommandsFilterTestCase(unittest.TestCase):
 
         self.assertEqual(CommandsFilter(
             context).build(options), expected)
-
-    def test_build_no_event(self):
-        context = {}
-        options = default_options()
-        options.pop('event')
-
-        with self.assertRaises(InvalidParametersError):
-            CommandsFilter(context).build(options)
 
     def test_build_no_user_id(self):
         context = {}

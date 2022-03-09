@@ -1,5 +1,7 @@
+from json import JSONDecodeError
 from castle.errors import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
-    UserUnauthorizedError, InvalidParametersError, APIError, InternalServerError
+    UserUnauthorizedError, InvalidParametersError, APIError, InternalServerError, \
+    InvalidRequestTokenError
 from castle.logger import Logger
 
 RESPONSE_ERRORS = {
@@ -8,7 +10,10 @@ RESPONSE_ERRORS = {
     403: ForbiddenError,
     404: NotFoundError,
     419: UserUnauthorizedError,
-    422: InvalidParametersError
+    422: dict(
+        default=InvalidParametersError,
+        invalid_request_token=InvalidRequestTokenError,
+    ),
 }
 
 
@@ -33,4 +38,19 @@ class CoreProcessResponse(object):
             raise InternalServerError
 
         error = RESPONSE_ERRORS.get(self.response.status_code, APIError)
+
+        # check if a more specific error is defined for the given type
+        if isinstance(error, dict):
+            error_type = 'default'
+
+            # attempt to unpack the error type from the response body
+            try:
+                body = self.response.json()
+                if isinstance(body, dict) and 'type' in body:
+                    error_type = body['type']
+            except JSONDecodeError:
+                pass
+
+            error = error[error_type]
+
         raise error(self.response.text)

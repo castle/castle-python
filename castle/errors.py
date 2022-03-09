@@ -53,3 +53,7 @@ class InternalServerError(APIError):
 
 class ImpersonationFailed(APIError):
     pass
+
+
+class InvalidRequestTokenError(APIError):
+    pass

@@ -40,8 +40,7 @@ class CoreProcessResponse(object):
                 if isinstance(body, dict) and 'type' in body:
                     if body['type'] == 'invalid_request_token':
                         raise InvalidRequestTokenError(body['message'])
-                    else:
-                        raise InvalidParametersError(body['message'])
+                    raise InvalidParametersError(body['message'])
             except JSONDecodeError:
                 raise InvalidParametersError(self.response.text)
 

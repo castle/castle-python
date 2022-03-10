@@ -27,6 +27,10 @@ class InvalidParametersError(APIError):
     pass
 
 
+class InvalidRequestTokenError(APIError):
+    pass
+
+
 class BadRequestError(APIError):
     pass
 

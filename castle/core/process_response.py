@@ -33,16 +33,15 @@ class CoreProcessResponse(object):
         if self.response.status_code >= 500 and self.response.status_code <= 599:
             raise InternalServerError
 
-
         if self.response.status_code == 422:
             # attempt to unpack the error type from the response body
             try:
                 body = self.response.json()
                 if isinstance(body, dict) and 'type' in body:
                     if body['type'] == 'invalid_request_token':
-                       raise InvalidRequestTokenError(body['message'])
+                        raise InvalidRequestTokenError(body['message'])
                     else:
-                       raise InvalidParametersError(body['message'])
+                        raise InvalidParametersError(body['message'])
             except JSONDecodeError:
                 raise InvalidParametersError(self.response.text)
 

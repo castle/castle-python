@@ -17,19 +17,9 @@ aliases:
 jobs:
   lint-sdk:
     docker:
-      - image: circleci/python:3.9
+      - image: circleci/python:3.10
         <<: *with-requests
     <<: *lint
-  python-3_4:
-    docker:
-      - image: circleci/python:3.4
-        <<: *with-requests
-    <<: *job-defaults
-  python-3_5:
-    docker:
-      - image: circleci/python:3.5
-        <<: *with-requests
-    <<: *job-defaults
   python-3_6:
     docker:
       - image: circleci/python:3.6
@@ -50,7 +40,11 @@ jobs:
       - image: circleci/python:3.9
         <<: *with-requests
     <<: *job-defaults
-
+  python-3_10:
+    docker:
+      - image: circleci/python:3.10
+        <<: *with-requests
+    <<: *job-defaults
 workflows:
   main:
     jobs:

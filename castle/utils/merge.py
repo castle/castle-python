@@ -9,7 +9,7 @@ class UtilsMerge(object):
         :param extra: The dictionary to merge into the base. Keys from this
             dictionary will take precedence.
         """
-        if extra is None:
+        if extra is None or base is None:
             return
 
         for key, value in extra.items():

@@ -55,12 +55,6 @@ class DeepMergeTestCase(unittest.TestCase):
         UtilsMerge.call(a, b)
         self.assertEqual(a, {'key': 'value'})
 
-    def test_merge_when_no_base(self):
-        a = None
-        b = {'key': 'value'}
-        UtilsMerge.call(a, b)
-        self.assertEqual(a, None)
-
     def test_merge_none_deletes_from_base(self):
         a = {'key': 'value', 'other': 'value'}
         b = {'other': None}

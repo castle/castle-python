@@ -9,6 +9,7 @@ class FailoverPrepareResponse(object):
 
     def call(self):
         return dict(
+            policy={'action': self.strategy},
             action=self.strategy,
             user_id=self.user_id,
             failover=True,

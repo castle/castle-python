@@ -20,6 +20,11 @@ jobs:
       - image: circleci/python:3.10
         <<: *with-requests
     <<: *lint
+  python-3_5:
+    docker:
+      - image: circleci/python:3.5
+        <<: *with-requests
+    <<: *job-defaults
   python-3_6:
     docker:
       - image: circleci/python:3.6
@@ -49,6 +54,7 @@ workflows:
   main:
     jobs:
       - lint-sdk
+      - python-3_5
       - python-3_6
       - python-3_7
       - python-3_8

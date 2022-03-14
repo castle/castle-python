@@ -116,6 +116,8 @@ class ClientTestCase(unittest.TestCase):
     @responses.activate
     def test_authenticate_tracked_true_status_500(self):
         response_text = {
+            'policy': {'action': Verdict.ALLOW.value},
+
             'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
@@ -133,6 +135,8 @@ class ClientTestCase(unittest.TestCase):
 
     def test_authenticate_tracked_false(self):
         response_text = {
+            'policy': {'action': Verdict.ALLOW.value},
+
             'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
@@ -183,6 +187,9 @@ class ClientTestCase(unittest.TestCase):
     @responses.activate
     def test_filter_tracked_true_status_500(self):
         response_text = {
+
+            'policy': {'action': Verdict.ALLOW.value},
+
             'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
@@ -205,6 +212,8 @@ class ClientTestCase(unittest.TestCase):
 
     def test_filter_tracked_false(self):
         response_text = {
+            'policy': {'action': Verdict.ALLOW.value},
+
             'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
@@ -265,6 +274,8 @@ class ClientTestCase(unittest.TestCase):
     @responses.activate
     def test_risk_tracked_true_status_500(self):
         response_text = {
+            'policy': {'action': Verdict.ALLOW.value},
+
             'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
@@ -287,6 +298,9 @@ class ClientTestCase(unittest.TestCase):
 
     def test_risk_tracked_false(self):
         response_text = {
+
+            'policy': {'action': Verdict.ALLOW.value},
+
             'action': Verdict.ALLOW.value,
             'user_id': '1234',
             'failover': True,
@@ -327,6 +341,8 @@ class ClientTestCase(unittest.TestCase):
         self.assertEqual(
             Client.failover_response_or_raise(options.get('user_id'), Exception()),
             {
+                'policy': {'action': Verdict.ALLOW.value},
+
                 'action': Verdict.ALLOW.value,
                 'user_id': '1234',
                 'failover': True,

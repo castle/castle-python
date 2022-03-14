@@ -28,6 +28,7 @@ class FailoverPrepareResponseTestCase(unittest.TestCase):
         self.assertDictEqual(
             failover_response.call(),
             {
+                'policy': {'action': configuration.failover_strategy},
                 'action': configuration.failover_strategy,
                 'user_id': user_id(),
                 'failover': True,

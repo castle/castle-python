@@ -1,6 +1,21 @@
 master
 ------
 
+6.1.0 (2022-03-14)
+------------------
+-  `#111 <https://github.com/castle/castle-python/pull/111>`__ fix context preparation issues
+-  `#111 <https://github.com/castle/castle-python/pull/111>`__ remove SDK based validations
+
+Features:
+~~~~~~~~~
+-  `#111 <https://github.com/castle/castle-python/pull/111>`__ add InvalidRequestTokenError
+
+Enhancements:
+~~~~~~~~~~~~~
+-  `#111 <https://github.com/castle/castle-python/pull/111>`__ remove X-Castle headers from the allowlist
+-  `#112 <https://github.com/castle/castle-python/pull/112>`__ extend failover response with policy action
+
+
 6.0.0 (2021-06-02)
 ------------------
 

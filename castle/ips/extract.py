@@ -57,6 +57,6 @@ class IPsExtract(object):
 
     def _limit_proxy_depth(self, ips, ip_header):
         if ip_header in DEPTH_RELATED:
-            ips = ips[:len(ips)-self.trusted_proxy_depth]
+            ips = ips[:len(ips) - self.trusted_proxy_depth]
 
         return ips

@@ -8,4 +8,4 @@ class-rgx=[A-Z_][_a-zA-Z0-9]+$
 ignored-modules = responses,requests
 
 [MESSAGES CONTROL]
-disable=missing-docstring,too-many-instance-attributes,attribute-defined-outside-init,too-few-public-methods,dangerous-default-value,duplicate-code,bad-continuation,useless-object-inheritance,too-many-public-methods
+disable=missing-docstring,too-many-instance-attributes,attribute-defined-outside-init,too-few-public-methods,dangerous-default-value,duplicate-code,bad-continuation,useless-object-inheritance,too-many-public-methods,R1735,C0209,W0707

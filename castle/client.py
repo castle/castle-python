@@ -20,7 +20,8 @@ class Client(object):
         if options is None:
             options = {}
 
-        options.setdefault('context', ContextPrepare.call(request, options))
+        options = options.copy()
+        options['context'] = ContextPrepare.call(request, options)
         return cls(options)
 
     @staticmethod

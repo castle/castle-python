@@ -4,7 +4,7 @@ import requests
 from castle.test import unittest
 from castle.core.process_response import CoreProcessResponse
 from castle.errors import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
-    UserUnauthorizedError, InvalidParametersError, InternalServerError
+    UserUnauthorizedError, InvalidParametersError, InternalServerError, InvalidRequestTokenError
 
 
 def response(status_code=200, body=None):
@@ -78,6 +78,16 @@ class CoreProcessResponseTestCase(unittest.TestCase):
     def test_verify_422(self):
         with self.assertRaises(InvalidParametersError):
             CoreProcessResponse(response(status_code=422)).verify()
+
+    def test_verify_422_record_invalid(self):
+        with self.assertRaises(InvalidParametersError):
+            CoreProcessResponse(
+                response(status_code=422, body=b'{"type":"record_invalid","message":"validation failed"}')).verify()
+
+    def test_verify_422_invalid_request_token(self):
+        with self.assertRaises(InvalidRequestTokenError):
+            CoreProcessResponse(response(
+                status_code=422, body=b'{"type":"invalid_request_token","message":"token invalid"}')).verify()
 
     def test_verify_500(self):
         with self.assertRaises(InternalServerError):

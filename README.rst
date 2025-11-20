@@ -89,7 +89,7 @@ Import and configure the library with your Castle API secret.
 Usage
 -------------------------------
 
-See [documentation](https://docs.castle.io) for how to use this SDK with the Castle APIs
+See `documentation <https://docs.castle.io>`_ for how to use this SDK with the Castle APIs
 
 
 Multi-environment configuration

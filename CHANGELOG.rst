@@ -1,6 +1,13 @@
 master
 ------
 
+7.1.0 (2026-05-29)
+------------------
+
+Features:
+~~~~~~~~~
+-  add ``events_schema``, ``query_events``, and ``group_events`` for the Events API
+
 7.0.0 (2026-05-29)
 ------------------
 

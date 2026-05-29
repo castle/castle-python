@@ -15,6 +15,7 @@ TEST_MODULES = [
     'castle.test.commands.lists_test',
     'castle.test.commands.list_items_test',
     'castle.test.commands.privacy_test',
+    'castle.test.commands.events_test',
     'castle.test.configuration_test',
     'castle.test.context.get_default_test',
     'castle.test.context.merge_test',

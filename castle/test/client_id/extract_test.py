@@ -21,20 +21,13 @@ def environ():
 
 class ClientIdExtractTestCase(unittest.TestCase):
     def test_extract_client_id_from_cookiesand_environ(self):
-        self.assertEqual(
-            ClientIdExtract(environ(), cookies()).call(),
-            client_id_environ()
-        )
+        self.assertEqual(ClientIdExtract(environ(), cookies()).call(), client_id_environ())
 
     def test_extract_client_id_from_cookies(self):
-        self.assertEqual(
-            ClientIdExtract({}, cookies()).call(),
-            client_id()
-        )
+        self.assertEqual(ClientIdExtract({}, cookies()).call(), client_id())
 
     def test_extract_client_id_from_environ(self):
-        self.assertEqual(ClientIdExtract(
-            environ(), {}).call(), client_id_environ())
+        self.assertEqual(ClientIdExtract(environ(), {}).call(), client_id_environ())
 
     def test_extract_client_id_unavailable(self):
         self.assertEqual(ClientIdExtract({}, {}).call(), '')

@@ -6,7 +6,6 @@ from castle.utils.merge import UtilsMerge
 
 
 class PayloadPrepare(object):
-
     @staticmethod
     def call(payload_options, request, options=None):
         if options is None:

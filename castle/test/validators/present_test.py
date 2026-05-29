@@ -4,13 +4,9 @@ from castle.errors import InvalidParametersError
 
 
 class ValidatorsPresentTestCase(unittest.TestCase):
-
     def test_call_valid(self):
         params = {'foo': 'bar', 'fooz': 'barz'}
-        self.assertEqual(
-            ValidatorsPresent.call(params, 'foo', 'fooz'),
-            None
-        )
+        self.assertEqual(ValidatorsPresent.call(params, 'foo', 'fooz'), None)
 
     def test_call_not_valid(self):
         params = {'foo': 'bar', 'fooz': 'barz'}

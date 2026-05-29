@@ -8,6 +8,7 @@ class Session(object):
 
         def get(self):
             return self.session
+
     instance = None
 
     def __new__(cls):

@@ -10,9 +10,7 @@ def default_options():
         'request_token': '7e51335b-f4bc-4bc7-875d-b713fb61eb23-bf021a3022a1a302',
         'event': '$registration',
         'status': '',
-        'user': {
-            'id': '1234'
-        }
+        'user': {'id': '1234'},
     }
 
 
@@ -25,19 +23,13 @@ def default_options_plus(**extra):
 
 def default_command_with_data(**data):
     """What we expect the filter command to look like."""
-    return Command(
-        method='post',
-        path='filter',
-        data=dict(sent_at=mock.sentinel.timestamp, **data)
-    )
+    return Command(method='post', path='filter', data=dict(sent_at=mock.sentinel.timestamp, **data))
 
 
 class CommandsFilterTestCase(unittest.TestCase):
-
     def setUp(self):
         # patch timestamp to return a known value
-        timestamp_patcher = mock.patch(
-            'castle.commands.filter.generate_timestamp.call')
+        timestamp_patcher = mock.patch('castle.commands.filter.generate_timestamp.call')
         self.mock_timestamp = timestamp_patcher.start()
         self.mock_timestamp.return_value = mock.sentinel.timestamp
         self.addCleanup(timestamp_patcher.stop)
@@ -56,8 +48,7 @@ class CommandsFilterTestCase(unittest.TestCase):
         expected_data.update(context={'test': '1', 'spam': True})
         expected = default_command_with_data(**expected_data)
 
-        self.assertEqual(CommandsFilter(
-            context).call(options), expected)
+        self.assertEqual(CommandsFilter(context).call(options), expected)
 
     def test_call_properties_allowed(self):
         context = {}
@@ -66,8 +57,7 @@ class CommandsFilterTestCase(unittest.TestCase):
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsFilter(
-            context).call(options), expected)
+        self.assertEqual(CommandsFilter(context).call(options), expected)
 
     def test_call_user_traits_allowed(self):
         context = {}
@@ -76,5 +66,4 @@ class CommandsFilterTestCase(unittest.TestCase):
 
         expected = default_command_with_data(**options)
 
-        self.assertEqual(CommandsFilter(
-            context).call(options), expected)
+        self.assertEqual(CommandsFilter(context).call(options), expected)

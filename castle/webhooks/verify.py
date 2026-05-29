@@ -19,9 +19,7 @@ class WebhooksVerify(object):
     @staticmethod
     def _compute_signature(webhook, api_secret):
         encoded_str = hmac.new(
-            bytes(api_secret.encode('utf-8')),
-            CoreProcessWebhook(webhook).call(),
-            hashlib.sha256
+            bytes(api_secret.encode('utf-8')), CoreProcessWebhook(webhook).call(), hashlib.sha256
         ).hexdigest()
         return base64.b64encode(binascii.unhexlify(encoded_str)).decode('utf-8')
 

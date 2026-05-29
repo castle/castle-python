@@ -13,5 +13,5 @@ class FailoverPrepareResponse(object):
             action=self.strategy,
             user_id=self.user_id,
             failover=True,
-            failover_reason=self.reason
+            failover_reason=self.reason,
         )

@@ -1,5 +1,4 @@
 class UtilsMerge(object):
-
     @classmethod
     def call(cls, base, extra):
         """

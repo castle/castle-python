@@ -2,7 +2,6 @@ import sys
 
 
 class UtilsSecureCompare(object):
-
     @staticmethod
     def call(str_a, str_b):
         """

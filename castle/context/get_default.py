@@ -13,16 +13,15 @@ class ContextGetDefault(object):
         self.pre_headers = HeadersFilter(request).call()
 
     def call(self):
-        context = dict({
-            'client_id': self._client_id(),
-            'active': True,
-            'headers': self._headers(),
-            'ip': self._ip(),
-            'library': {
-                'name': 'castle-python',
-                'version': __version__
+        context = dict(
+            {
+                'client_id': self._client_id(),
+                'active': True,
+                'headers': self._headers(),
+                'ip': self._ip(),
+                'library': {'name': 'castle-python', 'version': __version__},
             }
-        })
+        )
         context.update(self._optional_defaults())
 
         return context

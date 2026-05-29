@@ -1,9 +1,9 @@
 Python SDK for Castle
 =====================
 
-.. image:: https://circleci.com/gh/castle/castle-python.svg?style=shield&branch=master
+.. image:: https://github.com/castle/castle-python/actions/workflows/specs.yml/badge.svg?branch=master
    :alt: Build Status
-   :target: https://circleci.com/gh/castle/castle-python
+   :target: https://github.com/castle/castle-python/actions/workflows/specs.yml
 
 `Castle <https://castle.io>`_ **analyzes user behavior in web and mobile apps to stop fraud before it happens.**
 
@@ -19,15 +19,14 @@ Import and configure the library with your Castle API secret.
 
 .. code:: python
 
-    from castle.configuration import configuration, DEFAULT_ALLOWLIST
+    from castle.configuration import configuration, DEFAULT_ALLOWLIST, TRUSTED_PROXIES
 
-    # Same as setting it through Castle.api_secret
     configuration.api_secret = ':YOUR-API-SECRET'
 
-    # For authenticate method you can set failover strategies: allow(default), deny, challenge, throw
+    # For risk/filter methods you can set failover strategies: allow(default), deny, challenge, throw
     configuration.failover_strategy = 'deny'
 
-    # Castle::RequestError is raised when timing out in milliseconds (default: 1000 milliseconds)
+    # RequestError is raised when timing out in milliseconds (default: 1000 milliseconds)
     configuration.request_timeout = 1500
 
     # Base Castle API url
@@ -84,7 +83,7 @@ Import and configure the library with your Castle API secret.
     configuration.trust_proxy_chain = false
     # *Warning*: this mode is highly promiscuous and could lead to wrongly trusting a spoofed IP if the request passes through a malicious proxy
 
-    # *Note: the default list of proxies that are always marked as "trusted" can be found in: Castle::Configuration::TRUSTED_PROXIES
+    # *Note: the default list of proxies that are always marked as "trusted" can be found in TRUSTED_PROXIES
 
 Usage
 -------------------------------
@@ -101,18 +100,23 @@ It is also possible to define multiple configs within one application.
 
     from castle.configuration import Configuration
 
-    # Initialize new instance of Castle::Configuration
+    # Initialize a separate Configuration instance
     config = Configuration()
     config.api_secret = ':YOUR-API-SECRET'
 
-After a successful setup, you can pass the config to any API command as follows:
+After a successful setup, you can pass the config to a client and call any API as follows:
 
 .. code:: python
 
-    from castle.api.get_device import APIGetDevice
+    from castle.client import Client
 
-    # Get device data
-    APIGetDevice.call(device_token, config)
+    client = Client({'context': {}})
+    client.risk({
+        'request_token': '<token>',
+        'event': '$login',
+        'status': '$succeeded',
+        'user': {'id': '1234'}
+    })
 
 
 Signature
@@ -120,7 +124,7 @@ Signature
 
 .. code:: python
 
-    from secure_mode import signature
+    from castle.secure_mode import signature
 
     signature(user_id)
 
@@ -132,7 +136,3 @@ Exceptions
 ``CastleError`` will be thrown if the Castle API returns a 400 or a 500
 level HTTP response. You can also choose to catch a more `finegrained
 error <https://github.com/castle/castle-python/blob/master/castle/errors.py>`__.
-
-
-.. |Build Status| image:: https://travis-ci.org/castle/castle-python.svg?branch=master
-   :target: https://travis-ci.org/castle/castle-python

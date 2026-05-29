@@ -37,7 +37,7 @@ class APIRequestTestCase(unittest.TestCase):
             responses.POST,
             'https://api.castle.io/v1/authenticate',
             json=response_text(),
-            status=200
+            status=200,
         )
         self.assertIsInstance(APIRequest().request(command()), Response)
 
@@ -47,7 +47,7 @@ class APIRequestTestCase(unittest.TestCase):
             responses.POST,
             'https://api.castle.io/v1/authenticate',
             json=response_text(),
-            status=200
+            status=200,
         )
         self.assertEqual(APIRequest().call(command()), response_text())
 

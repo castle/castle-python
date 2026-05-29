@@ -35,13 +35,15 @@ FAILOVER_STRATEGY = FailoverStrategy.ALLOW.value
 REQUEST_TIMEOUT = 1000
 FAILOVER_STRATEGIES = FailoverStrategy.list()
 # regexp of trusted proxies which is always appended to the trusted proxy list
-TRUSTED_PROXIES = [r"""
+TRUSTED_PROXIES = [
+    r"""
         \A127\.0\.0\.1\Z|
         \A(10|172\.(1[6-9]|2[0-9]|30|31)|192\.168)\.|
         \A::1\Z|\Afd[0-9a-f]{2}:.+|
         \Alocalhost\Z|
         \Aunix\Z|
-        \Aunix:"""]
+        \Aunix:"""
+]
 
 
 class Configuration(object):
@@ -175,7 +177,6 @@ class Configuration(object):
 
 
 class SingletonConfiguration(Configuration):
-
     instance = None
 
     def __new__(cls, *args, **kwargs):

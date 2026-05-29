@@ -1,7 +1,16 @@
 from json import JSONDecodeError
-from castle.errors import BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, \
-    UserUnauthorizedError, InvalidParametersError, APIError, InternalServerError, \
-    InvalidRequestTokenError
+from castle.errors import (
+    BadRequestError,
+    UnauthorizedError,
+    ForbiddenError,
+    NotFoundError,
+    UserUnauthorizedError,
+    InvalidParametersError,
+    APIError,
+    InternalServerError,
+    InvalidRequestTokenError,
+    RateLimitError,
+)
 from castle.logger import Logger
 
 RESPONSE_ERRORS = {
@@ -9,7 +18,8 @@ RESPONSE_ERRORS = {
     401: UnauthorizedError,
     403: ForbiddenError,
     404: NotFoundError,
-    419: UserUnauthorizedError
+    419: UserUnauthorizedError,
+    429: RateLimitError,
 }
 
 

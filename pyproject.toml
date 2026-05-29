@@ -1,2 +1,53 @@
-[tool.autopep8]
-max_line_length = 100
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "castle"
+description = "Castle protects your users from account compromise"
+readme = "README.rst"
+license = { text = "MIT License" }
+authors = [
+    { name = "Castle Intelligence, Inc.", email = "info@castle.io" },
+]
+requires-python = ">=3.9"
+dynamic = ["version"]
+dependencies = [
+    "requests>=2.31",
+]
+classifiers = [
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/castle/castle-python"
+Source = "https://github.com/castle/castle-python"
+Changelog = "https://github.com/castle/castle-python/blob/master/CHANGELOG.rst"
+
+[project.optional-dependencies]
+test = ["responses>=0.23"]
+lint = ["ruff>=0.6"]
+
+[tool.setuptools.dynamic]
+version = { attr = "castle.version.VERSION" }
+
+[tool.setuptools.packages.find]
+include = ["castle*"]
+exclude = ["castle.test*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.format]
+quote-style = "preserve"

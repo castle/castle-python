@@ -2,10 +2,13 @@
 *.pyo
 *.egg-info
 .eggs
+__pycache__/
 .pytest_cache
+.ruff_cache
 /dist
 /build
 .coverage
 /htmlcov
+.venv/
 .vscode/
 .idea/

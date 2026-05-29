@@ -51,9 +51,9 @@ class NotFoundError(APIError):
     pass
 
 
-class InternalServerError(APIError):
+class RateLimitError(APIError):
     pass
 
 
-class ImpersonationFailed(APIError):
+class InternalServerError(APIError):
     pass

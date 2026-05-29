@@ -2,7 +2,6 @@ from castle.configuration import configuration
 
 
 class Logger(object):
-
     @staticmethod
     def call(message, data="", config=configuration):
         """

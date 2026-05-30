@@ -255,6 +255,42 @@ class ClientTestCase(unittest.TestCase):
         options = {'identifier': 'a@b.com', 'identifier_type': '$email'}
         self.assertEqual(client.delete_user_data(options), response_text)
 
+    @responses.activate
+    def test_events_schema(self):
+        response_text = {'fields': []}
+        responses.add(
+            responses.GET,
+            'https://api.castle.io/v1/events/schema',
+            json=response_text,
+            status=200,
+        )
+        client = Client.from_request(request(), {})
+        self.assertEqual(client.events_schema(), response_text)
+
+    @responses.activate
+    def test_query_events(self):
+        response_text = {'data': []}
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/events/query',
+            json=response_text,
+            status=200,
+        )
+        client = Client.from_request(request(), {})
+        self.assertEqual(client.query_events({'filters': []}), response_text)
+
+    @responses.activate
+    def test_group_events(self):
+        response_text = {'data': []}
+        responses.add(
+            responses.POST,
+            'https://api.castle.io/v1/events/group',
+            json=response_text,
+            status=200,
+        )
+        client = Client.from_request(request(), {})
+        self.assertEqual(client.group_events({'filters': []}), response_text)
+
     def test_disable_tracking(self):
         client = Client.from_request(request(), {})
         client.disable_tracking()

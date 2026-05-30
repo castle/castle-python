@@ -1,5 +1,4 @@
 class ContextSanitize(object):
-
     @classmethod
     def call(cls, context):
         sanitized_context = cls._sanitize_active_mode(context)

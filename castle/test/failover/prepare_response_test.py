@@ -20,8 +20,7 @@ class FailoverPrepareResponseTestCase(unittest.TestCase):
     def test_strategy_not_passed(self):
         failover_response = FailoverPrepareResponse(user_id())
         self.assertEqual(failover_response.user_id, user_id())
-        self.assertEqual(failover_response.strategy,
-                         configuration.failover_strategy)
+        self.assertEqual(failover_response.strategy, configuration.failover_strategy)
 
     def test_call(self):
         failover_response = FailoverPrepareResponse(user_id())
@@ -32,6 +31,6 @@ class FailoverPrepareResponseTestCase(unittest.TestCase):
                 'action': configuration.failover_strategy,
                 'user_id': user_id(),
                 'failover': True,
-                'failover_reason': None
-            }
+                'failover_reason': None,
+            },
         )

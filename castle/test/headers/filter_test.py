@@ -15,7 +15,7 @@ def headers():
         'HTTP_USER_AGENT': 'Mozilla 1234',
         'TEST': '1',
         'REMOTE_ADDR': '1.2.3.4',
-        'CONTENT_LENGTH': '0'
+        'CONTENT_LENGTH': '0',
     }
 
 
@@ -29,14 +29,16 @@ def request():
 
 class ExtractorsHeadersTestCase(unittest.TestCase):
     def test_filter_headers(self):
-        self.assertEqual(HeadersFilter(request()).call(),
-                         {
-            'Accept': 'application/json',
-            'Authorization': 'Basic 123456',
-            'Cookie': "__cid=abcd;other=efgh",
-            'Content-Length': '0',
-            'Ok': 'OK',
-            'User-Agent': 'Mozilla 1234',
-            'Remote-Addr': '1.2.3.4',
-            'X-Forwarded-For': '1.2.3.4'
-        })
+        self.assertEqual(
+            HeadersFilter(request()).call(),
+            {
+                'Accept': 'application/json',
+                'Authorization': 'Basic 123456',
+                'Cookie': "__cid=abcd;other=efgh",
+                'Content-Length': '0',
+                'Ok': 'OK',
+                'User-Agent': 'Mozilla 1234',
+                'Remote-Addr': '1.2.3.4',
+                'X-Forwarded-For': '1.2.3.4',
+            },
+        )

@@ -3,7 +3,6 @@ from castle.utils.clone import UtilsClone
 
 
 class ContextMerge(object):
-
     @staticmethod
     def call(initial_context, request_context):
         if initial_context is None:

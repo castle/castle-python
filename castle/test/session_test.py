@@ -6,9 +6,11 @@ from castle.client import Client
 def request():
     req = namedtuple('Request', ['ip', 'environ', 'COOKIES'])
     req.ip = '217.144.192.112'
-    req.environ = {'HTTP_X_FORWARDED_FOR': '217.144.192.112',
-                   'HTTP-User-Agent': 'test',
-                   'HTTP_X_CASTLE_CLIENT_ID': '1234'}
+    req.environ = {
+        'HTTP_X_FORWARDED_FOR': '217.144.192.112',
+        'HTTP-User-Agent': 'test',
+        'HTTP_X_CASTLE_CLIENT_ID': '1234',
+    }
     req.COOKIES = {}
     return req
 

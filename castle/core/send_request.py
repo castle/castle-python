@@ -19,16 +19,12 @@ class CoreSendRequest(object):
             "timeout": config.request_timeout / 1000.0,
             "headers": self.headers,
             "verify": CoreSendRequest.verify(),
-            "data": None if params is None else json.dumps(params)
+            "data": None if params is None else json.dumps(params),
         }
 
         Logger.call("{}:".format(url), request_data.get("data"))
 
-        return self.session.get().request(
-            method,
-            url,
-            **request_data
-        )
+        return self.session.get().request(method, url, **request_data)
 
     def build_url(self, path):
         return '{base}/{action}'.format(base=self.base_url, action=path)

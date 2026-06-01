@@ -19,6 +19,5 @@ class WebhooksVerifyTestCase(unittest.TestCase):
 
     def test_webhook_valid(self):
         self.assertEqual(
-            WebhooksVerify().call(webhook("v61Bn6ItuClDcRqrr6++csm2Ub3Jfyos4BMR3PslhBY=")),
-            None
+            WebhooksVerify().call(webhook("v61Bn6ItuClDcRqrr6++csm2Ub3Jfyos4BMR3PslhBY=")), None
         )

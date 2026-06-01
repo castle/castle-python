@@ -74,23 +74,8 @@ class DeepMergeTestCase(unittest.TestCase):
         self.assertEqual(a, {'key': 'newvalue'})
 
     def test_deep_merge(self):
-        a = {
-            'first': {
-                'second': {
-                    'key': 'value',
-                    'otherkey': 'othervalue'
-                },
-                'key': 'value'
-            }
-        }
-        b = {
-            'first': {
-                'second': {
-                    'otherkey': 'newvalue',
-                    'yetanotherkey': 'yetanothervalue'
-                }
-            }
-        }
+        a = {'first': {'second': {'key': 'value', 'otherkey': 'othervalue'}, 'key': 'value'}}
+        b = {'first': {'second': {'otherkey': 'newvalue', 'yetanotherkey': 'yetanothervalue'}}}
         UtilsMerge.call(a, b)
 
         expected = {
@@ -98,9 +83,9 @@ class DeepMergeTestCase(unittest.TestCase):
                 'second': {
                     'key': 'value',
                     'otherkey': 'newvalue',
-                    'yetanotherkey': 'yetanothervalue'
+                    'yetanotherkey': 'yetanothervalue',
                 },
-                'key': 'value'
+                'key': 'value',
             }
         }
         self.assertEqual(a, expected)

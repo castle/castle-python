@@ -1,6 +1,35 @@
 master
 ------
 
+7.0.0 (2026-05-29)
+------------------
+
+Breaking Changes:
+~~~~~~~~~~~~~~~~~
+-  require Python 3.9 or newer (3.4–3.8 are no longer supported)
+-  remove ``track``, ``authenticate``, device management, and impersonation
+   client methods; use ``risk``, ``filter``, and ``log`` instead
+-  remove ``ImpersonationFailed``
+
+Features:
+~~~~~~~~~
+-  add Lists and List Items APIs
+-  add Privacy API (``request_user_data``, ``delete_user_data``)
+-  add ``RateLimitError`` for HTTP 429 responses
+
+Bug fixes:
+~~~~~~~~~~
+-  fix ``Client.filter`` and ``Client.risk`` failover when ``user`` is missing;
+   fall back to ``matching_user_id``
+
+Enhancements:
+~~~~~~~~~~~~~
+-  remove unused ``ValidatorsNotSupported`` validator
+-  migrate CI to GitHub Actions (Python 3.9–3.13)
+-  migrate packaging to ``pyproject.toml`` (PEP 621)
+-  replace ``pylint``/``autopep8`` with ``ruff``
+-  bump ``requests`` minimum to ``2.31``
+
 6.1.0 (2022-03-14)
 ------------------
 -  `#111 <https://github.com/castle/castle-python/pull/111>`__ fix context preparation issues

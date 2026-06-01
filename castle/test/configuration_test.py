@@ -1,11 +1,24 @@
 from castle.test import unittest
 from castle.configuration import Configuration, SingletonConfiguration
-from castle.test.helpers.configuration_helper import default_values, api_secret_setter, \
-    base_url_setter, base_url_setter_with_port, allowlisted_setter_list, allowlisted_setter_none, \
-    allowlisted_setter_empty, denylisted_setter_list, denylisted_setter_none, \
-    denylisted_setter_empty, request_timeout_setter, failover_strategy_setter_valid, \
-    failover_strategy_setter_invalid, ip_headers_setter_valid, ip_headers_setter_invalid, \
-    trusted_proxies_setter_valid, trusted_proxies_setter_invalid
+from castle.test.helpers.configuration_helper import (
+    default_values,
+    api_secret_setter,
+    base_url_setter,
+    base_url_setter_with_port,
+    allowlisted_setter_list,
+    allowlisted_setter_none,
+    allowlisted_setter_empty,
+    denylisted_setter_list,
+    denylisted_setter_none,
+    denylisted_setter_empty,
+    request_timeout_setter,
+    failover_strategy_setter_valid,
+    failover_strategy_setter_invalid,
+    ip_headers_setter_valid,
+    ip_headers_setter_invalid,
+    trusted_proxies_setter_valid,
+    trusted_proxies_setter_invalid,
+)
 
 
 class ConfigurationTestCase(unittest.TestCase):

@@ -3,11 +3,7 @@ from castle.command import Command
 
 
 def command():
-    return Command(
-        method='post',
-        path='authenticate',
-        data={'event': '$login.authenticate'}
-    )
+    return Command(method='post', path='authenticate', data={'event': '$login.authenticate'})
 
 
 class CommandTestCase(unittest.TestCase):

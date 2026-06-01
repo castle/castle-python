@@ -43,10 +43,7 @@ class CoreSendRequestTestCase(unittest.TestCase):
         # JSON requires double quotes for its strings
         response_text = {"action": "allow", "user_id": "12345"}
         responses.add(
-            responses.POST,
-            'https://api.castle.io/v1/authenticate',
-            json=response_text,
-            status=200
+            responses.POST, 'https://api.castle.io/v1/authenticate', json=response_text, status=200
         )
         res = CoreSendRequest().build_query('post', 'authenticate', data)
         self.assertIsInstance(res, Response)
@@ -67,16 +64,12 @@ class CoreSendRequestTestCase(unittest.TestCase):
 
     def test_build_url(self):
         self.assertEqual(
-            CoreSendRequest().build_url('authenticate'),
-            'https://api.castle.io/v1/authenticate'
+            CoreSendRequest().build_url('authenticate'), 'https://api.castle.io/v1/authenticate'
         )
 
     def test_build_url_with_port(self):
         configuration.base_url = 'http://api.castle.local:3001'
-        self.assertEqual(
-            CoreSendRequest().build_url('test'),
-            'http://api.castle.local:3001/test'
-        )
+        self.assertEqual(CoreSendRequest().build_url('test'), 'http://api.castle.local:3001/test')
 
     def test_verify_true(self):
         self.assertEqual(CoreSendRequest().verify(), True)

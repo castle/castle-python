@@ -18,6 +18,9 @@ from castle.commands.list_items.archive import CommandsListItemsArchive
 from castle.commands.list_items.unarchive import CommandsListItemsUnarchive
 from castle.commands.privacy.request_data import CommandsPrivacyRequestData
 from castle.commands.privacy.delete_data import CommandsPrivacyDeleteData
+from castle.commands.events.schema import CommandsEventsSchema
+from castle.commands.events.query import CommandsEventsQuery
+from castle.commands.events.group import CommandsEventsGroup
 from castle.configuration import configuration
 from castle.context.prepare import ContextPrepare
 from castle.errors import InternalServerError, RequestError
@@ -137,6 +140,15 @@ class Client(object):
 
     def delete_user_data(self, options):
         return self.api.call(CommandsPrivacyDeleteData.call(options))
+
+    def events_schema(self, options=None):
+        return self.api.call(CommandsEventsSchema.call(options))
+
+    def query_events(self, options):
+        return self.api.call(CommandsEventsQuery.call(options))
+
+    def group_events(self, options):
+        return self.api.call(CommandsEventsGroup.call(options))
 
     def disable_tracking(self):
         self.do_not_track = True

@@ -5,122 +5,174 @@ Python SDK for Castle
    :alt: Build Status
    :target: https://github.com/castle/castle-python/actions/workflows/specs.yml
 
-`Castle <https://castle.io>`_ **analyzes user behavior in web and mobile apps to stop fraud before it happens.**
+The official Python SDK for `Castle <https://castle.io>`_. Castle analyzes user behavior in web and mobile apps to stop fraud before it happens.
+
+This package is a thin wrapper around the `Castle HTTP API <https://reference.castle.io>`_. It exposes risk assessment, event logging, Lists, Privacy (GDPR), Events (enterprise), and webhook verification. See the API reference for supported events and payload shapes.
+
+Requirements
+------------
+
+- Python 3.9 or newer
+- A `Castle <https://dashboard.castle.io>`_ API secret
 
 Installation
 ------------
 
-``pip install castle``
+.. code:: bash
+
+    pip install castle
+
+Quick start
+-----------
+
+.. code:: python
+
+    import os
+    from castle.configuration import configuration
+    from castle.client import Client
+
+    configuration.api_secret = os.environ['CASTLE_API_SECRET']
+
+    client = Client.from_request(request)
+    verdict = client.risk({
+        'event': '$login',
+        'status': '$succeeded',
+        'request_token': request.POST.get('castle_request_token'),
+        'user': {'id': '12345', 'email': 'user@example.com'},
+    })
+
+    action = verdict.get('policy', {}).get('action') or verdict.get('action')
+    if action == 'deny':
+        # block the user
+        pass
+    elif action == 'challenge':
+        # send 2FA / additional verification
+        pass
+    else:
+        # allow
+        pass
+
+``Client.from_request`` builds request context (IP, headers, client id) from a framework request object. See `Advanced configuration`_ for header allow/deny lists and proxy chains.
 
 Configuration
 -------------
 
-Import and configure the library with your Castle API secret.
+The minimal, recommended setup:
 
 .. code:: python
 
-    from castle.configuration import configuration, DEFAULT_ALLOWLIST, TRUSTED_PROXIES
+    import os
+    from castle.configuration import configuration
 
-    configuration.api_secret = ':YOUR-API-SECRET'
+    configuration.api_secret = os.environ['CASTLE_API_SECRET']
 
-    # For risk/filter methods you can set failover strategies: allow(default), deny, challenge, throw
-    configuration.failover_strategy = 'deny'
+    # Behavior when Castle's API is unreachable or returns a 5xx.
+    # One of: allow (default), deny, challenge, throw
+    configuration.failover_strategy = 'allow'
 
-    # RequestError is raised when timing out in milliseconds (default: 1000 milliseconds)
-    configuration.request_timeout = 1500
+    # Request timeout in milliseconds (default: 1000).
+    # RequestError is raised on timeout.
+    configuration.request_timeout = 1000
 
-    # Base Castle API url
-    # configuration.base_url = "https://api.castle.io/v1"
+Logging
+~~~~~~~
 
-    # Logger (need to respond to info method) - logs Castle API requests and responses
-    # configuration.logger = logging.getLogger()
+.. code:: python
 
-    # Allowlisted and Denylisted headers are case insensitive
-    # and allow to use _ and - as a separator, http prefixes are removed
-    # By default all headers are passed, but some are automatically scrubbed.
-    # If you need to apply an allowlist, we recommend using the minimum set of
-    # standard headers that we've exposed in the `DEFAULT_ALLOWLIST` constant.
-    # Allowlisted headers
-    configuration.allowlisted = DEFAULT_ALLOWLIST + ['X_HEADER']
+    import logging
+    from castle.configuration import configuration
 
-    # Denylisted headers take advantage over allowlisted elements. Note that
-    # some headers are always scrubbed, for security reasons.
-    configuration.denylisted = ['HTTP-X-header']
+    configuration.logger = logging.getLogger('castle')
 
-    # Castle needs the original IP of the client, not the IP of your proxy or load balancer.
-    # The SDK will only trust the proxy chain as defined in the configuration.
-    # We try to fetch the client IP based on X-Forwarded-For or Remote-Addr headers in that order,
-    # but sometimes the client IP may be stored in a different header or order.
-    # The SDK can be configured to look for the client IP address in headers that you specify.
+The logger only needs to respond to ``info``. Each request and response is logged with sensitive values stripped.
 
-    # Sometimes, Cloud providers do not use consistent IP addresses to proxy requests.
-    # In this case, the client IP is usually preserved in a custom header. Example:
-    # Cloudflare preserves the client request in the 'Cf-Connecting-Ip' header.
-    # It would be used like so: configuration.ip_headers=['Cf-Connecting-Ip']
-    configuration.ip_headers = []
+Multi-environment / multi-tenant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # If the specified header or X-Forwarded-For default contains a proxy chain with public IP addresses,
-    # then you must choose only one of the following (but not both):
-    # 1. The trusted_proxies value must match the known proxy IPs. This option is preferable if the IP is static.
-    # 2. The trusted_proxy_depth value must be set to the number of known trusted proxies in the chain (see below).
-    # This option is preferable if the IPs are ephemeral, but the depth is consistent.
-
-    # Additionally to make X-Forwarded-For and other headers work better discovering client ip address,
-    # and not the address of a reverse proxy server, you can define trusted proxies
-    # which will help to fetch proper ip from those headers
-
-    # In order to extract the client IP of the X-Forwarded-For header
-    # and not the address of a reverse proxy server, you must define all trusted public proxies
-    # you can achieve this by listing all the proxies ip defined by string or regular expressions
-    # in the trusted_proxies setting
-    configuration.trusted_proxies = []
-    # or by providing number of trusted proxies used in the chain
-    configuration.trusted_proxy_depth = 0
-    # note that you must pick one approach over the other.
-
-    # If there is no possibility to define options above and there is no other header that holds the client IP,
-    # then you may set trust_proxy_chain = true to trust all of the proxy IPs in X-Forwarded-For
-    configuration.trust_proxy_chain = false
-    # *Warning*: this mode is highly promiscuous and could lead to wrongly trusting a spoofed IP if the request passes through a malicious proxy
-
-    # *Note: the default list of proxies that are always marked as "trusted" can be found in TRUSTED_PROXIES
-
-Usage
--------------------------------
-
-See `documentation <https://docs.castle.io>`_ for how to use this SDK with the Castle APIs
-
-
-Multi-environment configuration
--------------------------------
-
-It is also possible to define multiple configs within one application.
+Most apps only need the global ``configuration`` singleton, but you can also create standalone ``Configuration`` instances and pass them per call via ``APIRequest``:
 
 .. code:: python
 
     from castle.configuration import Configuration
+    from castle.api_request import APIRequest
+    from castle.commands.risk import CommandsRisk
 
-    # Initialize a separate Configuration instance
     config = Configuration()
-    config.api_secret = ':YOUR-API-SECRET'
+    config.api_secret = os.environ['CASTLE_API_SECRET_TENANT_A']
 
-After a successful setup, you can pass the config to a client and call any API as follows:
+    APIRequest(config).call(CommandsRisk(context).call({
+        'event': '$login',
+        'status': '$succeeded',
+        'request_token': '<token>',
+        'user': {'id': '1234'},
+    }))
+
+Usage
+-----
+
+See `Castle documentation <https://docs.castle.io>`_ and the `API reference <https://reference.castle.io>`_ for endpoint details, event types, and integration guides.
+
+Advanced configuration
+----------------------
+
+The defaults work for most deployments. The options below only matter if you have a non-trivial proxy chain or strict header policies.
+
+Header allow/deny lists
+~~~~~~~~~~~~~~~~~~~~~~~
+
+By default the SDK sends every HTTP header except ``Cookie`` and ``Authorization``. Castle uses these headers to fingerprint the request.
 
 .. code:: python
 
-    from castle.client import Client
+    from castle.configuration import configuration, DEFAULT_ALLOWLIST
 
-    client = Client({'context': {}})
-    client.risk({
-        'request_token': '<token>',
-        'event': '$login',
-        'status': '$succeeded',
-        'user': {'id': '1234'}
-    })
+    # Always-blocked headers (in addition to Cookie/Authorization).
+    configuration.denylisted = ['HTTP-X-Internal-Header']
 
+    # Strict allow-list mode. Headers outside the list are scrubbed,
+    # except User-Agent which is always preserved.
+    configuration.allowlisted = DEFAULT_ALLOWLIST
+
+Header names are case-insensitive and accept both ``_`` and ``-`` as separators. A leading ``HTTP_`` prefix is stripped automatically.
+
+Client IP detection
+~~~~~~~~~~~~~~~~~~~
+
+Castle needs the original client IP, not the IP of your proxy or load balancer. The SDK reads ``X-Forwarded-For`` and ``Remote-Addr`` by default; pick **one** of the strategies below:
+
+.. code:: python
+
+    from castle.configuration import configuration, TRUSTED_PROXIES
+
+    # 1. Custom header (e.g. Cloudflare's Cf-Connecting-Ip).
+    configuration.ip_headers = ['Cf-Connecting-Ip']
+
+    # 2. Static, known proxy IPs (strings or regexes).
+    configuration.trusted_proxies = ['10.0.0.1']
+
+    # 3. Ephemeral proxies but known chain depth.
+    configuration.trusted_proxy_depth = 2
+
+    # 4. Last resort: trust the entire X-Forwarded-For chain.
+    # Warning: vulnerable to header spoofing if a malicious proxy is in path.
+    configuration.trust_proxy_chain = False
+
+Use **either** ``trusted_proxies`` **or** ``trusted_proxy_depth``, not both. Private/loopback ranges in ``TRUSTED_PROXIES`` are always considered trusted.
+
+Optional settings
+~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    from castle.configuration import configuration
+
+    # Override the API base URL (default: https://api.castle.io/v1)
+    # configuration.base_url = 'https://api.castle.io/v1'
 
 Signature
 ---------
+
+Secure mode signs user identifiers on the server:
 
 .. code:: python
 
@@ -128,11 +180,18 @@ Signature
 
     signature(user_id)
 
-will create a signed user_id.
-
 Exceptions
 ----------
 
-``CastleError`` will be thrown if the Castle API returns a 400 or a 500
-level HTTP response. You can also choose to catch a more `finegrained
-error <https://github.com/castle/castle-python/blob/master/castle/errors.py>`__.
+All exceptions inherit from ``CastleError``. The most useful ones:
+
+- ``ConfigurationError`` — the SDK is misconfigured (missing API secret, invalid URL, etc.)
+- ``RequestError`` — network failure or timeout reaching Castle
+- ``InvalidRequestTokenError`` — the request token is missing or invalid
+- ``InvalidParametersError`` — 422 response with validation details
+- ``RateLimitError`` — 429 response; back off and retry
+- ``UnauthorizedError`` — 401; bad API secret
+- ``InternalServerError`` — 5xx response from Castle
+- ``WebhookVerificationError`` — webhook signature did not match
+
+The full list is in `castle/errors.py <https://github.com/castle/castle-python/blob/master/castle/errors.py>`_.

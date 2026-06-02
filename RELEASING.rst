@@ -2,25 +2,56 @@ Releasing
 =========
 
 #. Create release branch ``X.Y.Z`` from ``develop``.
-#. Update ``VERSION`` in ``castle/version.py`` to the new version
-#. Update the ``CHANGELOG.rst`` for the impending release
-#. ``git commit -am "release X.Y.Z"`` (where X.Y.Z is the new version)
-#. Push to Github, make PR to the develop branch, and when approved, merge.
-#. Pull latest ``develop``, merge it to ``master``, and push it.
-#. Make a release on Github from the ``master`` branch, specify tag as ``vX.Y.Z`` to create a tag.
-#. ``git checkout master && git pull``
-#. ``rm -rf dist build``
-#. ``python3 -m build``
-#. ``twine upload dist/*``
+#. Update ``VERSION`` in ``castle/version.py`` to the new version.
+#. Update ``CHANGELOG.rst`` for the impending release.
+#. ``git commit -am "release X.Y.Z"`` (where ``X.Y.Z`` is the new version).
+#. Push to GitHub, open a PR to ``develop``, and merge when approved.
+#. On ``develop``: run ``make test`` and ``make lint`` (or confirm CI is green).
+#. Pull latest ``develop``, merge into ``master``, and **push ``master`` to ``origin``**.
+#. Create a GitHub release from ``master`` with tag ``vX.Y.Z`` (see below).
+#. Publish to PyPI from ``master`` (see below). A GitHub release does **not** publish the package; PyPI is updated only via ``twine upload``.
 
-When you change something in the README.rst make sure it is in the
-correct format, as pypi will ignore the file if it is not valid.
+GitHub release
+--------------
 
-To validate the rendered metadata locally:
+Create the release only after ``master`` on ``origin`` contains the release commit.
 
-``pip3 install build twine``
+.. code-block:: console
 
-``python3 -m build && twine check dist/*``
+    gh release create vX.Y.Z \
+      --title "Release X.Y.Z" \
+      --notes-file release-notes.md
 
-To upload to testpypi
-``twine upload --repository-url https://test.pypi.org/legacy/ dist/*``
+Use ``--latest`` as a separate flag if you need to mark the release as Latest; do not put ``--latest`` in ``--title``.
+
+PyPI
+----
+
+From a clean checkout of ``master`` at the release commit:
+
+.. code-block:: console
+
+    git checkout master && git pull
+    rm -rf dist build
+    pip install build twine
+    python3 -m build
+    twine check dist/*
+    twine upload dist/*
+
+README and metadata
+-------------------
+
+When you change ``README.rst``, validate that PyPI will accept it:
+
+.. code-block:: console
+
+    python3 -m build && twine check dist/*
+
+PyPI ignores ``README.rst`` if it is not valid reStructuredText.
+
+TestPyPI
+--------
+
+.. code-block:: console
+
+    twine upload --repository-url https://test.pypi.org/legacy/ dist/*

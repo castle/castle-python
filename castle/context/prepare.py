@@ -7,5 +7,5 @@ class ContextPrepare(object):
     def call(request, options=None):
         if options is None:
             options = {}
-        default_context = ContextGetDefault(request, options.get('cookies')).call()
+        default_context = ContextGetDefault(request).call()
         return ContextMerge.call(default_context, options.get('context', {}))

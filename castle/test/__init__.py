@@ -6,7 +6,6 @@ from unittest import mock  # noqa: F401 - re-exported for `from castle.test impo
 
 TEST_MODULES = [
     'castle.test.api_request_test',
-    'castle.test.client_id.extract_test',
     'castle.test.client_test',
     'castle.test.command_test',
     'castle.test.commands.filter_test',

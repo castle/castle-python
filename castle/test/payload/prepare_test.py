@@ -18,8 +18,6 @@ def request():
 
 def ctx():
     return {
-        'active': True,
-        'client_id': '1234',
         'headers': {
             'User-Agent': 'test',
             'X-Castle-Client-Id': '1234',
@@ -27,7 +25,6 @@ def ctx():
         },
         'ip': '217.144.192.112',
         'library': {'name': 'castle-python', 'version': VERSION},
-        'user_agent': 'test',
     }
 
 

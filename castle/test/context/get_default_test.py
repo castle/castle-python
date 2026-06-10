@@ -4,14 +4,6 @@ from castle.version import VERSION as __version__
 from castle.context.get_default import ContextGetDefault
 
 
-def client_id():
-    return 'abcd'
-
-
-def cookies():
-    return {'__cid': client_id()}
-
-
 def request_ip():
     return '5.5.5.5'
 
@@ -19,7 +11,7 @@ def request_ip():
 def environ():
     return {
         'HTTP_X_FORWARDED_FOR': request_ip(),
-        'HTTP_COOKIE': "__cid={client_id()};other=efgh",
+        'HTTP_COOKIE': "__cid=abcd;other=efgh",
         'HTTP-Accept-Language': 'en',
         'HTTP-User-Agent': 'test',
     }
@@ -34,9 +26,7 @@ def request(env):
 
 class ContextGetDefaultTestCase(unittest.TestCase):
     def test_default_context(self):
-        context = ContextGetDefault(request(environ()), cookies()).call()
-        self.assertEqual(context['client_id'], client_id())
-        self.assertEqual(context['active'], True)
+        context = ContextGetDefault(request(environ())).call()
         self.assertEqual(
             context['headers'],
             {
@@ -48,4 +38,6 @@ class ContextGetDefaultTestCase(unittest.TestCase):
         )
         self.assertEqual(context['ip'], request_ip())
         self.assertDictEqual(context['library'], {'name': 'castle-python', 'version': __version__})
-        self.assertEqual(context['user_agent'], 'test')
+        self.assertNotIn('client_id', context)
+        self.assertNotIn('active', context)
+        self.assertNotIn('user_agent', context)

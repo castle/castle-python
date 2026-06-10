@@ -1,6 +1,14 @@
 master
 ------
 
+7.2.0 (2026-06-09)
+------------------
+
+Housekeeping:
+~~~~~~~~~~~~~
+-  slim down the default request context to ``headers``, ``ip``, and ``library``; the client id is carried by ``headers`` (the ``X-Castle-Client-Id`` header / ``__cid`` cookie) and resolved server-side
+-  remove the internal ``ClientIdExtract`` service and the unused ``cookies`` plumbing in ``ContextGetDefault`` / ``ContextPrepare``
+
 7.1.0 (2026-05-29)
 ------------------
 

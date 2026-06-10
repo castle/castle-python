@@ -30,8 +30,6 @@ class ClientTestCase(unittest.TestCase):
 
     def test_init(self):
         context = {
-            'active': True,
-            'client_id': '1234',
             'headers': {
                 'User-Agent': 'test',
                 'X-Forwarded-For': '217.144.192.112',
@@ -39,7 +37,6 @@ class ClientTestCase(unittest.TestCase):
             },
             'ip': '217.144.192.112',
             'library': {'name': 'castle-python', 'version': VERSION},
-            'user_agent': 'test',
         }
         client = Client.from_request(request(), {})
         self.assertEqual(client.do_not_track, False)

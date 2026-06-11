@@ -1,0 +1,13 @@
+api:
+  specs:
+    - openapi: ./openapi/openapi.yml
+groups:
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 5.14.14
+        output:
+          location: local-file-system
+          path: ../generated/python
+        github:
+          repository: castle/castle-python

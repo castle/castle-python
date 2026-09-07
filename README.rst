@@ -1,7 +1,7 @@
 Python SDK for Castle
 =====================
 
-.. image:: https://github.com/castle/castle-python/actions/workflows/specs.yml/badge.svg?branch=master
+.. image:: https://github.com/castle/castle-python/actions/workflows/specs.yml/badge.svg?branch=main
    :alt: Build Status
    :target: https://github.com/castle/castle-python/actions/workflows/specs.yml
 
@@ -195,4 +195,4 @@ All exceptions inherit from ``CastleError``. The most useful ones:
 - ``InternalServerError`` — 5xx response from Castle
 - ``WebhookVerificationError`` — webhook signature did not match
 
-The full list is in `castle/errors.py <https://github.com/castle/castle-python/blob/master/castle/errors.py>`_.
+The full list is in `castle/errors.py <https://github.com/castle/castle-python/blob/main/castle/errors.py>`_.

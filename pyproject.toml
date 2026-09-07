@@ -36,7 +36,7 @@ Changelog = "https://github.com/castle/castle-python/blob/master/CHANGELOG.rst"
 
 [project.optional-dependencies]
 test = ["responses>=0.23"]
-lint = ["ruff>=0.6"]
+lint = ["ruff==0.15.16"]
 
 [tool.setuptools.dynamic]
 version = { attr = "castle.version.VERSION" }

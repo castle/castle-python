@@ -10,12 +10,14 @@ from castle.errors import (
     InternalServerError,
     InvalidRequestTokenError,
     RateLimitError,
+    PaymentRequiredError,
 )
 from castle.logger import Logger
 
 RESPONSE_ERRORS = {
     400: BadRequestError,
     401: UnauthorizedError,
+    402: PaymentRequiredError,
     403: ForbiddenError,
     404: NotFoundError,
     419: UserUnauthorizedError,

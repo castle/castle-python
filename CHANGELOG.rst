@@ -1,6 +1,14 @@
 master
 ------
 
+7.3.0 (2026-09-07)
+------------------
+
+-  add ``PaymentRequiredError`` for HTTP 402 responses
+-  raise the ``requests`` minimum to ``2.32.5``
+-  pin ``ruff`` to ``0.15.22``
+-  test on Python 3.9–3.14
+
 7.2.0 (2026-06-09)
 ------------------
 

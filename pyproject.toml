@@ -13,7 +13,7 @@ authors = [
 requires-python = ">=3.9"
 dynamic = ["version"]
 dependencies = [
-    "requests>=2.31",
+    "requests>=2.32.5",
 ]
 classifiers = [
     "Environment :: Web Environment",
@@ -27,6 +27,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 [project.urls]
@@ -36,7 +37,7 @@ Changelog = "https://github.com/castle/castle-python/blob/master/CHANGELOG.rst"
 
 [project.optional-dependencies]
 test = ["responses>=0.23"]
-lint = ["ruff>=0.6"]
+lint = ["ruff==0.15.22"]
 
 [tool.setuptools.dynamic]
 version = { attr = "castle.version.VERSION" }

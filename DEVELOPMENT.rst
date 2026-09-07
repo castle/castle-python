@@ -24,7 +24,7 @@ Test
 
     $ make test
 
-Runs ``python3 -m unittest -v castle.test``. CI runs the same suite on Python 3.9–3.13 via GitHub Actions (``.github/workflows/specs.yml``).
+Runs ``python3 -m unittest -v castle.test``. CI runs the same suite on Python 3.9–3.14 via GitHub Actions (``.github/workflows/specs.yml``).
 
 Linting
 -------

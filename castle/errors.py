@@ -55,5 +55,9 @@ class RateLimitError(APIError):
     pass
 
 
+class PaymentRequiredError(APIError):
+    pass
+
+
 class InternalServerError(APIError):
     pass

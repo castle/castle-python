@@ -13,6 +13,7 @@ from castle.errors import (
     InternalServerError,
     InvalidRequestTokenError,
     RateLimitError,
+    PaymentRequiredError,
 )
 
 
@@ -90,6 +91,10 @@ class CoreProcessResponseTestCase(unittest.TestCase):
     def test_verify_419(self):
         with self.assertRaises(UserUnauthorizedError):
             CoreProcessResponse(response(status_code=419)).verify()
+
+    def test_verify_402(self):
+        with self.assertRaises(PaymentRequiredError):
+            CoreProcessResponse(response(status_code=402)).verify()
 
     def test_verify_429(self):
         with self.assertRaises(RateLimitError):

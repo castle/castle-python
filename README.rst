@@ -190,6 +190,7 @@ All exceptions inherit from ``CastleError``. The most useful ones:
 - ``InvalidRequestTokenError`` — the request token is missing or invalid
 - ``InvalidParametersError`` — 422 response with validation details
 - ``RateLimitError`` — 429 response; back off and retry
+- ``PaymentRequiredError`` — 402 response
 - ``UnauthorizedError`` — 401; bad API secret
 - ``InternalServerError`` — 5xx response from Castle
 - ``WebhookVerificationError`` — webhook signature did not match

@@ -1,7 +1,7 @@
 master
 ------
 
-7.2.1 (2026-09-07)
+7.3.0 (2026-09-07)
 ------------------
 
 -  add ``PaymentRequiredError`` for HTTP 402 responses
